@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "64910056361",
+    "firebase_url": "https://world-shop-c308d.firebaseio.com",
+    "project_id": "world-shop-c308d",
+    "storage_bucket": "world-shop-c308d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64910056361:android:8004521c0d6df509",
+        "android_client_info": {
+          "package_name": "thefour.com.worldshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64910056361-h5riqccuaelv9qvtrnglq5hahssdfhbe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thefour.com.worldshop",
+            "certificate_hash": "BE2BBEBC3C19B210D4FD81E3B73984562FA0E246"
+          }
+        },
+        {
+          "client_id": "64910056361-on8cem991rf4fduaepqfchgv9sa5hu4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKcVP33W49azF4rIgkC3V6mDS1-tWWbhI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64910056361-on8cem991rf4fduaepqfchgv9sa5hu4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

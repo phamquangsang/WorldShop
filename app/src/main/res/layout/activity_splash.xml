@@ -6,9 +6,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
         tools:context=".activities.SplashActivity">
@@ -18,7 +15,6 @@
             android:layout_width="210dp"
             android:layout_height="210dp"
             android:gravity="center"
-
             android:orientation="horizontal">
 
             <ImageView
@@ -41,11 +37,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:text="ICY CHAT"
+                android:text="@string/app_name_all_caps"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/colorPrimary"
                 android:textIsSelectable="false"
-                android:textSize="12dp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

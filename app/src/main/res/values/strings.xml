@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">World Shop</string>
+    <string name="login_explain">Login to start shopping all over the world</string>
+    <string name="message_login_dialog">Please wait...</string>
+    <string name="title_login_dialog">Log in</string>
+    <string name="app_name_all_caps">WORLD SHOP</string>
 </resources>
