@@ -65,12 +65,12 @@ public class SplashActivity extends AppCompatActivity {
                 if (mFirebaseUser != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + mFirebaseUser.getUid());
+                    startActivity(HomeActivity.getIntent(SplashActivity.this));
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                     startActivity(LoginActivity.getIntent(SplashActivity.this));
                 }
-
             }
         });
 

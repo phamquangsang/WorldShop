@@ -2,10 +2,11 @@ package thefour.com.worldshop.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,9 +27,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 
+import thefour.com.worldshop.NetworkUtil;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.api.UserApi;
 import thefour.com.worldshop.databinding.ActivityLoginBinding;
+import thefour.com.worldshop.models.User;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -52,9 +58,39 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 Log.i(TAG, "onAuthStateChanged: log time need to check user"+ (System.currentTimeMillis()-timeBeginCreate));
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
+                    // User is signed in, check if Existing user, then load data else create new user
+                    UserApi.retrieveUserById(user.getUid(), new UserApi.IsUserExistCallback() {
+                        @Override
+                        public void onUserExist(User existingUser) {
+                            if(existingUser==null){//new User, create account into database
+                                final User worldShopUser = new User();
+                                worldShopUser.setUserId(user.getUid());
+                                worldShopUser.setEmail(user.getEmail());
+                                worldShopUser.setName(user.getDisplayName());
+                                worldShopUser.setProfileImageUrl(user.getPhotoUrl().toString());
+                                worldShopUser.setTimeJoined(System.currentTimeMillis());
+                                UserApi.createNewUser(worldShopUser, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError==null){
+                                            Log.i(TAG, "onComplete: create new User Completed: "
+                                                    +worldShopUser.getEmail());
+                                        }else{
+                                            Log.e(TAG, "onComplete: create new user failed",databaseError.toException());
+                                        }
+                                    }
+                                });
+                            }else{
+                                Snackbar.make(mBinding.loginContainer
+                                        ,"Welcome back "+existingUser.getName()
+                                        ,Snackbar.LENGTH_INDEFINITE).show();
+                                //Todo enter main Screen
+                            }
+                        }
+                    });
+
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
                     // User is signed out
@@ -105,13 +141,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Snackbar.make(mBinding.loginContainer,"Cannot connect to Google!\n"
-                + connectionResult.getErrorMessage(),Snackbar.LENGTH_LONG);
+                + connectionResult.getErrorMessage(),Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.google_sign_in_button:
+                if(!NetworkUtil.isNetworkAvailable(this)){
+                    Snackbar.make(mBinding.loginContainer,
+                            R.string.no_internet_warning,
+                            Snackbar.LENGTH_LONG)
+                            .setAction("Turn on Wifi", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivity(new Intent(
+                                            Settings.ACTION_WIFI_SETTINGS));
+                                }
+                            })
+                            .show();
+                    break;
+                }
                 mProgressDialog.show();
                 signIn();
                 break;
@@ -139,10 +189,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             firebaseAuthWithGoogle(acct);
-            Toast.makeText(this, "login succeed" + "\nName:"+acct.getDisplayName()
-                    +"\nEmail:"+acct.getEmail()
-                    +"\nProfileImage:"+acct.getPhotoUrl()
-                    , Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "login succeed" + "\nName:"+acct.getDisplayName()
+//                    +"\nEmail:"+acct.getEmail()
+//                    +"\nProfileImage:"+acct.getPhotoUrl()
+//                    , Toast.LENGTH_SHORT).show();
         } else {
 //            // Signed out, show unauthenticated UI.
 //            updateUI(false);

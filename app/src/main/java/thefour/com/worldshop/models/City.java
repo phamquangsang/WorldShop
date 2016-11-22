@@ -7,8 +7,17 @@ package thefour.com.worldshop.models;
 public class City {
     private String cityId;
     private String name;
+    private String imageUrl;
 
     public City() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getCityId() {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_shop"
+        android:orderInCategory="200"
+        android:title="@string/shop_menu_item"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_shopping_cart_white_48px"/>
+    <item
+        android:id="@+id/action_travel"
+        android:orderInCategory="300"
+        android:title="@string/travel_menu_item"
+        android:icon="@drawable/ic_flight_white_24dp"
+        app:showAsAction="ifRoom"/>
+
+</menu>

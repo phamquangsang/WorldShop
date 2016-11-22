@@ -1,5 +1,7 @@
 package thefour.com.worldshop.models;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.HashMap;
 
 /**
@@ -14,17 +16,24 @@ public class User {
     private String profileImageUrl;
     private long timeJoined;
 
+    public User() {
+    }
+
+
     public String getUserId() {
         return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
 
     public double getMoney() {
         return money;
-    }
-
-    public void setMoney(long money) {
-        this.money = money;
     }
 
     public String getName() {
