@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:src="@drawable/example_image_item"
-        android:id="@+id/item_imageView"
-        android:scaleType="centerCrop"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageButton
+        app:srcCompat="@drawable/ic_add_a_photo_black_80px"
+        android:id="@+id/item_imageButton"
         android:layout_width="@dimen/item_image_size"
         android:layout_height="@dimen/item_image_size"
         android:padding="@dimen/item_image_padding" />
+
 </layout>

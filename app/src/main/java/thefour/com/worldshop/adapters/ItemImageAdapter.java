@@ -1,16 +1,20 @@
 package thefour.com.worldshop.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
@@ -22,6 +26,7 @@ import thefour.com.worldshop.databinding.ItemImageBinding;
 
 public class ItemImageAdapter extends
         RecyclerView.Adapter<ItemImageAdapter.ImageHolder>{
+    private static final String TAG = ItemImageAdapter.class.getSimpleName();
     private final int TYPE_IMAGE = 1;
     private final int TYPE_ADD_IMAGE = 2;
 
@@ -41,11 +46,13 @@ public class ItemImageAdapter extends
     public void onBindViewHolder(ImageHolder holder, int position) {
         switch (getItemViewType(position)){
             case TYPE_ADD_IMAGE:
-
+                holder.mBinding.itemImageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 break;
             case TYPE_IMAGE:
+                holder.mBinding.itemImageButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Uri imagePath = Uri.parse(mDataset.get(position));
                 Glide.with(holder.mBinding.itemImageButton.getContext())
-                        .load(R.drawable.example_image_item).into(holder.mBinding.itemImageButton);
+                        .load(imagePath).into(holder.mBinding.itemImageButton);
                 break;
         }
     }
