@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_shop:{
                 //TODO start shopping activity
+                startActivity(ShoppingActivity.getIntent(this));
                 break;
             }
             case R.id.action_travel:{
