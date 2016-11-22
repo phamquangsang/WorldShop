@@ -18,4 +18,5 @@
     <string name="delivery_detail">Delivery detail</string>
     <string name="deliver_to">Deliver to</string>
     <string name="traveler_reward_amount">Traveler reward amount</string>
+    <string name="explain_read_storage_permission">Read external storage is required to upload image</string>
 </resources>
