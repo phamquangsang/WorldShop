@@ -9,4 +9,13 @@
     <string name="shop_menu_item">Shop</string>
     <string name="travel_menu_item">Travel</string>
     <string name="title_activity_shopping">ShoppingActivity</string>
+    <string name="enter_item_link">Enter item link</string>
+    <string name="shopping_instruction">Provide us a few details about your item</string>
+    <string name="item_price">Item price</string>
+    <string name="item_description">Item description</string>
+    <string name="item_name">Item name</string>
+    <string name="default_quantity_number">1</string>
+    <string name="delivery_detail">Delivery detail</string>
+    <string name="deliver_to">Deliver to</string>
+    <string name="traveler_reward_amount">Traveler reward amount</string>
 </resources>
