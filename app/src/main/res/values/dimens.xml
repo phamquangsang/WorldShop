@@ -4,4 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="official_margin_left">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="padding_separator">8dp</dimen>
+    <dimen name="horizontal_item_image_list_height">130dp</dimen>
+    <dimen name="item_image_size">130dp</dimen>
+    <dimen name="item_image_padding">2dp</dimen>
 </resources>
