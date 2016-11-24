@@ -1,0 +1,149 @@
+"user":{
+  "user-id":{
+    "user-id":"this is the unique user id",
+    "money":5000,
+    "name":"Phạm Sang",
+    "email":"phamngocquangsang@gmail,com",
+    "profileImageUrl":"http://icyteam.com/avartar.jpeg",
+    "timeJoined":{
+      "timestamp":1471499548133
+    }
+  }
+}
+
+"requests":{
+  "requestId":{
+    "requestId":"unique requestId",
+    "status":"Pending/inactive/completed",
+    "reward":200,
+    "quantity":1,
+    "fromUser":{
+      "user-id":"this is the unique user id",
+      "name":"Phạm Sang",
+      "money":5000,
+      "email":"phamngocquangsang@gmail,com",
+      "profileImageUrl":"http://icyteam.com/avartar.jpeg",
+      "timeJoined":{
+        "timestamp":1471499548133
+      },
+    },
+    "item":{
+      "itemUrl":"https://www.amazon.com/dp/B01M7UIE1I?psc=1",
+      "image":"https://images-na.ssl-images-amazon.com/images/I/51KlRyVQnQL._SL1200_.jpg",
+      "name":"Microsoft Surface Book (Intel Core i7, 16GB RAM, 512GB) with Performance Base",
+      "description":"Microsoft Surface Book with Performance Base is built for power. Featuring an Intel Core i7 processor, NVIDIA GeForce GTX 965M 2GB GDDR5 memory and a 512GB solid state drive. It is ultra-thin, meticulously crafted, with an incredible 13.5” PixelSense touch-screen display with 3000 x 2000 resolution detachable. Up to 16 hours of battery life for video playback keeps you going all day. Use the included Surface Pen to mark-up presentations, sign documents, take notes and much more. Surface Book with Performance Base speeds through intensive professional software, like SolidWorks 3D CAD, AutoCAD Revit, and Adobe Premiere Pro.",
+      "price":2799
+    },
+    "deliverTo":{
+      "cityId":"HCMCITY",
+      "name":"Ho Chi Minh City",
+    },
+    "offers":{
+      "offerId":{
+        "offerId":"unique offer id",
+        "requestId":"unique requestId",
+        "time":1471499548133,
+        "lastTimeEdited":1471499548133,
+        "fee":40,
+        "deliverFrom":{
+          "cityId":"city id",
+          "name":"Ho Chi Minh City"
+        },
+        "status":"pendding/accepted",
+        "fromUser":{
+          "user-id":"this is the unique user id",
+          "money":5000,
+          "name":"Phạm Sang",
+          "email":"phamngocquangsang@gmail,com",
+          "profileImageUrl":"http://icyteam.com/avartar.jpeg",
+          "timeJoined":{
+            "timestamp":1471499548133
+          }
+        },
+        "item":{
+          "itemUrl":"https://www.amazon.com/dp/B01M7UIE1I?psc=1",
+          "image":"https://images-na.ssl-images-amazon.com/images/I/51KlRyVQnQL._SL1200_.jpg",
+          "name":"Microsoft Surface Book (Intel Core i7, 16GB RAM, 512GB) with Performance Base",
+          "description":"Microsoft Surface Book with Performance Base is built for power. Featuring an Intel Core i7 processor, NVIDIA GeForce GTX 965M 2GB GDDR5 memory and a 512GB solid state drive. It is ultra-thin, meticulously crafted, with an incredible 13.5” PixelSense touch-screen display with 3000 x 2000 resolution detachable. Up to 16 hours of battery life for video playback keeps you going all day. Use the included Surface Pen to mark-up presentations, sign documents, take notes and much more. Surface Book with Performance Base speeds through intensive professional software, like SolidWorks 3D CAD, AutoCAD Revit, and Adobe Premiere Pro.",
+          "price":2799
+        },
+        "deliveryDate":1471499548133,
+        "note":"this is some note from traveler"
+      }
+    }
+  }
+
+}
+
+"offers":{
+  "offerId":{
+    "offerId":"unique offer id",
+    "requestId":"unique requestId",
+    "time":1471499548133,
+    "lastTimeEdited":1471499548133,
+    "fee":40,
+    "deliveryDate":1471499548133,
+    "note":"this is some note from traveler",
+    "deliverFrom":{
+      "cityId":"city id",
+      "name":"Ho Chi Minh City"
+    },
+    "status":"pendding/accepted",
+    "fromUser":{
+      "user-id":"this is the unique user id",
+      "money":5000,
+      "name":"Phạm Sang",
+      "email":"phamngocquangsang@gmail,com",
+      "profileImageUrl":"http://icyteam.com/avartar.jpeg",
+      "timeJoined":{
+        "timestamp":1471499548133
+      }
+    },
+    "item":{
+      "itemUrl":"https://www.amazon.com/dp/B01M7UIE1I?psc=1",
+      "image":"https://images-na.ssl-images-amazon.com/images/I/51KlRyVQnQL._SL1200_.jpg",
+      "name":"Microsoft Surface Book (Intel Core i7, 16GB RAM, 512GB) with Performance Base",
+      "description":"Microsoft Surface Book with Performance Base is built for power. Featuring an Intel Core i7 processor, NVIDIA GeForce GTX 965M 2GB GDDR5 memory and a 512GB solid state drive. It is ultra-thin, meticulously crafted, with an incredible 13.5” PixelSense touch-screen display with 3000 x 2000 resolution detachable. Up to 16 hours of battery life for video playback keeps you going all day. Use the included Surface Pen to mark-up presentations, sign documents, take notes and much more. Surface Book with Performance Base speeds through intensive professional software, like SolidWorks 3D CAD, AutoCAD Revit, and Adobe Premiere Pro.",
+      "price":2799
+    }
+  }
+}
+
+"cities":{
+  "cityId":{
+    "cityId":"city id",
+    "name":"Ho Chi Minh City"
+  }
+}
+
+"cityRequests":{
+  "cityId":{
+    "requestId":{
+      ....
+    },
+    "requestId":{
+      ....
+    }
+  }
+}
+
+"userRequests":{
+  "userId":{
+    "requestId":{
+      ....
+    }
+  },
+  "userId":{
+    "requestId":{
+      ....
+    }
+  }
+}
+
+"userOffers":{
+  "userId":{
+    "offerId":{
+      ....
+    }
+  }
+}
