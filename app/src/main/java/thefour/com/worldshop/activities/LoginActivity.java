@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         if (databaseError==null){
                                             Log.i(TAG, "onComplete: create new User Completed: "
                                                     +worldShopUser.getEmail());
+                                            startActivity(HomeActivity.getIntent(LoginActivity.this, worldShopUser.getUserId()));
                                         }else{
                                             Log.e(TAG, "onComplete: create new user failed",databaseError.toException());
                                         }
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         ,"Welcome back "+existingUser.getName()
                                         ,Snackbar.LENGTH_INDEFINITE).show();
                                 //Todo enter main Screen
+                                startActivity(HomeActivity.getIntent(LoginActivity.this, user.getUid()));
                             }
                         }
                     });
