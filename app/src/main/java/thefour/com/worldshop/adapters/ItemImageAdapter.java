@@ -89,6 +89,9 @@ public class ItemImageAdapter extends
         mDataset.add(fileUrl);
         notifyItemInserted(mDataset.size()-1);
     }
+    public ArrayList<String> getData(){
+        return mDataset;
+    }
 
     public static class UserClickAddImageButtonEvent{   }
 }

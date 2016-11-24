@@ -7,35 +7,56 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
+
+import com.google.firebase.database.DatabaseError;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
+import java.util.ArrayList;
+
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.adapters.ItemImageAdapter;
+import thefour.com.worldshop.api.CityApi;
 import thefour.com.worldshop.databinding.ActivityShoppingBinding;
 import thefour.com.worldshop.databinding.ContentShoppingBinding;
+import thefour.com.worldshop.models.City;
+import thefour.com.worldshop.models.Item;
+import thefour.com.worldshop.models.Request;
+import thefour.com.worldshop.models.User;
 
 public class ShoppingActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
     private static final int REQUEST_CODE_PICK_PHOTO = 10;
+    private static final String ARG_LOGGED_USER = "arg_logged_user";
 
     private ContentShoppingBinding mContentBinding;
     private ActivityShoppingBinding mBinding;
     private ItemImageAdapter mAdapter;
+    private ArrayList<City> mCities;
 
-    public static Intent getIntent(Context c) {
+    private User mLoggedUser;
+
+    public static Intent getIntent(Context c, User loggedUser) {
         Intent i = new Intent(c, ShoppingActivity.class);
+        i.putExtra(ARG_LOGGED_USER, loggedUser);
         return i;
     }
 
@@ -45,16 +66,10 @@ public class ShoppingActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_shopping);
         mContentBinding = mBinding.contentShoppingContainer;
 
+        mLoggedUser = getIntent().getParcelableExtra(ARG_LOGGED_USER);
+
         setSupportActionBar(mBinding.toolbar);
         setUpLayout();
-
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public void setUpLayout(){
@@ -63,6 +78,41 @@ public class ShoppingActivity extends AppCompatActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new ItemImageAdapter();
         mContentBinding.recyclerViewItemImages.setAdapter(mAdapter);
+
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO validate input form
+                if(validateForm()){
+                    onRequestReady();
+                }
+            }
+        });
+
+        setUpAutoCompleteCities();
+    }
+
+    private void setUpAutoCompleteCities() {
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+        CityApi.loadCities(new CityApi.OnLoadCompleted() {
+            @Override
+            public void onLoadCompleted(ArrayList<City> cities) {
+                mCities = cities;
+                for (City city :
+                        cities) {
+                    adapter.add(city.getName());
+                }
+                adapter.notifyDataSetChanged();
+                Toast.makeText(ShoppingActivity.this, "load cities completed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLoadCancelled(DatabaseError error) {
+
+            }
+        });
+        mContentBinding.editTextDeliverTo.setAdapter(adapter);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -162,4 +212,94 @@ public class ShoppingActivity extends AppCompatActivity {
             }
         }
     }
+
+    private boolean validateForm(){
+        boolean result = true;
+        ContentShoppingBinding binding = mContentBinding;
+        result = validateUrl(binding.editTextItemUrl.getText().toString(), binding.inputItemUrl)&&result;
+        result = validateEmptyInput(binding.editTextItemDescription, binding.inputItemDescription)&&result;
+        result = validateEmptyInput(binding.editTextItemName, binding.inputItemName)&&result;
+        result = validateEmptyInput(binding.editTextItemPrice, binding.inputItemPrice)&&result;
+        result = validateEmptyInput(binding.editTextItemQuantity, binding.inputItemQuantity)&&result;
+        result = validateEmptyInput(binding.editTextReward, binding.inputItemReward)&&result;
+        result = validateItemImage()&&result;
+        result = validateCity(binding.editTextDeliverTo.getText().toString(), binding.inputItemDeliverTo)&&result;
+        return result;
+    }
+    private boolean validateItemImage(){
+        if(mAdapter.getItemCount()<=1){
+            Snackbar.make(mBinding.getRoot(), R.string.upload_picture_image_warning, Snackbar.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+    private boolean validateUrl(String url,@Nullable TextInputLayout inputLayout){
+        boolean result;
+        if(!Patterns.WEB_URL.matcher(url).matches()){
+            if(inputLayout != null)
+                inputLayout.setError(getString(R.string.invalid_item_url_warning));
+            result = false;
+        }
+        else{
+            result = true;
+            if(inputLayout!=null)
+                inputLayout.setError(null);
+        }
+        return result;
+    }
+
+    private boolean validateEmptyInput(EditText text,@Nullable TextInputLayout inputLayout){
+        if(text.getText().toString().isEmpty()){
+            if(inputLayout!=null)
+                inputLayout.setError(getString(R.string.empty_input_warning));
+            return false;
+        }
+        if(inputLayout!=null)
+            inputLayout.setError(null);
+        return true;
+    }
+
+    private boolean validateCity(String text,@Nullable TextInputLayout inputLayout){
+        for(int i=0; i<mCities.size(); i++){
+            if(text.trim().equalsIgnoreCase(mCities.get(i).getName())){
+                if(inputLayout!=null)
+                    inputLayout.setError(null);
+                return true;
+            }
+        }
+        if(inputLayout!=null){
+            inputLayout.setError("Unsupported City!!");
+        }
+        return false;
+    }
+
+    public void onRequestReady(){
+        //Todo sent request
+        ContentShoppingBinding binding = mContentBinding;
+        Request request = new Request();
+        Item item = new Item();
+        item.setName(binding.editTextItemName.getText().toString());
+        item.setDescription(binding.editTextItemDescription.getText().toString());
+        item.setItemUrl(binding.editTextItemUrl.getText().toString());
+        item.setPrice(Double.parseDouble(binding.editTextItemPrice.getText().toString()));
+        item.setFirstImage(mAdapter.getData().get(0));
+        item.setImages(mAdapter.getData());
+        request.setItem(item);
+        request.setFromUser(mLoggedUser);
+
+        for(int i = 0; i < mCities.size(); ++i){
+            String selectedCity = binding.editTextDeliverTo.getText().toString();
+            if(mCities.get(i).getName()
+                    .equalsIgnoreCase(selectedCity)){
+                request.setDeliverTo(mCities.get(i));
+            }
+        }
+        request.setQuantity(Integer.parseInt(binding.editTextItemQuantity.getText().toString()));
+//        request.setDeliverTo(binding.editTextDeliverTo.getText().toString());
+        request.setReward(Double.parseDouble(binding.editTextReward.getText().toString()));
+        request.setTime(System.currentTimeMillis());
+//        request.setStatus(Request.STATUS);
+    }
+
+
 }

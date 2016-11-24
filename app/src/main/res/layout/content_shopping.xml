@@ -31,6 +31,7 @@
                 android:text="@string/shopping_instruction" />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemUrl"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
@@ -53,6 +54,7 @@
                 android:orientation="horizontal"/>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemName"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
@@ -69,6 +71,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemDescription"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
@@ -85,6 +88,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemPrice"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
@@ -101,6 +105,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemQuantity"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
@@ -125,11 +130,12 @@
                 style="@style/Base.TextAppearance.AppCompat.Title" />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemDeliverTo"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/editTextDeliverTo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,6 +147,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputItemReward"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
