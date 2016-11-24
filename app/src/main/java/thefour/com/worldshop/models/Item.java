@@ -1,5 +1,7 @@
 package thefour.com.worldshop.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Quang Quang on 11/17/2016.
  */
@@ -7,7 +9,8 @@ package thefour.com.worldshop.models;
 public class Item {
     private String itemId;
     private String itemUrl;
-    private String image;
+    private String firstImage;
+    private ArrayList<String> images;
     private String name;
     private String description;
     private double price;
@@ -31,12 +34,20 @@ public class Item {
         this.itemUrl = itemUrl;
     }
 
-    public String getImage() {
-        return image;
+    public String getFirstImage() {
+        return firstImage;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFirstImage(String firstImage) {
+        this.firstImage = firstImage;
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
     }
 
     public String getName() {
