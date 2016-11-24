@@ -7,6 +7,11 @@ import java.util.HashMap;
  */
 
 public class Request {
+    public static final String STATUS_PENDING = "pending";
+    public static final String STATUS_INACTIVE = "inactive";//when user de-active request
+    public static final String STATUS_COMPLETE = "complete";
+    public static final String STATUS_OFFER_ACCEPTED = "offerAccepted";
+
     private String requestId;
     private String status;
     private double reward;

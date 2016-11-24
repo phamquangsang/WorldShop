@@ -5,6 +5,8 @@ package thefour.com.worldshop.models;
  */
 
 public class Offer {
+    public static final String STATUS_PENDING = "pending";
+    public static final String STATUS_ACCEPTED = "accepted";
     private String offerId;
     private String requestId;
     private long time;
