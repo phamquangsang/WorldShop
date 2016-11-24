@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.animation.Animation;
 import thefour.com.worldshop.databinding.ActivitySplashBinding;
@@ -65,7 +68,14 @@ public class SplashActivity extends AppCompatActivity {
                 if (mFirebaseUser != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + mFirebaseUser.getUid());
-                    startActivity(HomeActivity.getIntent(SplashActivity.this));
+                    //Keep this user account information in synced
+                    //
+                    FirebaseDatabase.getInstance().getReference()
+                            .child(Contracts.USER_LOCATION).
+                            child(mFirebaseUser.getUid())
+                            .keepSynced(true);
+
+                    startActivity(HomeActivity.getIntent(SplashActivity.this, mFirebaseUser.getUid()));
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
