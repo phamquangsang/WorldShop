@@ -89,7 +89,7 @@ public class ShoppingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO validate input form
                 if (validateForm()) {
-                    onPreparingRequest();
+                    onSendingRequest();
                 }
             }
         });
@@ -280,7 +280,7 @@ public class ShoppingActivity extends AppCompatActivity {
         return false;
     }
 
-    private void onPreparingRequest() {
+    private void onSendingRequest() {
         //Todo sent request
         finish();
         ContentShoppingBinding binding = mContentBinding;
