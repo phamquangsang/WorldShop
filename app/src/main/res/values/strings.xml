@@ -22,4 +22,6 @@
     <string name="upload_picture_image_warning">You have to upload at least one item picture</string>
     <string name="empty_input_warning">This field is required!</string>
     <string name="invalid_item_url_warning">Please enter valid Url</string>
+    <string name="title_activity_traveling">TravelingActivity</string>
+    <string name="setting_traveling_city">selected_city</string>
 </resources>

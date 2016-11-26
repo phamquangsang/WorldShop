@@ -49,4 +49,5 @@ public class Contracts {
     public static final String PRO_OFFER_NOTE = "note";
 
 
+    public static final String SETTING_TRAVEL_CITY = "setting_travel_city";
 }
