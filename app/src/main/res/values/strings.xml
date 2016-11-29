@@ -24,4 +24,6 @@
     <string name="invalid_item_url_warning">Please enter valid Url</string>
     <string name="title_activity_traveling">TravelingActivity</string>
     <string name="setting_traveling_city">selected_city</string>
+    <string name="menu_item_change_city">Change city</string>
+    <string name="make_offer_btn"> Make Offer</string>
 </resources>

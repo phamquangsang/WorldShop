@@ -37,7 +37,7 @@ public class Util {
         return setting;
     }
 
-    public static City loadSelectedCity(Context c){
+    public static @Nullable City loadSelectedCity(Context c){
         String cityJson = getSharedPreferences(c).getString(c.getString(R.string.setting_traveling_city),null);
         City city = new Gson().fromJson(cityJson, City.class);
         return city;

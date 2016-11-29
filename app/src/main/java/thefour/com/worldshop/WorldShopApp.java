@@ -2,6 +2,7 @@ package thefour.com.worldshop;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -15,5 +16,6 @@ public class WorldShopApp extends Application {
         super.onCreate();
         FirebaseApp.initializeApp(this);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        Fresco.initialize(this);
     }
 }

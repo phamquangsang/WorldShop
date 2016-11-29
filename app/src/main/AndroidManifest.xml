@@ -40,7 +40,9 @@
             android:name=".activities.TravelingActivity"
             android:label="@string/title_activity_traveling"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.SelectTravelingCityActivity"></activity>
+        <activity
+            android:name=".activities.SelectTravelingCityActivity"
+            android:noHistory="true"/>
     </application>
 
 </manifest>

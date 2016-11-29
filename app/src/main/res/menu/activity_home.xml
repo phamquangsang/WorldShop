@@ -11,7 +11,7 @@
         android:id="@+id/action_travel"
         android:orderInCategory="300"
         android:title="@string/travel_menu_item"
-        android:icon="@drawable/ic_flight_white_24dp"
+        android:icon="@drawable/ic_flight_white_80dp"
         app:showAsAction="ifRoom"/>
 
 </menu>

@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.Util;
 import thefour.com.worldshop.api.UserApi;
+import thefour.com.worldshop.models.City;
 import thefour.com.worldshop.models.User;
 
 public class HomeActivity extends AppCompatActivity {
@@ -70,13 +72,18 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_shop: {
-                //TODO start shopping activity
                 if (mLoggedUser != null)
                     startActivity(ShoppingActivity.getIntent(this, mLoggedUser));
                 break;
             }
             case R.id.action_travel: {
-                //TODO start travel activity
+                if(mLoggedUser != null){
+                    City travelTo = Util.loadSelectedCity(this);
+                    if(travelTo == null){
+                        startActivity(SelectTravelingCityActivity.getIntent(this, mLoggedUser));
+                    }else
+                        startActivity(TravelingActivity.getIntent(this, mLoggedUser, travelTo));
+                }
                 break;
             }
         }
