@@ -80,45 +80,9 @@ public class RequestViewModel extends BaseObservable {
         notifyChange();
     }
 
-    public User getFromUser() {
-        return fromUser;
-    }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
-        notifyChange();
-    }
 
-    public Item getItem() {
-        return item;
-    }
 
-    public void setItem(Item item) {
-        this.item = item;
-        notifyChange();
-    }
-
-    public City getDeliverTo() {
-        return deliverTo;
-    }
-
-    public void setDeliverTo(City deliverTo) {
-        this.deliverTo = deliverTo;
-        notifyChange();
-    }
-
-    public String getDeliverToString(){
-        return "Deliver to" +
-    }
-
-    public HashMap<String, Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(HashMap<String, Offer> offers) {
-        this.offers = offers;
-        notifyChange();
-    }
 
     public long getTime() {
         return time;
