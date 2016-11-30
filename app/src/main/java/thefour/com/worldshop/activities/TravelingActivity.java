@@ -112,10 +112,6 @@ public class TravelingActivity extends AppCompatActivity
         Log.i(TAG, "onDestroy: ");
     }
 
-    @Override
-    public void onListFragmentInteraction(Request item) {
-
-    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -135,5 +131,23 @@ public class TravelingActivity extends AppCompatActivity
 
         Log.i(TAG, "onNewIntent: city = " + mCity.getName() + " - traveler = " + mTraveler.getName());
         super.onNewIntent(intent);
+    }
+
+    @Override
+    public void onListFragmentInteraction(Request item) {
+        //TODO enter Request detail activity
+        Toast.makeText(this, "onListInteraction: "+item.getItem().getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserMakeOffer(Request item) {
+        //TODO enter make offer activity
+        Toast.makeText(this, "onUserMakeOffer: "+item.getRequestId(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserProfileClick(Request item) {
+        //TODO enter profile activity
+        Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
     }
 }

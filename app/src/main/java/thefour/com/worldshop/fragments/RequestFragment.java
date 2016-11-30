@@ -137,6 +137,8 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Request item);
+        void onUserMakeOffer(Request item);
+        void onUserProfileClick(Request item);
     }
 
     public void clearData(){

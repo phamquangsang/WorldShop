@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/profile_layout_header"
+                android:id="@+id/header"
                 bind:request="@{request}"/>
 
             <LinearLayout
@@ -48,14 +49,15 @@
                     android:textSize="24sp" />
 
                 <TextView
-                    android:id="@+id/requestItem_from"
+                    android:id="@+id/requestItem_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/official_margin_left"
                     android:layout_marginRight="@dimen/official_margin_left"
                     android:layout_marginTop="@dimen/official_margin_left"
                     android:lineSpacingExtra="@dimen/line_spacing"
-                    android:text="From everywhere"
+                    android:text="@{request.item.description}"
+                    android:maxLines="3"
                     android:textColor="#000000"
                     android:textSize="14sp" />
                 <TextView
@@ -87,6 +89,7 @@
                 android:textSize="10sp" />
 
             <include layout="@layout/request_item_footer"
+                android:id="@+id/footer"
                 bind:request="@{request}"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>

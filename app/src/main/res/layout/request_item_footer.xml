@@ -24,6 +24,7 @@
                 android:padding="@dimen/small_line_spacing"
                 android:text="reward"/>
             <TextView
+                android:id="@+id/itemRequest_price"
                 android:padding="@dimen/small_line_spacing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
