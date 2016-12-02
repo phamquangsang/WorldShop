@@ -13,11 +13,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".activities.SplashActivity"
-            android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,21 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activities.LoginActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:clearTaskOnLaunch="true"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_home" />
         <activity
             android:name=".activities.ShoppingActivity"
-            android:label="@string/title_activity_shopping"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_shopping" />
         <activity
             android:name=".activities.TravelingActivity"
-            android:label="@string/title_activity_traveling"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_traveling" />
         <activity
             android:name=".activities.SelectTravelingCityActivity"
             android:noHistory="true"/>

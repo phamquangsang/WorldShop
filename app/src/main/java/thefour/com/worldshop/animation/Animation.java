@@ -10,8 +10,7 @@ import android.view.animation.ScaleAnimation;
 
 
 public class Animation {
-    private View view;
-
+    private Animation(){}
 
     public static AnimatorSet getZoomAnimation(View v, long duration, TimeInterpolator timeInterpolator, float from, float to)
     {

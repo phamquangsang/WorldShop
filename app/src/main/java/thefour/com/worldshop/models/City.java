@@ -8,6 +8,12 @@ import android.os.Parcelable;
  */
 
 public class City implements Parcelable {
+    private static final String defaulUrl = "https://www.vietnamsunshinetravel.com/wp-content/uploads/2015/04/Da-Lat-daily-Tours.jpg";
+
+    public static String getDefaulUrl() {
+        return defaulUrl;
+    }
+
     private String cityId;
     private String name;
     private String image;
@@ -69,4 +75,13 @@ public class City implements Parcelable {
             return new City[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityId='" + cityId + '\'' +
+                ", name='" + name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }

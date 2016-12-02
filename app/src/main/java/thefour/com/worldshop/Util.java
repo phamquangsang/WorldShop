@@ -14,6 +14,8 @@ import thefour.com.worldshop.models.City;
  */
 
 public class Util {
+    private Util(){}
+
     public static String relativeTimeFormat(long timeStamp){
 //        final String pattern = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
 //        //2016-05-03 07:58:41
