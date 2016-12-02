@@ -71,7 +71,7 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
     public void onMessageEvent(CityAdapter.CitySelectedEvent event) {
         Log.i(TAG, "onMessageEvent: " + event.getmCity());
         onUserSelectedCity(event.getmCity());
-        Intent i = TravelingActivity.getIntent(this,mTraveler,event.getmCity());
+        Intent i = TravelingActivity.getIntent(this, mTraveler, event.getmCity());
         startActivity(i);
     }
 
@@ -81,7 +81,6 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
 
         mBiding.recyclerViewCities.setHasFixedSize(true);
         mBiding.recyclerViewCities.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
     private void loadData() {
@@ -94,8 +93,6 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
                 }
                 mAdapter = new CityAdapter(SelectTravelingCityActivity.this, mCities);
                 mBiding.recyclerViewCities.setAdapter(mAdapter);
-
-
             }
 
             @Override
