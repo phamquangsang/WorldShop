@@ -13,16 +13,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.FirebaseDatabase;
+
+import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.Util;
+import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.api.UserApi;
+import thefour.com.worldshop.fragments.RequestFragment;
 import thefour.com.worldshop.models.City;
+import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity
+        implements RequestFragment.OnListFragmentInteractionListener{
 
     private static final String ARG_USER_ID = "arg_user_id";
     private User mLoggedUser;
+    private RequestFragment mRequestFragment;
+    private ChildEventListener mChildEventListener;
 
     public static Intent getIntent(Context c, String userId) {
         Intent i = new Intent(c, HomeActivity.class);
@@ -42,8 +52,14 @@ public class HomeActivity extends AppCompatActivity {
             UserApi.retrieveUserById(userId, new UserApi.IsUserExistCallback() {
                 @Override
                 public void onUserExist(@Nullable User user) {
-                    if (user != null)
+                    if (user != null){
                         mLoggedUser = user;
+                        mRequestFragment = RequestFragment.newInstance(1,mLoggedUser);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, mRequestFragment)
+                                .commit();
+                        loadRequest();
+                    }
                     else {
                         Toast.makeText(HomeActivity.this, "Please Login again!", Toast.LENGTH_SHORT).show();
                         startActivity(LoginActivity.getIntent(HomeActivity.this));
@@ -60,6 +76,10 @@ public class HomeActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void loadRequest() {
+        mChildEventListener = RequestApi.loadLatestRequestInCity(mRequestFragment);
     }
 
     @Override
@@ -90,4 +110,27 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(Request item) {
+
+    }
+
+    @Override
+    public void onUserMakeOffer(Request item) {
+
+    }
+
+    @Override
+    public void onUserProfileClick(Request item) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mChildEventListener!=null){
+            FirebaseDatabase.getInstance().getReference().child(Contracts.REQUESTS_LOCATION)
+                    .removeEventListener(mChildEventListener);
+        }
+        super.onDestroy();
+    }
 }

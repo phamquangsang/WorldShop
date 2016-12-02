@@ -76,4 +76,40 @@ public class RequestApi {
         ref.addChildEventListener(listener);
         return listener;
     }
+
+    public static ChildEventListener loadLatestRequestInCity(final RequestEventListener eventListener){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref = ref.child(Contracts.REQUESTS_LOCATION);
+        final ChildEventListener listener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.i(TAG, "onChildAdded: "+dataSnapshot.toString());
+                eventListener.onRequestAdded(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestChanged(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                eventListener.onRequestRemoved(dataSnapshot.getValue(Request.class));
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestMoved(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                eventListener.onError(databaseError);
+            }
+
+        };
+
+        ref.addChildEventListener(listener);
+        return listener;
+    }
 }

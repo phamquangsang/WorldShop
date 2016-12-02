@@ -8,11 +8,6 @@ public class Contracts {
 
     private Contracts(){}
 
-    public static final String USER_LOCATION = "users";
-    public static final String REQUEST_LOCATION = "requests";
-    public static final String OFFER_LOCATION = "offers";
-    public static final String ITEM_LOCATION = "items";
-    public static final String CITY_LOCATION = "cities";
 
     public static final String USERS_LOCATION = "users";
     public static final String REQUESTS_LOCATION = "requests";
