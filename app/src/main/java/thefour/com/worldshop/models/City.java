@@ -10,17 +10,17 @@ import android.os.Parcelable;
 public class City implements Parcelable {
     private String cityId;
     private String name;
-    private String imageUrl;
+    private String image;
 
     public City() {
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCityId() {
@@ -47,18 +47,18 @@ public class City implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.cityId);
+        dest.writeString(this.image);
         dest.writeString(this.name);
-        dest.writeString(this.imageUrl);
+        dest.writeString(this.cityId);
     }
 
     protected City(Parcel in) {
-        this.cityId = in.readString();
+        this.image = in.readString();
         this.name = in.readString();
-        this.imageUrl = in.readString();
+        this.cityId = in.readString();
     }
 
-    public static final Parcelable.Creator<City> CREATOR = new Parcelable.Creator<City>() {
+    public static final Creator<City> CREATOR = new Creator<City>() {
         @Override
         public City createFromParcel(Parcel source) {
             return new City(source);
