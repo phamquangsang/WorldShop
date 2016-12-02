@@ -22,7 +22,7 @@ public class CityApi {
         void onLoadCancelled(DatabaseError error);
     }
     public static void loadCities(final OnLoadCompleted onLoadCompleted){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.CITY_LOCATION);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.CITIES_LOCATION);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

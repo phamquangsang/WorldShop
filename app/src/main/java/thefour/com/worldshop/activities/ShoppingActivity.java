@@ -14,27 +14,28 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
-
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-
 import java.util.ArrayList;
+import java.util.List;
 
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.adapters.ItemImageAdapter;
 import thefour.com.worldshop.api.CityApi;
+import thefour.com.worldshop.api.RequestApi;
+import thefour.com.worldshop.api.StorageApi;
 import thefour.com.worldshop.databinding.ActivityShoppingBinding;
 import thefour.com.worldshop.databinding.ContentShoppingBinding;
 import thefour.com.worldshop.models.City;
@@ -46,6 +47,7 @@ public class ShoppingActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
     private static final int REQUEST_CODE_PICK_PHOTO = 10;
     private static final String ARG_LOGGED_USER = "arg_logged_user";
+    private static final String TAG = ShoppingActivity.class.getSimpleName();
 
     private ContentShoppingBinding mContentBinding;
     private ActivityShoppingBinding mBinding;
@@ -67,12 +69,15 @@ public class ShoppingActivity extends AppCompatActivity {
         mContentBinding = mBinding.contentShoppingContainer;
 
         mLoggedUser = getIntent().getParcelableExtra(ARG_LOGGED_USER);
+        if (mLoggedUser == null) {
+            Toast.makeText(this, "mLoggedUserNull", Toast.LENGTH_SHORT).show();
+        }
 
         setSupportActionBar(mBinding.toolbar);
         setUpLayout();
     }
 
-    public void setUpLayout(){
+    public void setUpLayout() {
         mContentBinding.recyclerViewItemImages.setHasFixedSize(true);
         mContentBinding.recyclerViewItemImages.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -83,8 +88,8 @@ public class ShoppingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO validate input form
-                if(validateForm()){
-                    onRequestReady();
+                if (validateForm()) {
+                    onSendingRequest();
                 }
             }
         });
@@ -116,11 +121,11 @@ public class ShoppingActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ItemImageAdapter.UserClickAddImageButtonEvent event){
+    public void onMessageEvent(ItemImageAdapter.UserClickAddImageButtonEvent event) {
         Toast.makeText(this, "on user click add image button", Toast.LENGTH_SHORT).show();
         int permission =
                 ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if(PackageManager.PERMISSION_GRANTED != permission){
+        if (PackageManager.PERMISSION_GRANTED != permission) {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_CONTACTS)) {
@@ -145,7 +150,7 @@ public class ShoppingActivity extends AppCompatActivity {
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
-        }else {
+        } else {
             //TODO start image picker
             startImagePicker();
         }
@@ -192,7 +197,7 @@ public class ShoppingActivity extends AppCompatActivity {
         }
     }
 
-    public void startImagePicker(){
+    public void startImagePicker() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, REQUEST_CODE_PICK_PHOTO);
@@ -202,10 +207,11 @@ public class ShoppingActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
-            case REQUEST_CODE_PICK_PHOTO:{
+        switch (requestCode) {
+            case REQUEST_CODE_PICK_PHOTO: {
                 if (resultCode == RESULT_OK) {
                     String imagePath = data.getData().toString();
+                    Log.i(TAG, "onActivityResult: user selected image path: " + imagePath);
                     mAdapter.addImage(imagePath);
                 }
                 break;
@@ -213,92 +219,108 @@ public class ShoppingActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateForm(){
+    private boolean validateForm() {
         boolean result = true;
         ContentShoppingBinding binding = mContentBinding;
-        result = validateUrl(binding.editTextItemUrl.getText().toString(), binding.inputItemUrl)&&result;
-        result = validateEmptyInput(binding.editTextItemDescription, binding.inputItemDescription)&&result;
-        result = validateEmptyInput(binding.editTextItemName, binding.inputItemName)&&result;
-        result = validateEmptyInput(binding.editTextItemPrice, binding.inputItemPrice)&&result;
-        result = validateEmptyInput(binding.editTextItemQuantity, binding.inputItemQuantity)&&result;
-        result = validateEmptyInput(binding.editTextReward, binding.inputItemReward)&&result;
-        result = validateItemImage()&&result;
-        result = validateCity(binding.editTextDeliverTo.getText().toString(), binding.inputItemDeliverTo)&&result;
+        result = validateUrl(binding.editTextItemUrl.getText().toString(), binding.inputItemUrl) && result;
+        result = validateEmptyInput(binding.editTextItemDescription, binding.inputItemDescription) && result;
+        result = validateEmptyInput(binding.editTextItemName, binding.inputItemName) && result;
+        result = validateEmptyInput(binding.editTextItemPrice, binding.inputItemPrice) && result;
+        result = validateEmptyInput(binding.editTextItemQuantity, binding.inputItemQuantity) && result;
+        result = validateEmptyInput(binding.editTextReward, binding.inputItemReward) && result;
+        result = validateItemImage() && result;
+        result = validateCity(binding.editTextDeliverTo.getText().toString(), binding.inputItemDeliverTo) && result;
         return result;
     }
-    private boolean validateItemImage(){
-        if(mAdapter.getItemCount()<=1){
+
+    private boolean validateItemImage() {
+        if (mAdapter.getItemCount() <= 1) {
             Snackbar.make(mBinding.getRoot(), R.string.upload_picture_image_warning, Snackbar.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
-    private boolean validateUrl(String url,@Nullable TextInputLayout inputLayout){
+
+    private boolean validateUrl(String url, @Nullable TextInputLayout inputLayout) {
         boolean result;
-        if(!Patterns.WEB_URL.matcher(url).matches()){
-            if(inputLayout != null)
+        if (!Patterns.WEB_URL.matcher(url).matches()) {
+            if (inputLayout != null)
                 inputLayout.setError(getString(R.string.invalid_item_url_warning));
             result = false;
-        }
-        else{
+        } else {
             result = true;
-            if(inputLayout!=null)
+            if (inputLayout != null)
                 inputLayout.setError(null);
         }
         return result;
     }
 
-    private boolean validateEmptyInput(EditText text,@Nullable TextInputLayout inputLayout){
-        if(text.getText().toString().isEmpty()){
-            if(inputLayout!=null)
+    private boolean validateEmptyInput(EditText text, @Nullable TextInputLayout inputLayout) {
+        if (text.getText().toString().isEmpty()) {
+            if (inputLayout != null)
                 inputLayout.setError(getString(R.string.empty_input_warning));
             return false;
         }
-        if(inputLayout!=null)
+        if (inputLayout != null)
             inputLayout.setError(null);
         return true;
     }
 
-    private boolean validateCity(String text,@Nullable TextInputLayout inputLayout){
-        for(int i=0; i<mCities.size(); i++){
-            if(text.trim().equalsIgnoreCase(mCities.get(i).getName())){
-                if(inputLayout!=null)
+    private boolean validateCity(String text, @Nullable TextInputLayout inputLayout) {
+        for (int i = 0; i < mCities.size(); i++) {
+            if (text.trim().equalsIgnoreCase(mCities.get(i).getName())) {
+                if (inputLayout != null)
                     inputLayout.setError(null);
                 return true;
             }
         }
-        if(inputLayout!=null){
+        if (inputLayout != null) {
             inputLayout.setError("Unsupported City!!");
         }
         return false;
     }
 
-    public void onRequestReady(){
+    private void onSendingRequest() {
         //Todo sent request
+        finish();
         ContentShoppingBinding binding = mContentBinding;
-        Request request = new Request();
-        Item item = new Item();
+        final Request request = new Request();
+        request.setFromUser(mLoggedUser);
+
+        for (int i = 0; i < mCities.size(); ++i) {
+            String selectedCity = binding.editTextDeliverTo.getText().toString();
+            if (mCities.get(i).getName()
+                    .equalsIgnoreCase(selectedCity)) {
+                request.setDeliverTo(mCities.get(i));
+            }
+        }
+        request.setQuantity(Integer.parseInt(binding.editTextItemQuantity.getText().toString()));
+        request.setReward(Double.parseDouble(binding.editTextReward.getText().toString()));
+        request.setTime(System.currentTimeMillis());
+        request.setStatus(Request.STATUS_PENDING);
+
+        final Item item = new Item();
         item.setName(binding.editTextItemName.getText().toString());
         item.setDescription(binding.editTextItemDescription.getText().toString());
         item.setItemUrl(binding.editTextItemUrl.getText().toString());
         item.setPrice(Double.parseDouble(binding.editTextItemPrice.getText().toString()));
         item.setFirstImage(mAdapter.getData().get(0));
         item.setImages(mAdapter.getData());
-        request.setItem(item);
-        request.setFromUser(mLoggedUser);
 
-        for(int i = 0; i < mCities.size(); ++i){
-            String selectedCity = binding.editTextDeliverTo.getText().toString();
-            if(mCities.get(i).getName()
-                    .equalsIgnoreCase(selectedCity)){
-                request.setDeliverTo(mCities.get(i));
+        new StorageApi.OnUploadingImage(item.getImages()) {
+            @Override
+            public void onCompleted(List<String> result) {
+                item.setFirstImage(result.get(0));
+                item.setImages((ArrayList<String>) result);
+                request.setItem(item);
+                RequestApi.createRequest(request, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                        Toast.makeText(ShoppingActivity.this, "request Created!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        }
-        request.setQuantity(Integer.parseInt(binding.editTextItemQuantity.getText().toString()));
-//        request.setDeliverTo(binding.editTextDeliverTo.getText().toString());
-        request.setReward(Double.parseDouble(binding.editTextReward.getText().toString()));
-        request.setTime(System.currentTimeMillis());
-//        request.setStatus(Request.STATUS);
+        }.start();
     }
 
 

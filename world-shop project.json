@@ -14,7 +14,7 @@
 "requests":{
   "requestId":{
     "requestId":"unique requestId",
-    "status":"Pending/inactive/completed",
+    "status":"Pending/inactive/completed/offerAccepted",
     "reward":200,
     "quantity":1,
     "fromUser":{
@@ -49,7 +49,7 @@
           "cityId":"city id",
           "name":"Ho Chi Minh City"
         },
-        "status":"pendding/accepted",
+        "status":"pending/accepted",
         "fromUser":{
           "user-id":"this is the unique user id",
           "money":5000,

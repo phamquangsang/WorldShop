@@ -3,7 +3,6 @@ package thefour.com.worldshop.adapters;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
@@ -25,7 +22,7 @@ import thefour.com.worldshop.databinding.ItemImageBinding;
  */
 
 public class ItemImageAdapter extends
-        RecyclerView.Adapter<ItemImageAdapter.ImageHolder>{
+        RecyclerView.Adapter<ItemImageAdapter.ImageHolder> {
     private static final String TAG = ItemImageAdapter.class.getSimpleName();
     private final int TYPE_IMAGE = 1;
     private final int TYPE_ADD_IMAGE = 2;
@@ -44,7 +41,7 @@ public class ItemImageAdapter extends
 
     @Override
     public void onBindViewHolder(ImageHolder holder, int position) {
-        switch (getItemViewType(position)){
+        switch (getItemViewType(position)) {
             case TYPE_ADD_IMAGE:
                 holder.mBinding.itemImageButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 break;
@@ -59,16 +56,29 @@ public class ItemImageAdapter extends
 
     @Override
     public int getItemCount() {
-        return mDataset.size()+1;
+        return mDataset.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == mDataset.size()?TYPE_ADD_IMAGE:TYPE_IMAGE;
+        return position == mDataset.size() ? TYPE_ADD_IMAGE : TYPE_IMAGE;
     }
 
-    class ImageHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void addImage(String fileUrl) {
+        mDataset.add(fileUrl);
+        notifyItemInserted(mDataset.size() - 1);
+    }
+
+    public ArrayList<String> getData() {
+        return mDataset;
+    }
+
+    public static class UserClickAddImageButtonEvent {
+    }
+
+    class ImageHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ItemImageBinding mBinding;
+
         public ImageHolder(View itemView) {
             super(itemView);
             mBinding = DataBindingUtil.bind(itemView);
@@ -77,21 +87,11 @@ public class ItemImageAdapter extends
 
         @Override
         public void onClick(View view) {
-            if(view.getId()==R.id.item_imageButton){
-                if(getAdapterPosition() == mDataset.size()){
+            if (view.getId() == R.id.item_imageButton) {
+                if (getAdapterPosition() == mDataset.size()) {
                     EventBus.getDefault().post(new UserClickAddImageButtonEvent());
                 }
             }
         }
     }
-
-    public void addImage(String fileUrl){
-        mDataset.add(fileUrl);
-        notifyItemInserted(mDataset.size()-1);
-    }
-    public ArrayList<String> getData(){
-        return mDataset;
-    }
-
-    public static class UserClickAddImageButtonEvent{   }
 }

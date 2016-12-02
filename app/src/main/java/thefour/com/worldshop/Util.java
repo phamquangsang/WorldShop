@@ -1,6 +1,13 @@
 package thefour.com.worldshop;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.text.format.DateUtils;
+
+import com.google.gson.Gson;
+
+import thefour.com.worldshop.models.City;
 
 /**
  * Created by Quang Quang on 11/18/2016.
@@ -27,6 +34,21 @@ public class Util {
         return encodedEmail.replace(',','.');
     }
 
+    public static SharedPreferences getSharedPreferences(Context c){
+        SharedPreferences setting = c.getSharedPreferences("setting",Context.MODE_PRIVATE);
+        return setting;
+    }
 
+    public static @Nullable City loadSelectedCity(Context c){
+        String cityJson = getSharedPreferences(c).getString(c.getString(R.string.setting_traveling_city),null);
+        City city = new Gson().fromJson(cityJson, City.class);
+        return city;
+    }
+
+    public static void saveTravelingCity(Context c,@Nullable City city){
+        getSharedPreferences(c).edit()
+                .putString(c.getString(R.string.setting_traveling_city),new Gson().toJson(city))
+                .apply();
+    }
 
 }

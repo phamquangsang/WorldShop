@@ -5,6 +5,7 @@ package thefour.com.worldshop;
  */
 
 public class Contracts {
+
     private Contracts(){}
 
     public static final String USER_LOCATION = "users";
@@ -12,6 +13,16 @@ public class Contracts {
     public static final String OFFER_LOCATION = "offers";
     public static final String ITEM_LOCATION = "items";
     public static final String CITY_LOCATION = "cities";
+
+    public static final String USERS_LOCATION = "users";
+    public static final String REQUESTS_LOCATION = "requests";
+    public static final String USER_REQUESTS_LOCATION = "userRequests";
+    public static final String CITY_REQUESTS_LOCATION = "cityRequests";
+    public static final String OFFERS_LOCATION = "offers";
+    public static final String USER_OFFERS_LOCATION = "userOffers";
+    public static final String ITEMS_LOCATION = "items";
+    public static final String CITIES_LOCATION = "cities";
+
 
     public static final String PRO_CITY_ID = "cityId";
     public static final String PRO_CITY_NAME = "name";
@@ -47,4 +58,6 @@ public class Contracts {
     public static final String PRO_OFFER_DELIVER_DATE = "deliverDate";
     public static final String PRO_OFFER_NOTE = "note";
 
+
+    public static final String SETTING_TRAVEL_CITY = "setting_travel_city";
 }

@@ -30,7 +30,7 @@ public class UserApi {
 
     public static void retrieveUserById(String Uid, final IsUserExistCallback callback){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
-                .child(Contracts.USER_LOCATION).child(Uid);
+                .child(Contracts.USERS_LOCATION).child(Uid);
         userRef.keepSynced(true);
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -49,7 +49,7 @@ public class UserApi {
 
     public static void createNewUser(User user,@Nullable DatabaseReference.CompletionListener completeCallback){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
-                .child(Contracts.USER_LOCATION).child(user.getUserId());
+                .child(Contracts.USERS_LOCATION).child(user.getUserId());
         if(user.getEmail()!=null){
             //Firebase don't allow keys that contain ., $, #, [, ], /,
             // or ASCII control characters 0-31 or 127.
@@ -60,7 +60,7 @@ public class UserApi {
 
     public static void retrieveUserByEmail(String email, final IsUserExistCallback callback){
         Query query = FirebaseDatabase.getInstance().getReference()
-                .child(Contracts.USER_LOCATION).orderByChild(Contracts.PRO_USER_EMAIL)
+                .child(Contracts.USERS_LOCATION).orderByChild(Contracts.PRO_USER_EMAIL)
                 .equalTo(Util.encodeEmail(email));
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
