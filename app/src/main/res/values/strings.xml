@@ -27,4 +27,5 @@
     <string name="menu_item_change_city">Change city</string>
     <string name="make_offer_btn"> Make Offer</string>
     <string name="item_price_format">Item price: $</string>
+    <string name="setting_logged_user">logged_user_setting</string>
 </resources>
