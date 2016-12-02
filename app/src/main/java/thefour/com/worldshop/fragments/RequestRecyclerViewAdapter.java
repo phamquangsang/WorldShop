@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.databinding.FragmentRequestItemBinding;
 import thefour.com.worldshop.models.Request;
+import thefour.com.worldshop.models.User;
 
 import java.util.List;
 
@@ -21,10 +22,12 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
 
     private final List<Request> mValues;
     private final RequestFragment.OnListFragmentInteractionListener mListener;
+    private final User mLoggedUser;
 
-    public RequestRecyclerViewAdapter(List<Request> items, RequestFragment.OnListFragmentInteractionListener listener) {
+    public RequestRecyclerViewAdapter(List<Request> items, User loggedUser, RequestFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        mLoggedUser = loggedUser;
     }
 
     @Override
@@ -53,6 +56,14 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
         String price = c.getString(R.string.item_price_format)+holder.mItem.getItem().getPrice();
         holder.mBinding.footer.itemRequestPrice.setText(price);
         holder.mBinding.footer.reward.setText(("$"+ holder.mItem.getReward()));
+
+        //user don't make offer for their own request.
+        if(mLoggedUser.getUserId().equalsIgnoreCase(holder.mItem.getFromUser().getUserId())){
+            holder.mBinding.footer.btnMakeOffer.setVisibility(View.INVISIBLE);
+        }else {
+            holder.mBinding.footer.btnMakeOffer.setVisibility(View.VISIBLE);
+        }
+
         setOnClickListener(holder);
     }
 

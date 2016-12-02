@@ -19,7 +19,6 @@ import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.databinding.ActivityTravelingBinding;
-import thefour.com.worldshop.databinding.ContentTravelingBinding;
 import thefour.com.worldshop.fragments.RequestFragment;
 import thefour.com.worldshop.models.City;
 import thefour.com.worldshop.models.Request;
@@ -65,7 +64,7 @@ public class TravelingActivity extends AppCompatActivity
         }
 
 
-        mFragmentList = RequestFragment.newInstance(1);
+        mFragmentList = RequestFragment.newInstance(1, mTraveler);
         getSupportFragmentManager().beginTransaction().add(R.id.container, mFragmentList).commit();
 
         loadRequest();

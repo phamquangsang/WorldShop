@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.models.Request;
+import thefour.com.worldshop.models.User;
 
 /**
  * A fragment representing a list of Items.
@@ -29,11 +30,13 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_LOGGED_USER = "arg_logged_uesr";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RequestRecyclerViewAdapter mAdapter;
     private String TAG = RequestFragment.class.getSimpleName();
+    private User mLoggedUser;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,10 +47,11 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RequestFragment newInstance(int columnCount) {
+    public static RequestFragment newInstance(int columnCount, User loggedUser) {
         RequestFragment fragment = new RequestFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putParcelable(ARG_LOGGED_USER, loggedUser);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +62,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mLoggedUser = getArguments().getParcelable(ARG_LOGGED_USER);
         }
     }
 
@@ -75,7 +80,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new RequestRecyclerViewAdapter(new ArrayList<Request>(), mListener);
+            mAdapter = new RequestRecyclerViewAdapter(new ArrayList<Request>(), mLoggedUser, mListener);
             recyclerView.setAdapter(mAdapter);
         }
         return view;
