@@ -10,6 +10,10 @@ import android.util.Log;
 
 import com.google.firebase.database.DatabaseError;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
@@ -51,8 +55,27 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
         loadData();
     }
 
-    private void setUpViews()
-    {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(CityAdapter.CitySelectedEvent event) {
+        Log.i(TAG, "onMessageEvent: " + event.getmCity());
+        onUserSelectedCity(event.getmCity());
+        Intent i = TravelingActivity.getIntent(this,mTraveler,event.getmCity());
+        startActivity(i);
+    }
+
+    private void setUpViews() {
         setSupportActionBar(mBiding.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -60,21 +83,19 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
         mBiding.recyclerViewCities.setLayoutManager(new LinearLayoutManager(this));
 
     }
-    private void loadData()
-    {
+
+    private void loadData() {
         CityApi.loadCities(new CityApi.OnLoadCompleted() {
             @Override
             public void onLoadCompleted(ArrayList<City> cities) {
                 mCities = cities;
-                for (City c: mCities) {
+                for (City c : mCities) {
                     Log.i(TAG, "onLoadCompleted: " + c.toString());
                 }
-                mAdapter = new CityAdapter(SelectTravelingCityActivity.this,mCities);
+                mAdapter = new CityAdapter(SelectTravelingCityActivity.this, mCities);
                 mBiding.recyclerViewCities.setAdapter(mAdapter);
 
-                /*Random random = new Random();
-                int randomInt = random.nextInt(cities.size());
-                onUserSelectedCity(cities.get(randomInt));*/
+
             }
 
             @Override
@@ -95,4 +116,6 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
         );
         Log.i(TAG, "onUserSelectedCity: " + city.getName());
     }
+
+
 }
