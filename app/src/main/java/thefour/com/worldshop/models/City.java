@@ -81,7 +81,7 @@ public class City implements Parcelable {
         return "City{" +
                 "cityId='" + cityId + '\'' +
                 ", name='" + name + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", imageUrl='" + image + '\'' +
                 '}';
     }
 }

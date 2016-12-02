@@ -56,7 +56,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
             holder.mBinding.textViewItemCity.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_REGULAR));
             holder.mBinding.textViewItemCityCountry.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_LIGHT));
             //image
-            String url = (city.getImageUrl() == null ? City.getDefaulUrl() : city.getImageUrl());
+            String url = (city.getImage() == null ? City.getDefaulUrl() : city.getImage());
             Glide.with(mActivity)
                     .load(url)
                     .centerCrop()
