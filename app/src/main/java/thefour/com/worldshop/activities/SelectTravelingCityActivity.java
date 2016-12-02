@@ -71,8 +71,6 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
     public void onMessageEvent(CityAdapter.CitySelectedEvent event) {
         Log.i(TAG, "onMessageEvent: " + event.getmCity());
         onUserSelectedCity(event.getmCity());
-        Intent i = TravelingActivity.getIntent(this, mTraveler, event.getmCity());
-        startActivity(i);
     }
 
     private void setUpViews() {

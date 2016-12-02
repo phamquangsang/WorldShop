@@ -28,4 +28,5 @@
     <string name="make_offer_btn"> Make Offer</string>
     <string name="item_price_format">Item price: $</string>
     <string name="setting_logged_user">logged_user_setting</string>
+    <string name="title_activity_select_travelling">Select City</string>
 </resources>

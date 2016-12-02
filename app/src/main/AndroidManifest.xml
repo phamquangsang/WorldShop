@@ -37,6 +37,7 @@
             android:label="@string/title_activity_traveling" />
         <activity
             android:name=".activities.SelectTravelingCityActivity"
+            android:label="@string/title_activity_select_travelling"
             android:noHistory="true"/>
     </application>
 
