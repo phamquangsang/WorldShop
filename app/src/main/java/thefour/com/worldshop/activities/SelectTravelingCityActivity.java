@@ -30,8 +30,8 @@ import thefour.com.worldshop.models.User;
 -- todo call CityApi.loadCities() to load all the supported cites from server
 --------------------------------------------------------------------------------*/
 public class SelectTravelingCityActivity extends AppCompatActivity {
-    private static final String ARG_TRAVELER = "arg_traveler";
     public static final String ARG_CITY_RETURN = "arg_city_return";
+    private static final String ARG_TRAVELER = "arg_traveler";
     private static final String TAG = SelectTravelingCityActivity.class.getSimpleName();
 
     private User mTraveler;
