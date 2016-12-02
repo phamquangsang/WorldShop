@@ -8,6 +8,7 @@ import android.text.format.DateUtils;
 import com.google.gson.Gson;
 
 import thefour.com.worldshop.models.City;
+import thefour.com.worldshop.models.User;
 
 /**
  * Created by Quang Quang on 11/18/2016.
@@ -49,6 +50,17 @@ public class Util {
         getSharedPreferences(c).edit()
                 .putString(c.getString(R.string.setting_traveling_city),new Gson().toJson(city))
                 .apply();
+    }
+
+    public static @Nullable User loadLoggedUser(Context c){
+        String userJson = getSharedPreferences(c).getString(c.getString(R.string.setting_logged_user), null);
+        User user = new Gson().fromJson(userJson, User.class);
+        return user;
+    }
+
+    public static void saveLoggedUser(Context c, User user){
+        getSharedPreferences(c).edit()
+                .putString(c.getString(R.string.setting_logged_user), new Gson().toJson(user)).apply();
     }
 
 }
