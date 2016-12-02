@@ -5,6 +5,8 @@ package thefour.com.worldshop;
  */
 
 public class Contracts {
+    private Contracts(){}
+
     public static final String USER_LOCATION = "users";
     public static final String REQUEST_LOCATION = "requests";
     public static final String OFFER_LOCATION = "offers";
