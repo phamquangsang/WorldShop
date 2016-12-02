@@ -14,4 +14,6 @@
     <dimen name="line_spacing">8dp</dimen>
     <dimen name="small_line_spacing">4dp</dimen>
     <dimen name="request_item_footer_padding">8dp</dimen>
+    <dimen name="item_city_height">280dp</dimen>
+    <dimen name="actionBar_size">56dp</dimen>
 </resources>

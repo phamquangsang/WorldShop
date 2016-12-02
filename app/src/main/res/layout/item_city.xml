@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="city"
+            type="thefour.com.worldshop.models.City" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView_item_city"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_city_height"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_city_height"
+            android:layout_gravity="center"
+            android:background="#48000000"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_item_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{city.name}"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                tools:text="SANFRANCSICO" />
+
+            <TextView
+                android:id="@+id/textView_item_city_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="United State"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
+                android:layout_marginTop="6dp"
+                tools:text="United State" />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+</layout>
