@@ -6,12 +6,12 @@
         android:orderInCategory="200"
         android:title="@string/shop_menu_item"
         app:showAsAction="always"
-        android:icon="@drawable/ic_shopping_cart_white_48px"/>
+        android:icon="@drawable/ic_shopping_cart_black_24px"/>
     <item
         android:id="@+id/action_travel"
         android:orderInCategory="300"
         android:title="@string/travel_menu_item"
-        android:icon="@drawable/ic_flight_white_80dp"
+        android:icon="@drawable/ic_flight_black_24px"
         app:showAsAction="ifRoom"/>
 
 </menu>

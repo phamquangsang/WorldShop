@@ -4,16 +4,18 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="official_margin_left">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="padding_separator">8dp</dimen>
+    <dimen name="padding_separator">12dp</dimen>
     <dimen name="horizontal_item_image_list_height">130dp</dimen>
-    <dimen name="item_image_size">130dp</dimen>
+    <dimen name="item_image_size">120dp</dimen>
     <dimen name="item_image_padding">2dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="image_size">250dp</dimen>
+    <dimen name="image_size">240dp</dimen>
     <dimen name="spacing">4dp</dimen>
     <dimen name="line_spacing">8dp</dimen>
     <dimen name="small_line_spacing">4dp</dimen>
     <dimen name="request_item_footer_padding">8dp</dimen>
     <dimen name="item_city_height">280dp</dimen>
     <dimen name="actionBar_size">56dp</dimen>
+    <dimen name="view_vertical_margin">4dp</dimen>
+    <dimen name="official_margin_top">12dp</dimen>
 </resources>

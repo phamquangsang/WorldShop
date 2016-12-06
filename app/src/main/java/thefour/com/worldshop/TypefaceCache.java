@@ -11,6 +11,7 @@ import java.util.Hashtable;
 public final class TypefaceCache {
     public static final String OPENSANS_LIGHT = "fonts/OpenSans-Light.ttf";
     public static final String OPENSANS_REGULAR = "fonts/OpenSans-Regular.ttf";
+    public static final String TITLE_FONT = "fonts/norwester.otf";
 
     private static final Hashtable<String, Typeface> CACHE = new Hashtable<String, Typeface>();
 

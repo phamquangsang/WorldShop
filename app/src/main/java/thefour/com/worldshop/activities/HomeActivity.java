@@ -3,6 +3,7 @@ package thefour.com.worldshop.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.TypefaceCache;
 import thefour.com.worldshop.Util;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.api.UserApi;
@@ -51,6 +53,8 @@ public class HomeActivity extends AppCompatActivity
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mBinding.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
 
         //Load user from sharedPreference faster than firebase
         mLoggedUser = Util.loadLoggedUser(this);

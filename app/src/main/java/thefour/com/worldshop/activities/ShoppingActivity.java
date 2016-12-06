@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.TypefaceCache;
 import thefour.com.worldshop.adapters.ItemImageAdapter;
 import thefour.com.worldshop.api.CityApi;
 import thefour.com.worldshop.api.RequestApi;
@@ -74,6 +76,8 @@ public class ShoppingActivity extends AppCompatActivity {
         }
 
         setSupportActionBar(mBinding.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         setUpLayout();
     }
 
@@ -94,7 +98,34 @@ public class ShoppingActivity extends AppCompatActivity {
             }
         });
 
+        setFonts();
         setUpAutoCompleteCities();
+    }
+
+    private void setFonts() {
+        //title
+        mContentBinding.textViewInstruction.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
+        mContentBinding.textViewDeliveryDetail.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
+        mBinding.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+
+        //EditText
+        mContentBinding.editTextDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextReward.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+
+        //Input
+        mContentBinding.inputItemDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemReward.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+
     }
 
     private void setUpAutoCompleteCities() {

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.Util;
 import thefour.com.worldshop.databinding.FragmentRequestItemBinding;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
@@ -42,6 +43,7 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
         Context c = holder.mView.getContext();
         holder.mItem = mValues.get(position);
         holder.mBinding.setRequest(holder.mItem);
+        holder.mBinding.header.textViewTime.setText(Util.relativeTimeFormat(holder.mItem.getTime()));
         Glide.with(c)
                 .load(holder.mItem.getItem().getFirstImage())
                 .placeholder(R.drawable.cicor_progessbar)

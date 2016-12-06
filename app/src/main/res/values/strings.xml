@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">World Shop</string>
+    <string name="app_name">WORLD SHOP</string>
     <string name="login_explain">Login to start shopping all over the world</string>
     <string name="message_login_dialog">Please wait...</string>
     <string name="title_login_dialog">Log in</string>
@@ -8,7 +8,7 @@
     <string name="title_activity_home">World Shop</string>
     <string name="shop_menu_item">Shop</string>
     <string name="travel_menu_item">Travel</string>
-    <string name="title_activity_shopping">ShoppingActivity</string>
+    <string name="title_activity_shopping">SHOPPING</string>
     <string name="enter_item_link">Enter item link</string>
     <string name="shopping_instruction">Provide us a few details about your item</string>
     <string name="item_price">Item price</string>

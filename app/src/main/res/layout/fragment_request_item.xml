@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="request"
-            type="thefour.com.worldshop.models.Request"/>
-        <import type="thefour.com.worldshop.Util"/>
+            type="thefour.com.worldshop.models.Request" />
+
+        <import type="thefour.com.worldshop.Util" />
     </data>
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/official_margin_left"
-        android:id="@+id/container"
+        android:layout_marginBottom="@dimen/official_margin_left"
         android:orientation="vertical">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,9 +22,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/profile_layout_header"
+            <include
                 android:id="@+id/header"
-                bind:request="@{request}"/>
+                layout="@layout/profile_layout_header"
+                bind:request="@{request}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,16 +41,18 @@
                     android:src="@drawable/example_image_item" />
 
                 <TextView
+                    android:textAllCaps="true"
                     android:id="@+id/requestItem_itemName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/official_margin_left"
                     android:layout_marginRight="@dimen/official_margin_left"
-                    android:layout_marginTop="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
                     android:lineSpacingExtra="@dimen/spacing"
                     android:text="@{request.item.name}"
                     android:textColor="#000000"
-                    android:textSize="24sp" />
+                    android:textSize="18sp"
+                    tools:text="Macbook Pro" />
 
                 <TextView
                     android:id="@+id/requestItem_description"
@@ -54,12 +60,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/official_margin_left"
                     android:layout_marginRight="@dimen/official_margin_left"
-                    android:layout_marginTop="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
                     android:lineSpacingExtra="@dimen/line_spacing"
-                    android:text="@{request.item.description}"
                     android:maxLines="3"
-                    android:textColor="#000000"
+                    android:text="@{request.item.description}"
                     android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/requestItem_deliverTo"
                     android:layout_width="wrap_content"
@@ -69,28 +75,13 @@
                     android:layout_marginTop="@dimen/official_margin_left"
                     android:lineSpacingExtra="@dimen/line_spacing"
                     android:text="Deliver to Ho Chi Minh City"
-                    android:textColor="#000000"
                     android:textSize="14sp" />
-
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/requestItem_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/official_margin_left"
-                android:layout_marginRight="@dimen/official_margin_left"
-                android:layout_marginTop="@dimen/official_margin_left"
-                android:layout_marginBottom="4dp"
-                tools:text="15 phút trước"
-                android:text="@{Util.relativeTimeFormat(request.time)}"
-                android:textAllCaps="true"
-                android:textColor="#000000"
-                android:textSize="10sp" />
-
-            <include layout="@layout/request_item_footer"
+            <include
                 android:id="@+id/footer"
-                bind:request="@{request}"/>
+                layout="@layout/request_item_footer"
+                bind:request="@{request}" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

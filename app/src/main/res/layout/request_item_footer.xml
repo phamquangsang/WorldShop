@@ -32,8 +32,7 @@
         </LinearLayout>
 
         <Button
-            android:drawableStart="@drawable/ic_flight_white_24dp"
-            android:drawableLeft="@drawable/ic_flight_white_24dp"
+            android:drawableLeft="@drawable/ic_flight_black_24px"
             android:drawablePadding="4dp"
             android:text="@string/make_offer_btn"
             android:layout_alignParentEnd="true"

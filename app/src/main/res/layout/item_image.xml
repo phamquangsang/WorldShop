@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageButton
+        android:background="@drawable/border_bg"
         app:srcCompat="@drawable/ic_add_a_photo_black_80px"
         android:id="@+id/item_imageButton"
         android:layout_width="@dimen/item_image_size"
-        android:layout_height="@dimen/item_image_size"
-        android:padding="@dimen/item_image_padding" />
+        android:layout_height="@dimen/item_image_size" />
 
 </layout>
