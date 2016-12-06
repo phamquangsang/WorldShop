@@ -135,13 +135,17 @@ public class TravelingActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Request item) {
         //TODO enter Request detail activity
-        Toast.makeText(this, "onListInteraction: "+item.getItem().getName(), Toast.LENGTH_SHORT).show();
+        Intent i = RequestDetailActivity.getIntent(this, item, mTraveler);
+        startActivity(i);
+//        Toast.makeText(this, "onListInteraction: "+item.getItem().getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUserMakeOffer(Request item) {
         //TODO enter make offer activity
-        Toast.makeText(this, "onUserMakeOffer: "+item.getRequestId(), Toast.LENGTH_SHORT).show();
+        Intent intent = MakeOfferActivity.getItent(this, mTraveler, item);
+        startActivity(intent);
+//        Toast.makeText(this, "onUserMakeOffer: "+item.getRequestId(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
