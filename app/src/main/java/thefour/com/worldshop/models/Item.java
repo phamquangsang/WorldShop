@@ -1,12 +1,15 @@
 package thefour.com.worldshop.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Quang Quang on 11/17/2016.
  */
 
-public class Item {
+public class Item implements Parcelable {
     private String itemId;
     private String itemUrl;
     private String firstImage;
@@ -73,4 +76,42 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.itemId);
+        dest.writeString(this.itemUrl);
+        dest.writeString(this.firstImage);
+        dest.writeStringList(this.images);
+        dest.writeString(this.name);
+        dest.writeString(this.description);
+        dest.writeDouble(this.price);
+    }
+
+    protected Item(Parcel in) {
+        this.itemId = in.readString();
+        this.itemUrl = in.readString();
+        this.firstImage = in.readString();
+        this.images = in.createStringArrayList();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.price = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel source) {
+            return new Item(source);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }

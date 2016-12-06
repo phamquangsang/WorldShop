@@ -23,8 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.LoginActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:clearTaskOnLaunch="true"
@@ -38,7 +37,15 @@
         <activity
             android:name=".activities.SelectTravelingCityActivity"
             android:label="@string/title_activity_select_travelling"
-            android:noHistory="true"/>
+            android:noHistory="true" />
+        <activity
+            android:name=".activities.MakeOfferActivity"
+            android:label="@string/title_activity_make_offer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.RequestDetailActivity"
+            android:label="@string/title_activity_request_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

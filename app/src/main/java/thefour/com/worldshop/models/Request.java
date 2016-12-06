@@ -1,12 +1,15 @@
 package thefour.com.worldshop.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 
 /**
  * Created by Quang Quang on 11/17/2016.
  */
 
-public class Request {
+public class Request implements Parcelable {
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_INACTIVE = "inactive";//when user de-active request
     public static final String STATUS_COMPLETE = "complete";
@@ -93,4 +96,50 @@ public class Request {
     public void setTime(long time) {
         this.time = time;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.requestId);
+        dest.writeString(this.status);
+        dest.writeDouble(this.reward);
+        dest.writeInt(this.quantity);
+        dest.writeParcelable(this.fromUser, flags);
+        dest.writeParcelable(this.item, flags);
+        dest.writeParcelable(this.deliverTo, flags);
+        dest.writeSerializable(this.offers);
+        dest.writeLong(this.time);
+    }
+
+    public Request() {
+    }
+
+    protected Request(Parcel in) {
+        this.requestId = in.readString();
+        this.status = in.readString();
+        this.reward = in.readDouble();
+        this.quantity = in.readInt();
+        this.fromUser = in.readParcelable(User.class.getClassLoader());
+        this.item = in.readParcelable(Item.class.getClassLoader());
+        this.deliverTo = in.readParcelable(City.class.getClassLoader());
+        this.offers = (HashMap<String, Offer>) in.readSerializable();
+        this.time = in.readLong();
+    }
+
+    public static final Parcelable.Creator<Request> CREATOR = new Parcelable.Creator<Request>() {
+        @Override
+        public Request createFromParcel(Parcel source) {
+            return new Request(source);
+        }
+
+        @Override
+        public Request[] newArray(int size) {
+            return new Request[size];
+        }
+    };
 }

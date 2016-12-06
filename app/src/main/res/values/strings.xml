@@ -29,4 +29,6 @@
     <string name="item_price_format">Item price: $</string>
     <string name="setting_logged_user">logged_user_setting</string>
     <string name="title_activity_select_travelling">Select City</string>
+    <string name="title_activity_make_offer">MakeOfferActivity</string>
+    <string name="title_activity_request_detail">RequestDetailActivity</string>
 </resources>
