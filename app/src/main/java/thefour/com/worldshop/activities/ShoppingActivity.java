@@ -140,7 +140,7 @@ public class ShoppingActivity extends AppCompatActivity {
                     adapter.add(city.getName());
                 }
                 adapter.notifyDataSetChanged();
-                Toast.makeText(ShoppingActivity.this, "load cities completed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ShoppingActivity.this, "load cities completed", Toast.LENGTH_SHORT).show();
             }
 
             @Override

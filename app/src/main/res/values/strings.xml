@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">world shop</string>
+    <string name="app_name">World Shop</string>
     <string name="login_explain">Login to start shopping all over the world</string>
     <string name="message_login_dialog">Please wait...</string>
     <string name="title_login_dialog">Log in</string>
     <string name="app_name_all_caps">WORLD SHOP</string>
     <string name="no_internet_warning">No internet connection available!!</string>
-    <string name="title_activity_home">World Shop</string>
+    <string name="title_activity_home">world shop</string>
     <string name="shop_menu_item">Shop</string>
     <string name="travel_menu_item">Travel</string>
     <string name="title_activity_shopping">shopping</string>
