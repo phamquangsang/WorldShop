@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WORLD SHOP</string>
+    <string name="app_name">world shop</string>
     <string name="login_explain">Login to start shopping all over the world</string>
     <string name="message_login_dialog">Please wait...</string>
     <string name="title_login_dialog">Log in</string>
@@ -8,7 +8,7 @@
     <string name="title_activity_home">World Shop</string>
     <string name="shop_menu_item">Shop</string>
     <string name="travel_menu_item">Travel</string>
-    <string name="title_activity_shopping">SHOPPING</string>
+    <string name="title_activity_shopping">shopping</string>
     <string name="enter_item_link">Enter item link</string>
     <string name="shopping_instruction">Provide us a few details about your item</string>
     <string name="item_price">Item price</string>
@@ -22,13 +22,14 @@
     <string name="upload_picture_image_warning">You have to upload at least one item picture</string>
     <string name="empty_input_warning">This field is required!</string>
     <string name="invalid_item_url_warning">Please enter valid Url</string>
-    <string name="title_activity_traveling">TravelingActivity</string>
+    <string name="title_activity_traveling">all products</string>
     <string name="setting_traveling_city">selected_city</string>
     <string name="menu_item_change_city">Change city</string>
     <string name="make_offer_btn"> Make Offer</string>
-    <string name="item_price_format">Item price: $</string>
+    <string name="item_price_format">$</string>
+    <string name="item_reward_format">Reward: $</string>
     <string name="setting_logged_user">logged_user_setting</string>
-    <string name="title_activity_select_travelling">Select City</string>
+    <string name="title_activity_select_travelling">select city</string>
     <string name="title_activity_make_offer">MakeOfferActivity</string>
     <string name="title_activity_request_detail">RequestDetailActivity</string>
 </resources>

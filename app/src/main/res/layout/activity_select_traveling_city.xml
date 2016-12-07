@@ -11,12 +11,8 @@
         android:orientation="vertical"
         tools:context="thefour.com.worldshop.activities.SelectTravelingCityActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/actionBar_size"
-            android:background="@color/colorPrimary"
-            app:titleTextColor="@android:color/white" />
+        <include layout="@layout/toolbar"
+            android:id="@id/layout_toolbar"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView_cities"

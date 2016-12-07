@@ -28,7 +28,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
     private final List<City> mCities;
     private static final int mLayoutName;
 
-    public static final CitySelectedEvent onCitySelectedEvent;
+    private static final CitySelectedEvent onCitySelectedEvent;
 
     static {
         mLayoutName = R.layout.item_city;
@@ -41,7 +41,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
 
     }
 
-    public List<City> getmCities() {
+    public List<City> getCities() {
         return mCities;
     }
 
@@ -79,11 +79,11 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
     public static final class CitySelectedEvent {
         private City mCity;
 
-        public City getmCity() {
+        public City getCity() {
             return mCity;
         }
 
-        public void setmCity(City mCity) {
+        public void setCity(City mCity) {
             this.mCity = mCity;
         }
     }
@@ -91,7 +91,7 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
     class CityHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ItemCityBinding mBinding;
 
-        public CityHolder(View itemView) {
+        CityHolder(View itemView) {
             super(itemView);
             mBinding = DataBindingUtil.bind(itemView);
             mBinding.imageViewItemCity.setOnClickListener(this);
@@ -102,11 +102,9 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.imageView_item_city:
-                    onCitySelectedEvent.setmCity(mCities.get(getAdapterPosition()));
+                    onCitySelectedEvent.setCity(mCities.get(getAdapterPosition()));
                     EventBus.getDefault().post(onCitySelectedEvent);
                     break;
-                default:
-                    return;
             }
         }
     }

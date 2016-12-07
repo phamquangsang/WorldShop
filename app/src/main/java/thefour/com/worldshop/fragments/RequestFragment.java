@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.adapters.RequestRecyclerViewAdapter;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
@@ -80,7 +81,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new RequestRecyclerViewAdapter(new ArrayList<Request>(), mLoggedUser, mListener);
+            mAdapter = new RequestRecyclerViewAdapter(getActivity(),new ArrayList<Request>(), mLoggedUser, mListener);
             recyclerView.setAdapter(mAdapter);
         }
         return view;

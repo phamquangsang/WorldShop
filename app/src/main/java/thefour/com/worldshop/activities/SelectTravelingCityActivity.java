@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.TypefaceCache;
 import thefour.com.worldshop.Util;
 import thefour.com.worldshop.adapters.CityAdapter;
 import thefour.com.worldshop.api.CityApi;
@@ -37,7 +38,7 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
     private User mTraveler;
     private CityAdapter mAdapter;
     private ArrayList<City> mCities;
-    private ActivitySelectTravelingCityBinding mBiding;
+    private ActivitySelectTravelingCityBinding mBinding;
 
     public static Intent getIntent(Context c, User traveler) {
         Intent i = new Intent(c, SelectTravelingCityActivity.class);
@@ -50,7 +51,7 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTraveler = getIntent().getParcelableExtra(ARG_TRAVELER);
-        mBiding = DataBindingUtil.setContentView(this, R.layout.activity_select_traveling_city);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_select_traveling_city);
         setUpViews();
         loadData();
     }
@@ -69,16 +70,18 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CityAdapter.CitySelectedEvent event) {
-        Log.i(TAG, "onMessageEvent: " + event.getmCity());
-        onUserSelectedCity(event.getmCity());
+        Log.i(TAG, "onMessageEvent: " + event.getCity());
+        onUserSelectedCity(event.getCity());
     }
 
     private void setUpViews() {
-        setSupportActionBar(mBiding.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(mBinding.layoutToolbar.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_select_travelling);
 
-        mBiding.recyclerViewCities.setHasFixedSize(true);
-        mBiding.recyclerViewCities.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerViewCities.setHasFixedSize(true);
+        mBinding.recyclerViewCities.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void loadData() {
@@ -90,7 +93,7 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
                     Log.i(TAG, "onLoadCompleted: " + c.toString());
                 }
                 mAdapter = new CityAdapter(SelectTravelingCityActivity.this, mCities);
-                mBiding.recyclerViewCities.setAdapter(mAdapter);
+                mBinding.recyclerViewCities.setAdapter(mAdapter);
             }
 
             @Override
@@ -105,7 +108,7 @@ public class SelectTravelingCityActivity extends AppCompatActivity {
         getIntent().putExtra(ARG_CITY_RETURN, city);
         setResult(RESULT_OK);
         finish();
-        startActivity(TravelingActivity.getIntent(this, mTraveler, city)
+        startActivity(TravellingActivity.getIntent(this, mTraveler, city)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 //                .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         );

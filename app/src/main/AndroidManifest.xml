@@ -32,7 +32,7 @@
             android:name=".activities.ShoppingActivity"
             android:label="@string/title_activity_shopping" />
         <activity
-            android:name=".activities.TravelingActivity"
+            android:name=".activities.TravellingActivity"
             android:label="@string/title_activity_traveling" />
         <activity
             android:name=".activities.SelectTravelingCityActivity"

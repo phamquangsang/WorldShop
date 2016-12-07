@@ -19,6 +19,18 @@ public class User implements Parcelable {
     private String profileImageUrl;
     private long timeJoined;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", money=" + money +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", timeJoined=" + timeJoined +
+                '}';
+    }
+
     public User() {
     }
 

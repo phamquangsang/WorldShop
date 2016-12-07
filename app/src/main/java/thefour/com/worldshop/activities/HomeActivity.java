@@ -3,10 +3,8 @@ package thefour.com.worldshop.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,10 +49,11 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mBinding.layoutToolbar.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mBinding.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_home);
+
 
         //Load user from sharedPreference faster than firebase
         mLoggedUser = Util.loadLoggedUser(this);
@@ -80,14 +79,6 @@ public class HomeActivity extends AppCompatActivity
                 }
             });
         }
-
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void loadRequest() {
@@ -119,7 +110,7 @@ public class HomeActivity extends AppCompatActivity
                     if(travelTo == null){
                         startActivity(SelectTravelingCityActivity.getIntent(this, mLoggedUser));
                     }else
-                        startActivity(TravelingActivity.getIntent(this, mLoggedUser, travelTo));
+                        startActivity(TravellingActivity.getIntent(this, mLoggedUser, travelTo));
                 }
                 break;
             }

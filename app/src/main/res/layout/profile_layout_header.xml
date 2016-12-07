@@ -21,13 +21,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="@dimen/official_margin_left"
+            android:layout_marginRight="@dimen/official_margin_left"
             android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/imageView_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginLeft="@dimen/official_margin_left"
                 app:srcCompat="@drawable/ic_person_black_48px" />
 
             <LinearLayout
@@ -53,7 +54,6 @@
                     android:layout_marginBottom="4dp"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="4dp"
-                    android:textAllCaps="true"
                     android:textColor="#000000"
                     android:textSize="10sp"
                     tools:text="15 phút trước" />
@@ -61,22 +61,26 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            app:cardElevation="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
+            android:layout_marginLeft="@dimen/official_margin_left"
+            android:layout_marginRight="@dimen/official_margin_left"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/imageView_addition_menu"
+            <Button
+                android:id="@+id/btn_make_offer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/official_margin_left"
-                android:paddingRight="@dimen/official_margin_left"
-                android:paddingTop="@dimen/official_margin_left"
-                app:srcCompat="@drawable/dot_icon" />
+                android:layout_height="36dp"
+                android:background="@color/colorAccent"
+                android:paddingLeft="@dimen/padding_separator"
+                android:paddingRight="@dimen/padding_separator"
+                android:text="@string/make_offer_btn"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
 
-        </LinearLayout>
+        </android.support.v7.widget.CardView>
     </FrameLayout>
 </layout>

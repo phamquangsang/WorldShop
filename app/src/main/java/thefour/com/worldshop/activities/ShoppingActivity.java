@@ -71,11 +71,12 @@ public class ShoppingActivity extends AppCompatActivity {
         mContentBinding = mBinding.contentShoppingContainer;
 
         mLoggedUser = getIntent().getParcelableExtra(ARG_LOGGED_USER);
+
         if (mLoggedUser == null) {
             Toast.makeText(this, "mLoggedUserNull", Toast.LENGTH_SHORT).show();
         }
 
-        setSupportActionBar(mBinding.toolbar);
+        setSupportActionBar(mBinding.layoutToolbar.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         setUpLayout();
@@ -106,7 +107,8 @@ public class ShoppingActivity extends AppCompatActivity {
         //title
         mContentBinding.textViewInstruction.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
         mContentBinding.textViewDeliveryDetail.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
-        mBinding.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_shopping);
 
         //EditText
         mContentBinding.editTextDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));

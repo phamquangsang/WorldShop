@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.TypefaceCache;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.databinding.ActivityTravelingBinding;
 import thefour.com.worldshop.fragments.RequestFragment;
@@ -24,7 +25,7 @@ import thefour.com.worldshop.models.City;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
 
-public class TravelingActivity extends AppCompatActivity
+public class TravellingActivity extends AppCompatActivity
         implements RequestFragment.OnListFragmentInteractionListener {
 
     private static final String ARG_TRAVELER = "arg_traveler";
@@ -34,11 +35,11 @@ public class TravelingActivity extends AppCompatActivity
     private City mCity;
     private ActivityTravelingBinding mBinding;
     private ChildEventListener mListener;
-    private String TAG = TravelingActivity.class.getSimpleName();
+    private String TAG = TravellingActivity.class.getSimpleName();
     private RequestFragment mFragmentList;
 
     public static Intent getIntent(Context c, User traveler, City travelTo) {
-        Intent i = new Intent(c, TravelingActivity.class);
+        Intent i = new Intent(c, TravellingActivity.class);
         i.putExtra(ARG_TRAVELER, traveler);
         i.putExtra(ARG_TRAVEL_TO, travelTo);
         return i;
@@ -53,8 +54,10 @@ public class TravelingActivity extends AppCompatActivity
         mTraveler = getIntent().getParcelableExtra(ARG_TRAVELER);
         mCity = getIntent().getParcelableExtra(ARG_TRAVEL_TO);
 
-        setSupportActionBar(mBinding.toolbar);
-        getSupportActionBar().setTitle(mCity.getName());
+        setSupportActionBar(mBinding.layoutToolbar.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_traveling);
 
         Toast.makeText(this, "city: " + mCity.getName(), Toast.LENGTH_SHORT).show();
 

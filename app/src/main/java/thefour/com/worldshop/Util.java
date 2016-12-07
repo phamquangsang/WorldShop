@@ -55,6 +55,7 @@ public class Util {
     public static @Nullable User loadLoggedUser(Context c){
         String userJson = getSharedPreferences(c).getString(c.getString(R.string.setting_logged_user), null);
         User user = new Gson().fromJson(userJson, User.class);
+
         return user;
     }
 
