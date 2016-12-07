@@ -10,7 +10,7 @@
     <string name="travel_menu_item">Travel</string>
     <string name="title_activity_shopping">shopping</string>
     <string name="enter_item_link">Enter item link</string>
-    <string name="shopping_instruction">Provide us a few details about your item</string>
+    <string name="shopping_instruction">Your item detail</string>
     <string name="item_price">Item price</string>
     <string name="item_description">Item description</string>
     <string name="item_name">Item name</string>

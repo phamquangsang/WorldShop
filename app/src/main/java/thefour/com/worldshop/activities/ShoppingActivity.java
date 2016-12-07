@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -105,28 +104,28 @@ public class ShoppingActivity extends AppCompatActivity {
 
     private void setFonts() {
         //title
-        mContentBinding.textViewInstruction.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
-        mContentBinding.textViewDeliveryDetail.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_REGULAR));
+        mContentBinding.textViewInstruction.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_BOLD));
+        mContentBinding.textViewDeliveryDetail.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_BOLD));
         mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
         mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_shopping);
 
         //EditText
-        mContentBinding.editTextDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.editTextReward.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.editTextDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.editTextReward.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
 
         //Input
-        mContentBinding.inputItemDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemReward.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
-        mContentBinding.inputItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.OPENSANS_LIGHT));
+        mContentBinding.inputItemDeliverTo.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemDescription.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemName.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemPrice.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemQuantity.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemReward.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
+        mContentBinding.inputItemUrl.setTypeface(TypefaceCache.get(this,TypefaceCache.HARMONIA_REGULAR));
 
     }
 

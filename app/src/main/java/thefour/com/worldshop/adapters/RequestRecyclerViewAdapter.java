@@ -1,7 +1,6 @@
 package thefour.com.worldshop.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,10 +61,15 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
         holder.mBinding.itemRequestPrice.setText(price);
         String reward = mActivity.getString(R.string.item_reward_format) + holder.mItem.getReward();
         holder.mBinding.reward.setText(reward);
-        holder.mBinding.itemRequestPrice.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_REGULAR));
-        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_REGULAR));
-        holder.mBinding.requestItemDescription.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_LIGHT));
-        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.OPENSANS_LIGHT));
+        holder.mBinding.itemRequestPrice.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
+        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
+        holder.mBinding.requestItemDescription.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.requestItemDeliverTo.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.reward.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.header.textViewUserName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
+        holder.mBinding.header.textViewTime.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+
 
         //user don't make offer for their own request.
         if(mLoggedUser.getUserId().equalsIgnoreCase(holder.mItem.getFromUser().getUserId())){

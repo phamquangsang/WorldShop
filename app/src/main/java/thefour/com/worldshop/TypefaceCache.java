@@ -9,8 +9,8 @@ import java.util.Hashtable;
  * Created by phatnguyen on 8/28/16.
  */
 public final class TypefaceCache {
-    public static final String OPENSANS_LIGHT = "fonts/OpenSans-Light.ttf";
-    public static final String OPENSANS_REGULAR = "fonts/OpenSans-Regular.ttf";
+    public static final String HARMONIA_REGULAR = "fonts/HarmoniaSansProCyr-Regular.otf";
+    public static final String HARMONIA_BOLD = "fonts/HarmoniaSansProCyr-Bold.otf";
     public static final String TITLE_FONT = "fonts/norwester.otf";
 
     private static final Hashtable<String, Typeface> CACHE = new Hashtable<String, Typeface>();

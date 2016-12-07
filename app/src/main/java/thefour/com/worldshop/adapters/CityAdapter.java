@@ -57,8 +57,8 @@ public final class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityHold
         if (city != null) {
             //text
             holder.mBinding.setCity(mCities.get(position));
-            holder.mBinding.textViewItemCity.setTypeface(TypefaceCache.get(mActivity, TypefaceCache.OPENSANS_REGULAR));
-            holder.mBinding.textViewItemCityCountry.setTypeface(TypefaceCache.get(mActivity, TypefaceCache.OPENSANS_LIGHT));
+            holder.mBinding.textViewItemCity.setTypeface(TypefaceCache.get(mActivity, TypefaceCache.HARMONIA_BOLD));
+            holder.mBinding.textViewItemCityCountry.setTypeface(TypefaceCache.get(mActivity, TypefaceCache.HARMONIA_REGULAR));
             //image
             String url = (city.getImage() == null ? City.getDefaulUrl() : city.getImage());
             Glide.with(mActivity)

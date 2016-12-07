@@ -6,6 +6,6 @@
     <color name="colorGray">#54000000</color>
     <color name="colorTitle">#CCffffff</color>
     <color name="colorContent">#B3ffffff</color>
-    <color name="colorBottomTransparency">#B3000000</color>
+    <color name="colorBottomTransparency">#E6000000</color>
 
 </resources>
