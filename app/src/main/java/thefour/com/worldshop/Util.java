@@ -3,9 +3,13 @@ package thefour.com.worldshop;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.text.format.DateUtils;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import thefour.com.worldshop.models.City;
 import thefour.com.worldshop.models.User;
@@ -64,4 +68,28 @@ public class Util {
                 .putString(c.getString(R.string.setting_logged_user), new Gson().toJson(user)).apply();
     }
 
+    public static boolean validateCity(String text, @Nullable TextInputLayout inputLayout, List<City> cities) {
+        for (int i = 0; i < cities.size(); i++) {
+            if (text.trim().equalsIgnoreCase(cities.get(i).getName())) {
+                if (inputLayout != null)
+                    inputLayout.setError(null);
+                return true;
+            }
+        }
+        if (inputLayout != null) {
+            inputLayout.setError("Unsupported City!!");
+        }
+        return false;
+    }
+
+    public static boolean validateEmptyInput(Context c, EditText text, @Nullable TextInputLayout inputLayout) {
+        if (text.getText().toString().isEmpty()) {
+            if (inputLayout != null)
+                inputLayout.setError(c.getString(R.string.empty_input_warning));
+            return false;
+        }
+        if (inputLayout != null)
+            inputLayout.setError(null);
+        return true;
+    }
 }

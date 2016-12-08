@@ -32,4 +32,7 @@
     <string name="title_activity_select_travelling">select city</string>
     <string name="title_activity_make_offer">MakeOfferActivity</string>
     <string name="title_activity_request_detail">RequestDetailActivity</string>
+    <string name="deliver_from">\"Deliver from</string>
+    <string name="deliver_fee">Deliver fee</string>
+    <string name="offer_note">Note</string>
 </resources>

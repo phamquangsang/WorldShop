@@ -33,6 +33,7 @@ import java.util.List;
 
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.TypefaceCache;
+import thefour.com.worldshop.Util;
 import thefour.com.worldshop.adapters.ItemImageAdapter;
 import thefour.com.worldshop.api.CityApi;
 import thefour.com.worldshop.api.RequestApi;
@@ -255,13 +256,13 @@ public class ShoppingActivity extends AppCompatActivity {
         boolean result = true;
         ContentShoppingBinding binding = mContentBinding;
         result = validateUrl(binding.editTextItemUrl.getText().toString(), binding.inputItemUrl) && result;
-        result = validateEmptyInput(binding.editTextItemDescription, binding.inputItemDescription) && result;
-        result = validateEmptyInput(binding.editTextItemName, binding.inputItemName) && result;
-        result = validateEmptyInput(binding.editTextItemPrice, binding.inputItemPrice) && result;
-        result = validateEmptyInput(binding.editTextItemQuantity, binding.inputItemQuantity) && result;
-        result = validateEmptyInput(binding.editTextReward, binding.inputItemReward) && result;
+        result = Util.validateEmptyInput(this, binding.editTextItemDescription, binding.inputItemDescription) && result;
+        result = Util.validateEmptyInput(this, binding.editTextItemName, binding.inputItemName) && result;
+        result = Util.validateEmptyInput(this, binding.editTextItemPrice, binding.inputItemPrice) && result;
+        result = Util.validateEmptyInput(this, binding.editTextItemQuantity, binding.inputItemQuantity) && result;
+        result = Util.validateEmptyInput(this, binding.editTextReward, binding.inputItemReward) && result;
         result = validateItemImage() && result;
-        result = validateCity(binding.editTextDeliverTo.getText().toString(), binding.inputItemDeliverTo) && result;
+        result = Util.validateCity(binding.editTextDeliverTo.getText().toString(), binding.inputItemDeliverTo, mCities) && result;
         return result;
     }
 
@@ -287,30 +288,8 @@ public class ShoppingActivity extends AppCompatActivity {
         return result;
     }
 
-    private boolean validateEmptyInput(EditText text, @Nullable TextInputLayout inputLayout) {
-        if (text.getText().toString().isEmpty()) {
-            if (inputLayout != null)
-                inputLayout.setError(getString(R.string.empty_input_warning));
-            return false;
-        }
-        if (inputLayout != null)
-            inputLayout.setError(null);
-        return true;
-    }
 
-    private boolean validateCity(String text, @Nullable TextInputLayout inputLayout) {
-        for (int i = 0; i < mCities.size(); i++) {
-            if (text.trim().equalsIgnoreCase(mCities.get(i).getName())) {
-                if (inputLayout != null)
-                    inputLayout.setError(null);
-                return true;
-            }
-        }
-        if (inputLayout != null) {
-            inputLayout.setError("Unsupported City!!");
-        }
-        return false;
-    }
+
 
     private void onSendingRequest() {
         //Todo sent request

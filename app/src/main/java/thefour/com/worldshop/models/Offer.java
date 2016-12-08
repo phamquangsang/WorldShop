@@ -1,5 +1,12 @@
 package thefour.com.worldshop.models;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+
+import thefour.com.worldshop.R;
+
 /**
  * Created by Quang Quang on 11/18/2016.
  */
@@ -106,4 +113,6 @@ public class Offer {
     public void setNote(String note) {
         this.note = note;
     }
+
+
 }

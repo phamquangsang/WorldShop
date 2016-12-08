@@ -57,6 +57,12 @@ public class HomeActivity extends AppCompatActivity
 
         //Load user from sharedPreference faster than firebase
         mLoggedUser = Util.loadLoggedUser(this);
+
+        mRequestFragment = RequestFragment.newInstance(1,mLoggedUser);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, mRequestFragment)
+                .commit();
+        loadRequest();
         
         String userId = getIntent().getStringExtra(ARG_USER_ID);
         if (userId != null) {
@@ -66,11 +72,7 @@ public class HomeActivity extends AppCompatActivity
                     if (user != null){
                         mLoggedUser = user;
                         Util.saveLoggedUser(HomeActivity.this ,user);
-                        mRequestFragment = RequestFragment.newInstance(1,mLoggedUser);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, mRequestFragment)
-                                .commit();
-                        loadRequest();
+
                     }
                     else {
                         Toast.makeText(HomeActivity.this, "Please Login again!", Toast.LENGTH_SHORT).show();

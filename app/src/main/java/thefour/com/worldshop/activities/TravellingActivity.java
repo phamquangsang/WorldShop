@@ -54,10 +54,10 @@ public class TravellingActivity extends AppCompatActivity
         mTraveler = getIntent().getParcelableExtra(ARG_TRAVELER);
         mCity = getIntent().getParcelableExtra(ARG_TRAVEL_TO);
 
-        setSupportActionBar(mBinding.layoutToolbar.toolbar);
+        setSupportActionBar(mBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mBinding.layoutToolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
-        mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_traveling);
+        mBinding.toolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
+        mBinding.toolbar.textViewTitle.setText(R.string.title_activity_traveling);
 
         Toast.makeText(this, "city: " + mCity.getName(), Toast.LENGTH_SHORT).show();
 
@@ -146,7 +146,7 @@ public class TravellingActivity extends AppCompatActivity
     @Override
     public void onUserMakeOffer(Request item) {
         //TODO enter make offer activity
-        Intent intent = MakeOfferActivity.getItent(this, mTraveler, item);
+        Intent intent = MakeOfferActivity.getIntent(this, mTraveler, item);
         startActivity(intent);
 //        Toast.makeText(this, "onUserMakeOffer: "+item.getRequestId(), Toast.LENGTH_SHORT).show();
     }
