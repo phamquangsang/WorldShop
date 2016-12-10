@@ -37,8 +37,13 @@
     "deliverTo":{
       "cityId":"HCMCITY",
       "name":"Ho Chi Minh City",
-    },
-    "offers":{
+    }
+  }
+
+}
+
+"requestOffers":{
+  "requestId":{
       "offerId":{
         "offerId":"unique offer id",
         "requestId":"unique requestId",
@@ -70,9 +75,8 @@
         "deliveryDate":1471499548133,
         "note":"this is some note from traveler"
       }
-    }
-  }
 
+  }
 }
 
 "offers":{

@@ -17,6 +17,7 @@ public class Contracts {
     public static final String USER_OFFERS_LOCATION = "userOffers";
     public static final String ITEMS_LOCATION = "items";
     public static final String CITIES_LOCATION = "cities";
+    public static final String REQUEST_OFFERS_LOCATION = "requestOffers";
 
 
     public static final String PRO_CITY_ID = "cityId";
@@ -39,7 +40,6 @@ public class Contracts {
     public static final String PRO_REQUEST_FROM_USER = "fromUser";
     public static final String PRO_REQUEST_ITEM = "item";
     public static final String PRO_REQUEST_DELIVER_TO = "deliverTo";
-    public static final String PRO_REQUEST_OFFERS = "offers";
 
     public static final String PRO_OFFER_ID = "offerId";
     public static final String PRO_OFFER_REQUEST_ID = "requestId";

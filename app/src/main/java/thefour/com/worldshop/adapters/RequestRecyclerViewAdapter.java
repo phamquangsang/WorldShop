@@ -73,9 +73,10 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
 
         //user don't make offer for their own request.
         if(mLoggedUser.getUserId().equalsIgnoreCase(holder.mItem.getFromUser().getUserId())){
-            holder.mBinding.header.btnMakeOffer.setVisibility(View.INVISIBLE);
+            ((View)(holder.mBinding.header.btnMakeOffer.getParent())).setVisibility(View.INVISIBLE);
         }else {
-            holder.mBinding.header.btnMakeOffer.setVisibility(View.VISIBLE);
+            View parrentView = (View) holder.mBinding.header.btnMakeOffer.getParent();
+            parrentView.setVisibility(View.VISIBLE);
         }
 
         setOnClickListener(holder);

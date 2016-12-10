@@ -1,6 +1,8 @@
 package thefour.com.worldshop.models;
 
 import android.databinding.BindingAdapter;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -11,7 +13,7 @@ import thefour.com.worldshop.R;
  * Created by Quang Quang on 11/18/2016.
  */
 
-public class Offer {
+public class Offer implements Parcelable {
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_ACCEPTED = "accepted";
     private String offerId;
@@ -115,4 +117,52 @@ public class Offer {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.offerId);
+        dest.writeString(this.requestId);
+        dest.writeLong(this.time);
+        dest.writeLong(this.lastTimeEdited);
+        dest.writeDouble(this.fee);
+        dest.writeParcelable(this.deliverFrom, flags);
+        dest.writeString(this.status);
+        dest.writeParcelable(this.fromUser, flags);
+        dest.writeParcelable(this.item, flags);
+        dest.writeLong(this.deliveryDate);
+        dest.writeString(this.note);
+    }
+
+    public Offer() {
+    }
+
+    protected Offer(Parcel in) {
+        this.offerId = in.readString();
+        this.requestId = in.readString();
+        this.time = in.readLong();
+        this.lastTimeEdited = in.readLong();
+        this.fee = in.readDouble();
+        this.deliverFrom = in.readParcelable(City.class.getClassLoader());
+        this.status = in.readString();
+        this.fromUser = in.readParcelable(User.class.getClassLoader());
+        this.item = in.readParcelable(Item.class.getClassLoader());
+        this.deliveryDate = in.readLong();
+        this.note = in.readString();
+    }
+
+    public static final Parcelable.Creator<Offer> CREATOR = new Parcelable.Creator<Offer>() {
+        @Override
+        public Offer createFromParcel(Parcel source) {
+            return new Offer(source);
+        }
+
+        @Override
+        public Offer[] newArray(int size) {
+            return new Offer[size];
+        }
+    };
 }

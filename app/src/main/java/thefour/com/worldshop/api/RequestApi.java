@@ -34,6 +34,17 @@ public class RequestApi {
         ref.updateChildren(childUpdates, completionListener);
     }
 
+    public static void updateRequest(Request request, DatabaseReference.CompletionListener completionListener) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        String key = request.getRequestId();
+        request.setRequestId(key);
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/" + Contracts.REQUESTS_LOCATION + "/" + key, request);
+        childUpdates.put("/" + Contracts.USER_REQUESTS_LOCATION + "/" + request.getFromUser().getUserId() + "/" + key, request);
+        childUpdates.put("/" + Contracts.CITY_REQUESTS_LOCATION + "/" + request.getDeliverTo().getCityId() + "/" + key, request);
+        ref.updateChildren(childUpdates, completionListener);
+    }
+
     public interface RequestEventListener{
         abstract void onRequestAdded(Request request, String previousCityId);
         abstract void onRequestChanged(Request newRequest, String previousCityId);

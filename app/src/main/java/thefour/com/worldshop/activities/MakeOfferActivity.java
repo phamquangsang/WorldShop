@@ -1,3 +1,8 @@
+/*
+// Make new offer or edit existing offer
+//If Offer passed in parameter has offerId => 'update'
+//else 'make new offer'
+*/
 package thefour.com.worldshop.activities;
 
 import android.content.Context;
@@ -5,6 +10,8 @@ import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Process;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestFutureTarget;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
@@ -34,17 +42,22 @@ import thefour.com.worldshop.models.User;
 public class MakeOfferActivity extends AppCompatActivity {
     private static final String ARG_USER = "arg_user";
     private static final String ARG_REQUEST = "arg_request";
+    private static final String ARG_UPDATED_OFFER = "arg_offer";
     private static final String TAG = MakeOfferActivity.class.getSimpleName();
+
     private ActivityMakeOfferBinding mBinding;
     private User mUser;
     private Request mRequest;
+    private Offer mOffer;
     private ArrayList<City> mCities;
 
 
-    public static Intent getIntent(Context c, User user, Request request) {
+
+    public static Intent getIntent(Context c, User user, Request request,@Nullable Offer updatedOffer) {
         Intent i = new Intent(c, MakeOfferActivity.class);
         i.putExtra(ARG_USER, user);
         i.putExtra(ARG_REQUEST, request);
+        i.putExtra(ARG_UPDATED_OFFER, updatedOffer);
         return i;
     }
 
@@ -63,7 +76,7 @@ public class MakeOfferActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_make_offer);
         setSupportActionBar(mBinding.toolbar);
 
-
+        mOffer = getIntent().getParcelableExtra(ARG_UPDATED_OFFER);
         mUser = getIntent().getParcelableExtra(ARG_USER);
         mRequest = getIntent().getParcelableExtra(ARG_REQUEST);
         mCities = new ArrayList<>();
@@ -139,12 +152,15 @@ public class MakeOfferActivity extends AppCompatActivity {
         return c.getTime().getTime();
     }
 
+
     private void setupView() {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mRequest.getItem().getName());
         mBinding.setRequest(mRequest);
         mBinding.container.setRequest(mRequest);
-        mBinding.container.editTextFee.setText(String.valueOf(0.05d * mRequest.getItem().getPrice() * mRequest.getQuantity()));
+        mBinding.container.editTextFee.setText
+                (String.valueOf(0.05d * mRequest.getItem().getPrice() * mRequest.getQuantity()));
+
         Glide.with(this)
                 .load(mRequest.getItem().getFirstImage())
                 .placeholder(R.drawable.placeholder)
@@ -154,7 +170,8 @@ public class MakeOfferActivity extends AppCompatActivity {
     }
 
     private void setUpAutoCompleteCities() {
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_expandable_list_item_1);
         CityApi.loadCities(new CityApi.OnLoadCompleted() {
             @Override
             public void onLoadCompleted(ArrayList<City> cities) {
@@ -177,24 +194,24 @@ public class MakeOfferActivity extends AppCompatActivity {
     }
 
     private void sendOffer() {
-        Offer offer = new Offer();
         String cityInput = mBinding.container.editTextDeliverFrom.getText().toString();
         for (City city :
                 mCities) {
             if (city.getName().equalsIgnoreCase(cityInput)) {
-                offer.setDeliverFrom(city);
+                mOffer.setDeliverFrom(city);
                 break;
             }
         }
-        offer.setDeliveryDate(getDeliverDateInMilis());
-        offer.setFromUser(mUser);
-        offer.setItem(mRequest.getItem());
-        offer.setFee(Double.valueOf(mBinding.container.editTextFee.getText().toString()));
-        offer.setStatus(Offer.STATUS_PENDING);
-        offer.setLastTimeEdited(System.currentTimeMillis());
-        offer.setTime(System.currentTimeMillis());
-        offer.setNote(mBinding.container.editTextNote.getText().toString());
-        OfferApi.makeOffer(getApplicationContext(), mRequest, mUser, offer, new DatabaseReference.CompletionListener() {
+        mOffer.setDeliveryDate(getDeliverDateInMilis());
+        mOffer.setFromUser(mUser);
+        mOffer.setItem(mRequest.getItem());
+        mOffer.setFee(Double.valueOf(mBinding.container.editTextFee.getText().toString()));
+        mOffer.setStatus(Offer.STATUS_PENDING);
+        mOffer.setLastTimeEdited(System.currentTimeMillis());
+        mOffer.setTime(System.currentTimeMillis());
+        mOffer.setNote(mBinding.container.editTextNote.getText().toString());
+
+        DatabaseReference.CompletionListener completeListener = new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError != null) {
@@ -203,6 +220,12 @@ public class MakeOfferActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Make offer succeed!", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        };
+        if(mOffer.getOfferId()==null){//make new offer
+            OfferApi.makeOffer(mRequest, mOffer, completeListener);
+        }else{//update offer
+            OfferApi.updateOffer(mRequest, mOffer, completeListener);
+        }
+
     }
 }

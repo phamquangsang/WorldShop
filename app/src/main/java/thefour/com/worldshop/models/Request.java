@@ -1,15 +1,20 @@
 package thefour.com.worldshop.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
 
+import thefour.com.worldshop.BR;
+
 /**
  * Created by Quang Quang on 11/17/2016.
  */
 
-public class Request implements Parcelable {
+public class Request extends BaseObservable implements Parcelable{
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_INACTIVE = "inactive";//when user de-active request
     public static final String STATUS_COMPLETE = "complete";
@@ -25,6 +30,7 @@ public class Request implements Parcelable {
     private HashMap<String, Offer> offers;
     private long time;
 
+    @Bindable
     public String getRequestId() {
         return requestId;
     }
@@ -33,6 +39,7 @@ public class Request implements Parcelable {
         this.requestId = requestId;
     }
 
+    @Bindable
     public String getStatus() {
         return status;
     }
@@ -41,6 +48,7 @@ public class Request implements Parcelable {
         this.status = status;
     }
 
+    @Bindable
     public double getReward() {
         return reward;
     }
@@ -49,12 +57,14 @@ public class Request implements Parcelable {
         this.reward = reward;
     }
 
+    @Bindable
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        notifyPropertyChanged(BR.quantity);
     }
 
     public User getFromUser() {
@@ -142,4 +152,6 @@ public class Request implements Parcelable {
             return new Request[size];
         }
     };
+
+
 }

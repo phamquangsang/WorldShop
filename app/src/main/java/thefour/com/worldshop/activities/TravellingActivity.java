@@ -146,7 +146,7 @@ public class TravellingActivity extends AppCompatActivity
     @Override
     public void onUserMakeOffer(Request item) {
         //TODO enter make offer activity
-        Intent intent = MakeOfferActivity.getIntent(this, mTraveler, item);
+        Intent intent = MakeOfferActivity.getIntent(this, mTraveler, item, null);
         startActivity(intent);
 //        Toast.makeText(this, "onUserMakeOffer: "+item.getRequestId(), Toast.LENGTH_SHORT).show();
     }
