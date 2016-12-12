@@ -2,6 +2,9 @@ package thefour.com.worldshop.api;
 
 import android.support.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -78,5 +81,50 @@ public class OfferApi {
         childUpdate.put("/" + Contracts.REQUEST_OFFERS_LOCATION + "/" + request.getRequestId() + "/" + key, offer);
         childUpdate.put("/" + Contracts.USER_OFFERS_LOCATION + "/" + offer.getFromUser().getUserId() + "/" + key, offer);
         ref.updateChildren(childUpdate, listener);
+    }
+
+    public interface OfferEventListener{
+        abstract void onOfferAdded(Offer offer, String previousCityId);
+        abstract void onOfferChanged(Offer newOffer, String previousCityId);
+        abstract void onOfferRemoved(Offer offer);
+        abstract void onOfferMoved(Offer offer, String s);
+        abstract void onError(DatabaseError error);
+    }
+
+    public static ChildEventListener loadOffers(String requestId, final OfferEventListener listener) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref = ref.child(Contracts.REQUEST_OFFERS_LOCATION).child(requestId);
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferAdded(offer, s);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferChanged(offer, s);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferRemoved(offer);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferMoved(offer, s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onError(databaseError);
+            }
+        };
+        ref.addChildEventListener(childEventListener);
+        return childEventListener;
     }
 }

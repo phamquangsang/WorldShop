@@ -35,4 +35,7 @@
     <string name="deliver_from">\"Deliver from</string>
     <string name="deliver_fee">Deliver fee</string>
     <string name="offer_note">Note</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="title_activity_conversation">ConversationActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>
