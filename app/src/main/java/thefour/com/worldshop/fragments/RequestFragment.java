@@ -95,7 +95,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnListOfferInteractListener");
         }
     }
 

@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 worldShopUser.setName(user.getDisplayName());
                                 worldShopUser.setProfileImageUrl(user.getPhotoUrl().toString());
                                 worldShopUser.setTimeJoined(System.currentTimeMillis());
+                                worldShopUser.setMoney(100000);
                                 UserApi.createNewUser(worldShopUser, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

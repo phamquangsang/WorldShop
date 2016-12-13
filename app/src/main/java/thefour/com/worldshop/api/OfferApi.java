@@ -10,10 +10,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.models.Offer;
 import thefour.com.worldshop.models.Request;
+import thefour.com.worldshop.models.User;
 
 /**
  * Created by Quang Quang on 12/8/2016.
@@ -21,6 +23,9 @@ import thefour.com.worldshop.models.Request;
 
 public class OfferApi {
     public static void makeOffer(Request request, Offer offer, @Nullable final DatabaseReference.CompletionListener listener) {
+        if(request.getFromUser().getUserId().equals(offer.getFromUser().getUserId())){
+            throw new IllegalStateException("user can not make offer for their own request");
+        }
         Map<String, Object> childUpdate = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         String key = ref.child(Contracts.REQUEST_OFFERS_LOCATION).child(request.getRequestId())
@@ -32,13 +37,22 @@ public class OfferApi {
         ref.updateChildren(childUpdate, listener);
     }
 
-    public static void acceptOffer(Request request, Offer offer, @Nullable final DatabaseReference.CompletionListener listener) {
+    public static void acceptOffer(final Request request, final Offer offer, User loggedUser, @Nullable final DatabaseReference.CompletionListener listener) {
         Map<String, Object> childUpdate = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         String key = request.getRequestId();
         if (key == null) {
             throw new NullPointerException("Request ID is null");
         }
+        if(request.getStatus().equals(Request.STATUS_OFFER_ACCEPTED)){
+            throw new IllegalStateException("Request can only accept one offer");
+        }
+        if(!loggedUser.getUserId().equals(request.getFromUser().getUserId())){
+            throw new IllegalStateException(loggedUser.getName()+" with UID: "
+                    + loggedUser.getUserId() + " - don't have permission to accept offer");
+        }
+
+
         offer.setStatus(Offer.STATUS_ACCEPTED);
         childUpdate.put("/" + Contracts.OFFERS_LOCATION + "/" + key, offer);
         childUpdate.put("/" + Contracts.REQUEST_OFFERS_LOCATION + "/" + request.getRequestId() + "/" + key, offer);
@@ -49,13 +63,22 @@ public class OfferApi {
         childUpdate.put("/" + Contracts.REQUESTS_LOCATION + "/" + key, request);
         childUpdate.put("/" + Contracts.USER_REQUESTS_LOCATION + "/" + request.getFromUser().getUserId() + "/" + key, request);
         childUpdate.put("/" + Contracts.CITY_REQUESTS_LOCATION + "/" + request.getDeliverTo().getCityId() + "/" + key, request);
-
-        ref.updateChildren(childUpdate, listener);
+        //TODO minus amount of money (total request price + traveler award)
+        ref.updateChildren(childUpdate, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                double money = request.getQuantity() * request.getItem().getPrice() + offer.getFee();
+                UserApi.withdrawal(money + money * Contracts.SERVICE_FEE, request.getFromUser(), listener);
+            }
+        });
     }
 
     public static void deleteOffer(Request request,
                                    Offer offer,
                                    @Nullable final DatabaseReference.CompletionListener listener) {
+        if (offer.getStatus().equals(Offer.STATUS_ACCEPTED)) {
+            throw new IllegalStateException("You have to cancel accepted offer before delete it");
+        }
         Map<String, Object> childUpdate = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         String key = request.getRequestId();
@@ -71,6 +94,9 @@ public class OfferApi {
     public static void updateOffer(Request request,
                                    Offer offer,
                                    @Nullable final DatabaseReference.CompletionListener listener) {
+        if (offer.getStatus().equals(Offer.STATUS_ACCEPTED)) {
+            throw new IllegalStateException("You have to cancel accepted offer before update it");
+        }
         Map<String, Object> childUpdate = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         String key = request.getRequestId();
@@ -84,11 +110,11 @@ public class OfferApi {
     }
 
     public interface OfferEventListener{
-        abstract void onOfferAdded(Offer offer, String previousCityId);
-        abstract void onOfferChanged(Offer newOffer, String previousCityId);
-        abstract void onOfferRemoved(Offer offer);
-        abstract void onOfferMoved(Offer offer, String s);
-        abstract void onError(DatabaseError error);
+        void onOfferAdded(Offer offer, String previousCityId);
+        void onOfferChanged(Offer newOffer, String previousCityId);
+        void onOfferRemoved(Offer offer);
+        void onOfferMoved(Offer offer, String s);
+        void onError(DatabaseError error);
     }
 
     public static ChildEventListener loadOffers(String requestId, final OfferEventListener listener) {
@@ -126,5 +152,13 @@ public class OfferApi {
         };
         ref.addChildEventListener(childEventListener);
         return childEventListener;
+    }
+
+    public static void cancelOffer(){
+
+    }
+
+    public static void offerCompleted(){
+
     }
 }

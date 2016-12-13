@@ -77,6 +77,9 @@ public class MakeOfferActivity extends AppCompatActivity {
         setSupportActionBar(mBinding.toolbar);
 
         mOffer = getIntent().getParcelableExtra(ARG_UPDATED_OFFER);
+        if(mOffer == null){
+            mOffer = new Offer();
+        }
         mUser = getIntent().getParcelableExtra(ARG_USER);
         mRequest = getIntent().getParcelableExtra(ARG_REQUEST);
         mCities = new ArrayList<>();

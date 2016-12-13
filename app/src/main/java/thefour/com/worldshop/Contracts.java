@@ -8,6 +8,7 @@ public class Contracts {
 
     private Contracts(){}
 
+    public static final double SERVICE_FEE = 0.1d;
 
     public static final String USERS_LOCATION = "users";
     public static final String REQUESTS_LOCATION = "requests";

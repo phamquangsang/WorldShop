@@ -37,6 +37,7 @@ public class Request extends BaseObservable implements Parcelable{
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+        notifyPropertyChanged(BR.requestId);
     }
 
     @Bindable
@@ -46,6 +47,7 @@ public class Request extends BaseObservable implements Parcelable{
 
     public void setStatus(String status) {
         this.status = status;
+        notifyPropertyChanged(BR.status);
     }
 
     @Bindable
@@ -55,6 +57,7 @@ public class Request extends BaseObservable implements Parcelable{
 
     public void setReward(double reward) {
         this.reward = reward;
+        notifyPropertyChanged(BR.reward);
     }
 
     @Bindable
@@ -66,7 +69,7 @@ public class Request extends BaseObservable implements Parcelable{
         this.quantity = quantity;
         notifyPropertyChanged(BR.quantity);
     }
-
+    @Bindable
     public User getFromUser() {
         return fromUser;
     }
@@ -74,7 +77,7 @@ public class Request extends BaseObservable implements Parcelable{
     public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
     }
-
+    @Bindable
     public Item getItem() {
         return item;
     }
@@ -82,13 +85,14 @@ public class Request extends BaseObservable implements Parcelable{
     public void setItem(Item item) {
         this.item = item;
     }
-
+    @Bindable
     public City getDeliverTo() {
         return deliverTo;
     }
 
     public void setDeliverTo(City deliverTo) {
         this.deliverTo = deliverTo;
+        notifyChange();
     }
 
     public HashMap<String, Offer> getOffers() {
@@ -98,7 +102,7 @@ public class Request extends BaseObservable implements Parcelable{
     public void setOffers(HashMap<String, Offer> offers) {
         this.offers = offers;
     }
-
+    @Bindable
     public long getTime() {
         return time;
     }
@@ -154,4 +158,16 @@ public class Request extends BaseObservable implements Parcelable{
     };
 
 
+    public void setRequest(Request request) {
+        this.requestId = request.getRequestId();
+        this.status = request.getStatus();
+        this.reward = request.getReward();
+        this.quantity = request.getQuantity();
+        this.fromUser = request.getFromUser();
+        this.item = request.getItem();
+        this.deliverTo = request.deliverTo;
+        this.offers = request.getOffers();
+        this.time = request.getTime();
+        notifyChange();
+    }
 }

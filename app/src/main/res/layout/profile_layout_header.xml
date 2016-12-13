@@ -77,7 +77,7 @@
                 android:background="@color/colorAccent"
                 android:paddingLeft="@dimen/padding_separator"
                 android:paddingRight="@dimen/padding_separator"
-                android:text="@string/make_offer_btn"
+                android:text="@string/btn_make_offer"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 

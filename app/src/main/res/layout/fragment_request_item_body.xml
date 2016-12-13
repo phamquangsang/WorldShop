@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="request"
+            type="thefour.com.worldshop.models.Request" />
+        <import type="thefour.com.worldshop.Util" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_size">
+
+            <ImageView
+                android:id="@+id/requestItem_ImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/example_image_item" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:background="@drawable/item_gradient"
+                android:orientation="vertical" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/requestItem_deliverTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:lineSpacingExtra="@dimen/line_spacing"
+                    android:textColor="@color/colorContent"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:background="#66ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/requestItem_itemName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:text="@{request.item.name}"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/itemRequest_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="center_vertical|end"
+                        android:maxLines="1"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/official_margin_top"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/requestItem_description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="3"
+                        android:text="@{request.item.description}"
+                        android:textColor="@color/colorContent"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/reward"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="center_vertical|end"
+                        android:textColor="@color/colorContent"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+    </LinearLayout>
+</layout>

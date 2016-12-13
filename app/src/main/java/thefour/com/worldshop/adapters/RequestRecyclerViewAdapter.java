@@ -49,24 +49,24 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
         Glide.with(mActivity)
                 .load(holder.mItem.getItem().getFirstImage())
                 .placeholder(R.drawable.cicor_progessbar)
-                .into(holder.mBinding.requestItemImageView);
+                .into(holder.mBinding.body.requestItemImageView);
         Glide.with(mActivity)
                 .load(holder.mItem.getFromUser().getProfileImageUrl())
                 .placeholder(R.drawable.cicor_progessbar)
                 .into(holder.mBinding.header.imageViewProfile);
 
         String deliverTo = "Deliver to "+holder.mItem.getDeliverTo().getName();
-        holder.mBinding.requestItemDeliverTo.setText(deliverTo);
+        holder.mBinding.body.requestItemDeliverTo.setText(deliverTo);
         String price = mActivity.getString(R.string.item_price_format)+holder.mItem.getItem().getPrice();
-        holder.mBinding.itemRequestPrice.setText(price);
+        holder.mBinding.body.itemRequestPrice.setText(price);
         String reward = mActivity.getString(R.string.item_reward_format) + holder.mItem.getReward();
-        holder.mBinding.reward.setText(reward);
-        holder.mBinding.itemRequestPrice.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
-        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
-        holder.mBinding.requestItemDescription.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
-        holder.mBinding.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
-        holder.mBinding.requestItemDeliverTo.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
-        holder.mBinding.reward.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.body.reward.setText(reward);
+        holder.mBinding.body.itemRequestPrice.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
+        holder.mBinding.body.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
+        holder.mBinding.body.requestItemDescription.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.body.requestItemItemName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.body.requestItemDeliverTo.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
+        holder.mBinding.body.reward.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
         holder.mBinding.header.textViewUserName.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_BOLD));
         holder.mBinding.header.textViewTime.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
 
@@ -139,7 +139,7 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
     public void removeRequest(Request request){
         for (Request item :
                 mValues) {
-            if(request.getRequestId().equalsIgnoreCase(item.getRequestId())){
+            if(request.getRequestId().equals(item.getRequestId())){
                 mValues.remove(item);
                 notifyDataSetChanged();
             }
@@ -149,7 +149,7 @@ public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecy
     public void updateRequest(Request request){
         for (Request item :
                 mValues) {
-            if(request.getRequestId().equalsIgnoreCase(item.getRequestId())){
+            if(request.getRequestId().equals(item.getRequestId())){
                 mValues.set(mValues.indexOf(item),request);
                 notifyDataSetChanged();
             }

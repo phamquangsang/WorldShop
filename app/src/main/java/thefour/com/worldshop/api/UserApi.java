@@ -7,7 +7,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import thefour.com.worldshop.Contracts;
@@ -77,4 +79,49 @@ public class UserApi {
             }
         });
     }
+
+    public static void withdrawal(final double amount, User user, @Nullable final DatabaseReference.CompletionListener listener){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child(Contracts.USERS_LOCATION).child(user.getUserId());
+        userRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                User u = mutableData.getValue(User.class);
+                if(u == null){
+                    return Transaction.success(mutableData);
+                }
+                u.setMoney(u.getMoney() - amount);
+                mutableData.setValue(u);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                listener.onComplete(databaseError, null);
+            }
+        });
+    }
+
+    public static void recharge(final double amount, User user, @Nullable final DatabaseReference.CompletionListener listener){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference()
+                .child(Contracts.USERS_LOCATION).child(user.getUserId());
+        userRef.runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                User u = mutableData.getValue(User.class);
+                if(u == null){
+                    return Transaction.success(mutableData);
+                }
+                u.setMoney(u.getMoney() + amount);
+                mutableData.setValue(u);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                listener.onComplete(databaseError, null);
+            }
+        });
+    }
+
 }

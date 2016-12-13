@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mRequestFragment)
                 .commit();
-        loadRequest();
+
         
         String userId = getIntent().getStringExtra(ARG_USER_ID);
         if (userId != null) {
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity
                     if (user != null){
                         mLoggedUser = user;
                         Util.saveLoggedUser(HomeActivity.this ,user);
-
+                        loadRequest();
                     }
                     else {
                         Toast.makeText(HomeActivity.this, "Please Login again!", Toast.LENGTH_SHORT).show();

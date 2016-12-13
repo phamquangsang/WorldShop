@@ -1,10 +1,13 @@
 package thefour.com.worldshop.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.bumptech.glide.Glide;
 
 import thefour.com.worldshop.R;
@@ -13,7 +16,7 @@ import thefour.com.worldshop.R;
  * Created by Quang Quang on 11/18/2016.
  */
 
-public class Offer implements Parcelable {
+public class Offer extends BaseObservable implements Parcelable  {
     public static final String STATUS_PENDING = "pending";
     public static final String STATUS_ACCEPTED = "accepted";
     private String offerId;
@@ -28,92 +31,114 @@ public class Offer implements Parcelable {
     private long deliveryDate;
     private String note;
 
+    @Bindable
     public String getOfferId() {
         return offerId;
     }
 
     public void setOfferId(String offerId) {
         this.offerId = offerId;
+        notifyChange();
     }
 
+    @Bindable
     public String getRequestId() {
         return requestId;
     }
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+        notifyChange();
     }
 
+    @Bindable
     public long getTime() {
         return time;
     }
 
     public void setTime(long time) {
         this.time = time;
+        notifyChange();
     }
 
+    @Bindable
     public long getLastTimeEdited() {
         return lastTimeEdited;
     }
 
     public void setLastTimeEdited(long lastTimeEdited) {
         this.lastTimeEdited = lastTimeEdited;
+        notifyChange();
     }
 
+    @Bindable
     public double getFee() {
         return fee;
     }
 
     public void setFee(double fee) {
         this.fee = fee;
+        notifyChange();
     }
 
+    @Bindable
     public City getDeliverFrom() {
         return deliverFrom;
     }
 
     public void setDeliverFrom(City deliverFrom) {
         this.deliverFrom = deliverFrom;
+        notifyChange();
     }
 
+    @Bindable
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+        notifyChange();
     }
 
+    @Bindable
     public User getFromUser() {
         return fromUser;
     }
 
     public void setFromUser(User fromUser) {
         this.fromUser = fromUser;
+        notifyChange();
     }
 
+    @Bindable
     public Item getItem() {
         return item;
     }
 
     public void setItem(Item item) {
         this.item = item;
+        notifyChange();
     }
 
+    @Bindable
     public long getDeliveryDate() {
         return deliveryDate;
     }
 
     public void setDeliveryDate(long deliveryDate) {
         this.deliveryDate = deliveryDate;
+        notifyChange();
     }
 
+    @Bindable
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note;
+        notifyChange();
     }
 
 

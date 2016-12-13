@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="request"
+            type="thefour.com.worldshop.models.Request"/>
+        <variable
+            name="offer"
+            type="thefour.com.worldshop.models.Offer" />
+        <variable
+            name="loggedUser"
+            type="thefour.com.worldshop.models.User"/>
+
+        <import type="thefour.com.worldshop.Util"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView_profile"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:srcCompat="@drawable/ic_person_black_48px" />
+
+                <TextView
+                    android:text="@{offer.fromUser.name}"
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageView_profile"
+                    android:layout_toRightOf="@+id/imageView_profile"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    tools:text="Quang Quang" />
+
+                <TextView
+                    android:id="@+id/tvOfferTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/tvUserName"
+                    android:layout_toRightOf="@+id/tvUserName"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@{Util.relativeTimeFormat(offer.time)}"
+                    tools:text="offered 4 days ago" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="@{String.valueOf(offer.fee)}"
+                    tools:text="$12" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/deliver_from"
+                    android:textColor="@color/colorGray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/deliverFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{offer.deliverFrom.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    tools:text="Ho Chi Minh City" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/arrival_date"
+                    android:textColor="@color/colorGray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/deliverDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{Util.relativeTimeFormat(offer.deliveryDate)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    tools:text="22 December" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnContainer"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{request.status.equals(request.STATUS_PENDING) ? View.VISIBLE : View.GONE}"
+                android:gravity="end">
+
+                <Button
+                    android:visibility="@{loggedUser.userId.equals(request.fromUser.userId)? View.VISIBLE : View.GONE}"
+                    android:id="@+id/btnAccept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Accept Offer"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" />
+
+                <Button
+                    android:visibility="@{offer.fromUser.userId.equals(loggedUser.userId)?View.VISIBLE:View.GONE}"
+                    android:id="@+id/btnUpdateOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" />
+
+                <Button
+                    android:visibility="@{offer.fromUser.userId.equals(loggedUser.userId)?View.VISIBLE:View.GONE}"
+                    android:id="@+id/btnDeleteOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnAcceptedContainer"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{request.status.equals(request.STATUS_OFFER_ACCEPTED)? View.VISIBLE : View.GONE}"
+                android:gravity="end">
+                <Button
+                    android:visibility="@{offer.fromUser.userId.equals(loggedUser.userId)?View.VISIBLE:View.GONE}"
+                    android:id="@+id/btnCancelOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" />
+                <Button
+                    android:id="@+id/btnCompleteOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Complete"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:visibility="@{(loggedUser.userId.equals(request.fromUser.userId) &amp;&amp; offer.status.equals(offer.STATUS_ACCEPTED))? View.VISIBLE : View.GONE}"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+</layout>
+
