@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:background="@color/white_page"
         app:layoutManager="LinearLayoutManager"
         tools:context="thefour.com.worldshop.fragments.OfferListFragment"
         tools:listitem="@layout/fragment_offer_item" />

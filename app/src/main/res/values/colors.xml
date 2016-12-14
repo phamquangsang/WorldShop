@@ -7,5 +7,6 @@
     <color name="colorTitle">#CCffffff</color>
     <color name="colorContent">#B3ffffff</color>
     <color name="colorBottomTransparency">#E6000000</color>
+    <color name="white_page">#F1F3F2</color>
 
 </resources>

@@ -1,10 +1,14 @@
 package thefour.com.worldshop.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +51,10 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
         holder.mBinding.setOffer(holder.mOffer);
         holder.mBinding.setRequest(mRequest);
         holder.mBinding.setLoggedUser(mLoggedUser);
+        Glide.with(holder.mView.getContext())
+                .load(holder.mOffer.getFromUser().getProfileImageUrl())
+//                .placeholder(R.drawable.ic_person_black_48px)
+                .into(holder.mBinding.imageViewProfile);
     }
 
     @Override
