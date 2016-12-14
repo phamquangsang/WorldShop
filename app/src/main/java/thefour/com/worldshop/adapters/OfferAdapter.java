@@ -47,13 +47,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
         holder.mBinding.setOffer(holder.mOffer);
         holder.mBinding.setRequest(mRequest);
         holder.mBinding.setLoggedUser(mLoggedUser);
-
-//        if(mRequest.getStatus().equals(Request.STATUS_PENDING)){
-//            holder.mBinding.btnCompleteOffer.setVisibility(View.GONE);
-//            holder.mBinding.btnCancelOffer.setVisibility(View.GONE);
-//        }
-
-
     }
 
     @Override
@@ -61,7 +54,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
         return mOffers.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public FragmentOfferItemBinding mBinding;
         public Offer mOffer;
@@ -70,8 +63,34 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             super(view);
             mView = view;
             mBinding = DataBindingUtil.bind(view);
+            mBinding.btnAccept.setOnClickListener(this);
+            mBinding.btnCancelOffer.setOnClickListener(this);
+            mBinding.btnUpdateOffer.setOnClickListener(this);
+            mBinding.btnDeleteOffer.setOnClickListener(this);
+            mBinding.btnCompleteOffer.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            Offer offer = mOffers.get(getAdapterPosition());
+            switch (v.getId()){
+                case R.id.btnAccept:
+                    mListener.onAcceptClick(offer);
+                    break;
+                case R.id.btnCancelOffer:
+                    mListener.onCancelOffer(offer);
+                    break;
+                case R.id.btnUpdateOffer:
+                    mListener.onUpdateClick(offer);
+                    break;
+                case R.id.btnDeleteOffer:
+                    mListener.onDeleteClick(offer);
+                    break;
+                case R.id.btnCompleteOffer:
+                    mListener.onCompleteOffer(offer);
+                    break;
+            }
+        }
     }
 
     public void addOffer(Offer offer){
@@ -80,18 +99,19 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
     }
 
     public void removeOffer(Offer offer){
-        for (Offer item :
-                mOffers) {
+        for (int i=0; i< mOffers.size();++i){
+            Offer item = mOffers.get(i);
             if(offer.getOfferId().equals(item.getOfferId())){
                 mOffers.remove(item);
                 notifyDataSetChanged();
+                return;
             }
         }
     }
 
     public void updateOffer(Offer offer){
-        for (Offer item :
-                mOffers) {
+        for (int i=0; i< mOffers.size();++i){
+            Offer item = mOffers.get(i);
             if(offer.getOfferId().equals(item.getOfferId())){
                 mOffers.set(mOffers.indexOf(item),offer);
                 notifyDataSetChanged();

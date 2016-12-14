@@ -115,6 +115,8 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
                 .child(Contracts.REQUESTS_LOCATION)
                 .child(mRequest.getRequestId());
         ref.addValueEventListener(mRequestListener);
+
+
     }
 
 

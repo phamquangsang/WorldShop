@@ -1,5 +1,7 @@
 package thefour.com.worldshop.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,7 +13,7 @@ import java.util.HashMap;
  * Created by Quang Quang on 11/17/2016.
  */
 
-public class User implements Parcelable {
+public class User extends BaseObservable implements Parcelable {
     private String userId;
     private double money;
     private String name;
@@ -34,53 +36,64 @@ public class User implements Parcelable {
     public User() {
     }
 
-
+    @Bindable
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+        notifyChange();
     }
 
     public void setMoney(double money) {
         this.money = money;
+        notifyChange();
     }
 
+    @Bindable
     public double getMoney() {
         return money;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyChange();
     }
 
+    @Bindable
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+        notifyChange();
     }
 
+    @Bindable
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+        notifyChange();
     }
 
+    @Bindable
     public long getTimeJoined() {
         return timeJoined;
     }
 
     public void setTimeJoined(long timeJoined) {
         this.timeJoined = timeJoined;
+        notifyChange();
     }
 
     @Override

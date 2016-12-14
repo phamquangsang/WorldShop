@@ -8,6 +8,7 @@
             name="request"
             type="thefour.com.worldshop.models.Request" />
         <import type="thefour.com.worldshop.Util" />
+        <import type="android.view.View"/>
     </data>
 
     <LinearLayout
@@ -24,6 +25,12 @@
             layout="@layout/fragment_request_item"
             bind:request="@{request}"/>
 
+        <TextView
+            tools:text="Request is pending"
+            android:id="@+id/tvRequestStatus"
+            android:text="@{request.status}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ImageButton
             android:id="@+id/btn_message"
             android:layout_width="wrap_content"
@@ -32,6 +39,7 @@
             android:contentDescription="@string/btn_message_me"/>
 
         <Button
+            android:visibility="@{request.status.equals(request.STATUS_PENDING)?View.VISIBLE:View.GONE}"
             android:text="@string/btn_make_offer"
             android:id="@+id/btn_make_offer"
             android:layout_width="wrap_content"

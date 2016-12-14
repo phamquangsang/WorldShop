@@ -11,11 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.NetworkUtil;
@@ -38,6 +41,7 @@ public class RequestDetailActivity extends AppCompatActivity
     private ActivityRequestDetailBinding mBinding;
     private OfferListFragment mFragment;
     private ChildEventListener mEventListener;
+    private ValueEventListener mRequestListener;
 
 
     //TODO|| to see request in detail, All item images, All offer (pending, accepted),
@@ -66,10 +70,12 @@ public class RequestDetailActivity extends AppCompatActivity
         mRequest = getIntent().getParcelableExtra(ARG_REQUEST);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
+        mBinding.content.setRequest(mRequest);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         setupView();
+        Toast.makeText(this, "request:status = "+mRequest.getStatus(), Toast.LENGTH_SHORT).show();
     }
 
     private void setupView() {
@@ -94,6 +100,21 @@ public class RequestDetailActivity extends AppCompatActivity
                 .commit();
 
         mEventListener = OfferApi.loadOffers(mRequest.getRequestId(),mFragment);
+        mRequestListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mRequest.setRequest(dataSnapshot.getValue(Request.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        FirebaseDatabase.getInstance().getReference()
+                .child(Contracts.REQUESTS_LOCATION).child(mRequest.getRequestId())
+                .addValueEventListener(mRequestListener);
+
     }
 
     private boolean isLoggedUser(User user){
@@ -122,8 +143,6 @@ public class RequestDetailActivity extends AppCompatActivity
             Snackbar.make(mBinding.getRoot(),R.string.no_internet_warning, Snackbar.LENGTH_LONG).show();
             return;
         }
-        mRequest.setStatus(Request.STATUS_OFFER_ACCEPTED);
-        mFragment.getAdapter().notifyDataSetChanged();
         OfferApi.acceptOffer(mRequest, item, mLoggedUser, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -146,6 +165,11 @@ public class RequestDetailActivity extends AppCompatActivity
                 .child(Contracts.REQUEST_OFFERS_LOCATION)
                 .child(mRequest.getRequestId())
                 .removeEventListener(mEventListener);
+        if(mRequestListener!=null){
+            FirebaseDatabase.getInstance().getReference()
+                    .child(Contracts.REQUESTS_LOCATION).child(mRequest.getRequestId())
+                    .removeEventListener(mRequestListener);
+        }
         super.onDestroy();
     }
 
@@ -165,11 +189,29 @@ public class RequestDetailActivity extends AppCompatActivity
 
     @Override
     public void onCancelOffer(Offer item) {
-
+        if(!NetworkUtil.isNetworkAvailable(this)){
+            Snackbar.make(mBinding.getRoot(),R.string.no_internet_warning, Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        OfferApi.undoAccepOffer(mRequest, item, mLoggedUser, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: cancel offer completed!");
+            }
+        });
     }
 
     @Override
     public void onCompleteOffer(Offer item) {
-
+        if(!NetworkUtil.isNetworkAvailable(this)){
+            Snackbar.make(mBinding.getRoot(),R.string.no_internet_warning, Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        OfferApi.offerCompleted(mRequest, item, mLoggedUser, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Toast.makeText(RequestDetailActivity.this, "Request Succeed!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

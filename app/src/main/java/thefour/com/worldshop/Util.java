@@ -32,6 +32,7 @@ public class Util {
         return relativeTime;
     }
 
+
     public static String encodeEmail(String email){
         return email.replace(".",",");
     }

@@ -79,6 +79,13 @@ public class MakeOfferActivity extends AppCompatActivity {
         mOffer = getIntent().getParcelableExtra(ARG_UPDATED_OFFER);
         if(mOffer == null){
             mOffer = new Offer();
+        }else{
+            mBinding.container.editTextFee.setText(String.valueOf(mOffer.getFee()));
+            Calendar ca = Calendar.getInstance();
+            ca.setTimeInMillis(mOffer.getDeliveryDate());
+            mBinding.container.datePicker.init(ca.get(Calendar.YEAR),ca.get(Calendar.MONTH), ca.get(Calendar.DATE),null);
+            mBinding.container.editTextDeliverFrom.setText(mOffer.getDeliverFrom().getName());
+            mBinding.container.editTextNote.setText(mOffer.getNote());
         }
         mUser = getIntent().getParcelableExtra(ARG_USER);
         mRequest = getIntent().getParcelableExtra(ARG_REQUEST);

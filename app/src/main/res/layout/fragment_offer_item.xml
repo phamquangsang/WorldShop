@@ -75,7 +75,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    android:text="@{String.valueOf(offer.fee)}"
+                    android:text="@{offer.getFeeInString()}"
                     tools:text="$12" />
             </RelativeLayout>
 
@@ -190,7 +190,7 @@
                 android:visibility="@{request.status.equals(request.STATUS_OFFER_ACCEPTED)? View.VISIBLE : View.GONE}"
                 android:gravity="end">
                 <Button
-                    android:visibility="@{offer.fromUser.userId.equals(loggedUser.userId)?View.VISIBLE:View.GONE}"
+                    android:visibility="@{offer.fromUser.userId.equals(loggedUser.userId) &amp;&amp; offer.status.equals(offer.STATUS_ACCEPTED) ?View.VISIBLE:View.GONE}"
                     android:id="@+id/btnCancelOffer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -76,6 +76,10 @@ public class Offer extends BaseObservable implements Parcelable  {
         return fee;
     }
 
+    public String getFeeInString(){
+        return "$"+getFee();
+    }
+
     public void setFee(double fee) {
         this.fee = fee;
         notifyChange();
