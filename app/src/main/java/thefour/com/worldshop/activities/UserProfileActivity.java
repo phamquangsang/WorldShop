@@ -55,10 +55,9 @@ public class UserProfileActivity extends AppCompatActivity implements RequestFra
         mUserProfile = getIntent().getParcelableExtra(ARG_PROFILE_USER);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mBinding.toolbar);
+        getSupportActionBar().setTitle(mUserProfile.getName());
 
         mRequestFragment = RequestFragment.newInstance(1, mLoggedUser.getUserId());
 
@@ -66,12 +65,19 @@ public class UserProfileActivity extends AppCompatActivity implements RequestFra
                 .replace(R.id.latestUserRequestContainer, mRequestFragment)
                 .commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        mBinding.content.tvViewAllRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = UserViewAllRequestActivity.getIntent(UserProfileActivity.this, mUserProfile, mLoggedUser);
+                startActivity(i);
             }
         });
     }
@@ -79,7 +85,8 @@ public class UserProfileActivity extends AppCompatActivity implements RequestFra
 
     @Override
     public void onListFragmentInteraction(Request item) {
-
+        Intent i = RequestDetailActivity.getIntent(this, item, mLoggedUser);
+        startActivity(i);
     }
 
     @Override

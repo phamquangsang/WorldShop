@@ -33,7 +33,7 @@
                 android:id="@+id/imageView_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                app:imageUrl="@{loggedUser.profileImageUrl}"
+                app:imageUrl="@{request.fromUser.profileImageUrl}"
                 app:placeholder="@{@drawable/ic_person_black_48px}"
                 tools:srcCompat="@drawable/ic_person_black_48px" />
 

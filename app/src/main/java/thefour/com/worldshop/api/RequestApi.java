@@ -97,7 +97,7 @@ public class RequestApi {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.USER_REQUESTS_LOCATION).child(user.getUserId());
         Query query = ref.orderByChild(Contracts.PRO_REQUEST_ID);
-        if(limitedSize!=0){
+        if(limitedSize>0){
             query = query.limitToLast(limitedSize);
         }
         final ChildEventListener listener = new ChildEventListener() {

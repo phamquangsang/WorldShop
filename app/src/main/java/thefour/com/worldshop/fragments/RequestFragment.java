@@ -35,7 +35,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_LOGGED_USER_ID = "arg_logged_user_id";
+    private static final String ARG_USER_ID = "arg_logged_user_id";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -55,11 +55,11 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RequestFragment newInstance(int columnCount, String loggedUserId) {
+    public static RequestFragment newInstance(int columnCount, String userid) {
         RequestFragment fragment = new RequestFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putString(ARG_LOGGED_USER_ID, loggedUserId);
+        args.putString(ARG_USER_ID, userid);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +71,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mLoggedUser = new User();
-            mLoggedUserId = getArguments().getString(ARG_LOGGED_USER_ID);
+            mLoggedUserId = getArguments().getString(ARG_USER_ID);
         }
     }
 
