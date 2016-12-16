@@ -8,13 +8,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 
 import thefour.com.worldshop.BR;
+import thefour.com.worldshop.R;
 
 /**
  * Created by Quang Quang on 11/17/2016.
@@ -185,5 +188,21 @@ public class Request extends BaseObservable implements Parcelable{
             Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);
         }
 
+    }
+
+    @BindingAdapter("bind:requestStatus")
+    public static void getRequestStatus(TextView tv, Request request){
+        if(request== null || request.getStatus()==null) {
+            return;
+        }
+        if(request.getStatus().equals(Request.STATUS_PENDING)){
+            tv.setText(R.string.request_status_pending);
+        }else if(request.getStatus().equals(Request.STATUS_OFFER_ACCEPTED)){
+            tv.setText(R.string.request_status_offer_acepted);
+        }else if(request.getStatus().equals(Request.STATUS_COMPLETE)){
+            tv.setText(R.string.request_status_completed);
+        }else{
+            tv.setText(R.string.request_status_unknown);
+        }
     }
 }

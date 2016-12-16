@@ -1,5 +1,6 @@
 package thefour.com.worldshop.api;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -16,6 +17,7 @@ import java.util.Map;
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.models.City;
 import thefour.com.worldshop.models.Request;
+import thefour.com.worldshop.models.User;
 
 /**
  * Created by Quang Quang on 11/24/2016.
@@ -88,6 +90,46 @@ public class RequestApi {
 
         ref.addChildEventListener(listener);
 //        pendingRequest.addChildEventListener(listener);
+        return listener;
+    }
+
+    public static ChildEventListener loadLatestUserRequest(User user, int limitedSize, final RequestEventListener eventListener){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref = ref.child(Contracts.USER_REQUESTS_LOCATION).child(user.getUserId());
+        Query query = ref.orderByChild(Contracts.PRO_REQUEST_ID);
+        if(limitedSize!=0){
+            query = query.limitToLast(limitedSize);
+        }
+        final ChildEventListener listener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.i(TAG, "onChildAdded: "+dataSnapshot.toString());
+                eventListener.onRequestAdded(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestChanged(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                eventListener.onRequestRemoved(dataSnapshot.getValue(Request.class));
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestMoved(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                eventListener.onError(databaseError);
+            }
+
+        };
+
+        query.addChildEventListener(listener);
         return listener;
     }
 

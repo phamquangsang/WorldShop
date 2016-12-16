@@ -4,6 +4,9 @@
 
     <data>
         <variable
+            name="loggedUser"
+            type="thefour.com.worldshop.models.User"/>
+        <variable
             name="request"
             type="thefour.com.worldshop.models.Request" />
         <import type="thefour.com.worldshop.Util" />
@@ -25,12 +28,14 @@
             <include
                 android:id="@+id/header"
                 layout="@layout/profile_layout_header"
-                bind:request="@{request}" />
+                bind:request="@{request}"
+                bind:loggedUser="@{loggedUser}"/>
 
             <include
                 android:id="@+id/body"
                 layout="@layout/fragment_request_item_body"
                 bind:request="@{request}" />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

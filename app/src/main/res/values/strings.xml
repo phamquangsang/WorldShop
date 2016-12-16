@@ -43,4 +43,11 @@
     <string name="accepted">Accepted</string>
     <string name="accept_offer">Accept Offer</string>
     <string name="sample_lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries...</string>
+    <string name="your_requests">Your Requests</string>
+    <string name="quantity">Quantity</string>
+    <string name="status">Status</string>
+    <string name="request_status_pending">Pending</string>
+    <string name="request_status_offer_acepted">Delivering</string>
+    <string name="request_status_completed">Completed</string>
+    <string name="request_status_unknown">Unknown</string>
 </resources>

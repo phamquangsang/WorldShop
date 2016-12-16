@@ -153,6 +153,8 @@ public class TravellingActivity extends AppCompatActivity
     public void onUserProfileClick(Request item) {
         //TODO enter profile activity
         Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
+        Intent i = UserProfileActivity.getIntent(this, mTraveler, item.getFromUser());
+        startActivity(i);
     }
 
     @Override

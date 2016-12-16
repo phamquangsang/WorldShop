@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:fontFamily="sans-serif-condensed"
-                    android:hint="@string/item_price"
+                    android:hint="@string/quantity"
                     android:inputType="number"
                     android:maxLines="1"
                     android:text="@string/default_quantity_number"

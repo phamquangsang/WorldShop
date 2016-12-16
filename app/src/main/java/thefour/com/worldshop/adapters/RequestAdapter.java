@@ -45,15 +45,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mBinding.setRequest(holder.mItem);
+        holder.mBinding.setLoggedUser(mLoggedUser);
         holder.mBinding.header.textViewTime.setText(Util.relativeTimeFormat(holder.mItem.getTime()));
-        Glide.with(mActivity)
-                .load(holder.mItem.getItem().getFirstImage())
-                .placeholder(R.drawable.cicor_progessbar)
-                .into(holder.mBinding.body.requestItemImageView);
-        Glide.with(mActivity)
-                .load(holder.mItem.getFromUser().getProfileImageUrl())
-                .placeholder(R.drawable.cicor_progessbar)
-                .into(holder.mBinding.header.imageViewProfile);
+
 
         String deliverTo = "Deliver to "+holder.mItem.getDeliverTo().getName();
         holder.mBinding.body.requestItemDeliverTo.setText(deliverTo);
@@ -71,13 +65,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.mBinding.header.textViewTime.setTypeface(TypefaceCache.get(mActivity,TypefaceCache.HARMONIA_REGULAR));
 
 
-        //user don't make offer for their own request.
-        if(mLoggedUser.getUserId().equalsIgnoreCase(holder.mItem.getFromUser().getUserId())){
-            ((View)(holder.mBinding.header.btnMakeOffer.getParent())).setVisibility(View.INVISIBLE);
-        }else {
-            View parrentView = (View) holder.mBinding.header.btnMakeOffer.getParent();
-            parrentView.setVisibility(View.VISIBLE);
-        }
 
         setOnClickListener(holder);
     }

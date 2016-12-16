@@ -191,4 +191,12 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
                 .child(Contracts.USERS_LOCATION).child(mLoggedUserId)
                 .addValueEventListener(mUserListener);
     }
+
+    public RequestAdapter getAdapter() {
+        return mAdapter;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
 }

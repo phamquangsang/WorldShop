@@ -8,6 +8,10 @@
         <variable
             name="request"
             type="thefour.com.worldshop.models.Request" />
+        <variable
+            name="loggedUser"
+            type="thefour.com.worldshop.models.User"/>
+        <import type="android.view.View"/>
     </data>
 
     <FrameLayout
@@ -29,7 +33,9 @@
                 android:id="@+id/imageView_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                app:srcCompat="@drawable/ic_person_black_48px" />
+                app:imageUrl="@{loggedUser.profileImageUrl}"
+                app:placeholder="@{@drawable/ic_person_black_48px}"
+                tools:srcCompat="@drawable/ic_person_black_48px" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,7 +74,8 @@
             android:layout_gravity="center_vertical|right"
             android:layout_marginLeft="@dimen/official_margin_left"
             android:layout_marginRight="@dimen/official_margin_left"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="@{loggedUser.userId.equals(request.fromUser.userId)?View.INVISIBLE:View.VISIBLE}">
 
             <Button
                 android:id="@+id/btn_make_offer"

@@ -1,16 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_user_profile"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="thefour.com.worldshop.activities.UserProfileActivity"
-    tools:showIn="@layout/activity_user_profile">
+    xmlns:tools="http://schemas.android.com/tools">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/content_user_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="thefour.com.worldshop.activities.UserProfileActivity"
+            tools:showIn="@layout/activity_user_profile">
+
+            <TextView
+                android:layout_marginBottom="@dimen/spacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/your_requests"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <FrameLayout
+                android:id="@+id/latestUserRequestContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_margin="@dimen/spacing"
+                android:textAlignment="center"
+                android:padding="@dimen/spacing"
+                android:id="@+id/tvViewAllRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="View ALl Request..."
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/double_spacing"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>
