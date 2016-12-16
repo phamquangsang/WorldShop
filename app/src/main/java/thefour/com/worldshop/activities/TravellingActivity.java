@@ -33,7 +33,6 @@ public class TravellingActivity extends AppCompatActivity
     private final int REQUEST_CODE_CHANGE_CITY = 1;
     private User mTraveler;
     private City mCity;
-    private ActivityTravelingBinding mBinding;
     private ChildEventListener mListener;
     private String TAG = TravellingActivity.class.getSimpleName();
     private RequestFragment mFragmentList;
@@ -49,7 +48,7 @@ public class TravellingActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate: ");
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_traveling);
+        ActivityTravelingBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_traveling);
 
         mTraveler = getIntent().getParcelableExtra(ARG_TRAVELER);
         mCity = getIntent().getParcelableExtra(ARG_TRAVEL_TO);
@@ -67,10 +66,9 @@ public class TravellingActivity extends AppCompatActivity
         }
 
 
-        mFragmentList = RequestFragment.newInstance(1, mTraveler);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, mFragmentList).commit();
-
-        loadRequest();
+        mFragmentList = RequestFragment.newInstance(1, mTraveler.getUserId());
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, mFragmentList).commit();
 
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +123,9 @@ public class TravellingActivity extends AppCompatActivity
         }else{
             setIntent(intent);
             mCity = newCity;
-            loadRequest();
             getSupportActionBar().setTitle(mCity.getName());
             mFragmentList.clearData();
+            loadRequest();
         }
 
 
@@ -155,5 +153,10 @@ public class TravellingActivity extends AppCompatActivity
     public void onUserProfileClick(Request item) {
         //TODO enter profile activity
         Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onListFragmentCreated() {
+        loadRequest();
     }
 }

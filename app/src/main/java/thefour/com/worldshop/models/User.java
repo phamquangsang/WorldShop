@@ -131,4 +131,16 @@ public class User extends BaseObservable implements Parcelable {
             return new User[size];
         }
     };
+
+    //call this setUser(newUserValue) to notify all view that listener to this Object
+    //to update new data
+    public void setUser(User user) {
+        setUserId(user.getUserId());
+        setMoney(user.getMoney());
+        setName(user.getName());
+        setEmail(user.getEmail());
+        setProfileImageUrl(user.getProfileImageUrl());
+        setTimeJoined(user.getTimeJoined());
+        notifyChange();
+    }
 }

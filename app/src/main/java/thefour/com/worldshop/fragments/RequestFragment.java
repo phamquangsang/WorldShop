@@ -11,12 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
-import thefour.com.worldshop.adapters.RequestRecyclerViewAdapter;
+import thefour.com.worldshop.adapters.RequestAdapter;
 import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
@@ -31,13 +35,16 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String ARG_LOGGED_USER = "arg_logged_uesr";
+    private static final String ARG_LOGGED_USER_ID = "arg_logged_user_id";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    private RequestRecyclerViewAdapter mAdapter;
+    private RequestAdapter mAdapter;
     private String TAG = RequestFragment.class.getSimpleName();
     private User mLoggedUser;
+    private String mLoggedUserId;
+    private ValueEventListener mUserListener;
+    private RecyclerView mRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -48,11 +55,11 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static RequestFragment newInstance(int columnCount, User loggedUser) {
+    public static RequestFragment newInstance(int columnCount, String loggedUserId) {
         RequestFragment fragment = new RequestFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
-        args.putParcelable(ARG_LOGGED_USER, loggedUser);
+        args.putString(ARG_LOGGED_USER_ID, loggedUserId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,7 +70,8 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            mLoggedUser = getArguments().getParcelable(ARG_LOGGED_USER);
+            mLoggedUser = new User();
+            mLoggedUserId = getArguments().getString(ARG_LOGGED_USER_ID);
         }
     }
 
@@ -75,15 +83,14 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new RequestRecyclerViewAdapter(getActivity(),new ArrayList<Request>(), mLoggedUser, mListener);
-            recyclerView.setAdapter(mAdapter);
         }
+        loadLoggedUser();
         return view;
     }
 
@@ -103,6 +110,11 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        if(mUserListener!=null){
+            FirebaseDatabase.getInstance().getReference()
+                    .child(Contracts.USERS_LOCATION).child(mLoggedUser.getUserId())
+                    .removeEventListener(mUserListener);
+        }
     }
 
     @Override
@@ -145,10 +157,38 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
         void onListFragmentInteraction(Request item);
         void onUserMakeOffer(Request item);
         void onUserProfileClick(Request item);
+        void onListFragmentCreated();
     }
 
     public void clearData(){
         mAdapter.getValues().clear();
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void loadLoggedUser(){
+        mUserListener = new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if (user != null){
+                    mLoggedUser = new User();
+                    mLoggedUser.setUser(user);
+                    mAdapter = new RequestAdapter(getActivity(),new ArrayList<Request>(), mLoggedUser, mListener);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mListener.onListFragmentCreated();
+                }
+                else {
+                    throw new IllegalStateException("userId not found exception");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: load user error", databaseError.toException());
+            }
+        };
+        FirebaseDatabase.getInstance().getReference()
+                .child(Contracts.USERS_LOCATION).child(mLoggedUserId)
+                .addValueEventListener(mUserListener);
     }
 }

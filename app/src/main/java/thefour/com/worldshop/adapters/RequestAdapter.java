@@ -21,13 +21,13 @@ import thefour.com.worldshop.models.User;
 import java.util.List;
 
 
-public class RequestRecyclerViewAdapter extends RecyclerView.Adapter<RequestRecyclerViewAdapter.ViewHolder> {
+public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     private final Activity mActivity;
     private final List<Request> mValues;
     private final RequestFragment.OnListFragmentInteractionListener mListener;
     private final User mLoggedUser;
 
-    public RequestRecyclerViewAdapter(Activity activity,List<Request> items, User loggedUser, RequestFragment.OnListFragmentInteractionListener listener) {
+    public RequestAdapter(Activity activity, List<Request> items, User loggedUser, RequestFragment.OnListFragmentInteractionListener listener) {
         mActivity = activity;
         mValues = items;
         mListener = listener;

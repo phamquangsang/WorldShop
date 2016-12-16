@@ -39,6 +39,8 @@
                 android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    app:imageUrl="@{offer.fromUser.profileImageUrl}"
+                    app:placeholder="@{@drawable/ic_person_black_48px}"
                     tools:src="@drawable/example_image_item"
                     android:id="@+id/imageView_profile"
                     android:layout_width="45dp"

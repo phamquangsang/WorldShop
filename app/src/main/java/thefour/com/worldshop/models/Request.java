@@ -2,9 +2,15 @@ package thefour.com.worldshop.models;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
 import android.databinding.Observable;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.HashMap;
 
@@ -169,5 +175,15 @@ public class Request extends BaseObservable implements Parcelable{
         this.offers = request.getOffers();
         this.time = request.getTime();
         notifyChange();
+    }
+
+    @BindingAdapter(value = {"bind:imageUrl", "bind:placeholder"}, requireAll = false)
+    public static void loadImage(ImageView imageView, String url, Drawable placeHolder) {
+        if (url == null) {
+            imageView.setImageDrawable(placeHolder);
+        } else {
+            Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);
+        }
+
     }
 }

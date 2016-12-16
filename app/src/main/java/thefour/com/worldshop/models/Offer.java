@@ -3,6 +3,7 @@ package thefour.com.worldshop.models;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
@@ -194,4 +195,14 @@ public class Offer extends BaseObservable implements Parcelable  {
             return new Offer[size];
         }
     };
+
+    @BindingAdapter(value = {"bind:imageUrl", "bind:placeholder"}, requireAll = false)
+    public static void loadImage(ImageView imageView, String url, Drawable placeHolder) {
+        if (url == null) {
+            imageView.setImageDrawable(placeHolder);
+        } else {
+            Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);
+        }
+
+    }
 }

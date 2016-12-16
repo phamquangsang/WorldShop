@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
@@ -55,6 +56,7 @@ public class RequestApi {
     public static ChildEventListener loadRequestInCity(City city, final RequestEventListener eventListener){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.CITY_REQUESTS_LOCATION).child(city.getCityId());
+//        Query pendingRequest = ref.orderByChild(Contracts.PRO_REQUEST_STATUS).equalTo(Request.STATUS_PENDING);
         final ChildEventListener listener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -85,6 +87,7 @@ public class RequestApi {
         };
 
         ref.addChildEventListener(listener);
+//        pendingRequest.addChildEventListener(listener);
         return listener;
     }
 

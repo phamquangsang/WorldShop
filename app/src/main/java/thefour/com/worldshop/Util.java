@@ -2,11 +2,15 @@ package thefour.com.worldshop;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.databinding.BindingAdapter;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -93,4 +97,6 @@ public class Util {
             inputLayout.setError(null);
         return true;
     }
+
+
 }

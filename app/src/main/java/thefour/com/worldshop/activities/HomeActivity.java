@@ -8,15 +8,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
@@ -34,10 +37,13 @@ public class HomeActivity extends AppCompatActivity
         implements RequestFragment.OnListFragmentInteractionListener{
 
     private static final String ARG_USER_ID = "arg_user_id";
-    private User mLoggedUser;
+    private static final String TAG = HomeActivity.class.getSimpleName();
+
     private RequestFragment mRequestFragment;
     private ChildEventListener mChildEventListener;
     private ActivityHomeBinding mBinding;
+    private String mUserId;
+    private User mLoggedUser;
 
     public static Intent getIntent(Context c, String userId) {
         Intent i = new Intent(c, HomeActivity.class);
@@ -55,32 +61,20 @@ public class HomeActivity extends AppCompatActivity
         mBinding.layoutToolbar.textViewTitle.setText(R.string.title_activity_home);
 
 
-        //Load user from sharedPreference faster than firebase
+//        Load user from sharedPreference faster than firebase
         mLoggedUser = Util.loadLoggedUser(this);
 
-        mRequestFragment = RequestFragment.newInstance(1,mLoggedUser);
+
+        mUserId = getIntent().getStringExtra(ARG_USER_ID);
+        if (mUserId != null) {
+            loadLoggedUser();
+        }else{
+            throw new IllegalStateException("userID == null");
+        }
+        mRequestFragment = RequestFragment.newInstance(1,mUserId);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, mRequestFragment)
                 .commit();
-
-        
-        String userId = getIntent().getStringExtra(ARG_USER_ID);
-        if (userId != null) {
-            UserApi.retrieveUserById(userId, new UserApi.IsUserExistCallback() {
-                @Override
-                public void onUserExist(@Nullable User user) {
-                    if (user != null){
-                        mLoggedUser = user;
-                        Util.saveLoggedUser(HomeActivity.this ,user);
-                        loadRequest();
-                    }
-                    else {
-                        Toast.makeText(HomeActivity.this, "Please Login again!", Toast.LENGTH_SHORT).show();
-                        startActivity(LoginActivity.getIntent(HomeActivity.this));
-                    }
-                }
-            });
-        }
     }
 
     private void loadRequest() {
@@ -88,6 +82,22 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 mBinding.progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void loadLoggedUser(){
+        UserApi.retrieveUserById(mUserId, new UserApi.IsUserExistCallback() {
+            @Override
+            public void onUserExist(@Nullable User user) {
+                if (user != null){
+                    Util.saveLoggedUser(HomeActivity.this ,user);
+                    mLoggedUser = user;
+                }
+                else {
+                    Toast.makeText(HomeActivity.this, "Please Login again!", Toast.LENGTH_SHORT).show();
+                    startActivity(LoginActivity.getIntent(HomeActivity.this));
+                }
             }
         });
     }
@@ -133,6 +143,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onUserProfileClick(Request item) {
 
+    }
+
+    @Override
+    public void onListFragmentCreated() {
+        loadRequest();
     }
 
     @Override
