@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,8 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context="thefour.com.worldshop.activities.UserProfileActivity"
@@ -47,10 +46,28 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="View ALl Request..."
                 android:textAllCaps="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/double_spacing"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/spacing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Offers you make"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            <FrameLayout
+                android:id="@+id/yourOffersContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

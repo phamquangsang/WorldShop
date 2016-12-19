@@ -15,7 +15,6 @@ public class WorldShopApp extends Application {
     public void onCreate() {
         super.onCreate();
         FirebaseApp.initializeApp(this);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //        Fresco.initialize(this);
     }
 }

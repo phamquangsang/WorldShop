@@ -38,4 +38,16 @@
         <!-- Color of the Toolbar -->
         <item name="android:background">#fff</item>
     </style>
+
+
+    <style name="MyAppbarStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!-- Used to for the title of the Toolbar -->
+        <item name="android:textColorPrimary">#000</item>
+        <!-- Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->
+        <item name="android:textColorPrimaryInverse">#000</item>
+        <!-- Used to color the text of the action menu icons -->
+        <item name="android:textColorSecondary">#000</item>
+        <!-- Used to color the overflow menu icon -->
+        <item name="actionMenuTextColor">#000</item>
+    </style>
 </resources>

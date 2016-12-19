@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.TypefaceCache;
@@ -148,6 +150,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onListFragmentCreated() {
         loadRequest();
+    }
+
+    @Override
+    public void onRequestListLoaded(List<Request> list) {
+        //do nothing
     }
 
     @Override

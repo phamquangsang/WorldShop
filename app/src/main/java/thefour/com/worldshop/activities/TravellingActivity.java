@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.TypefaceCache;
@@ -136,7 +138,7 @@ public class TravellingActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Request item) {
         //TODO enter Request detail activity
-        Intent i = RequestDetailActivity.getIntent(this, item, mTraveler);
+        Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mTraveler);
         startActivity(i);
 //        Toast.makeText(this, "onListInteraction: "+item.getItem().getName(), Toast.LENGTH_SHORT).show();
     }
@@ -152,7 +154,7 @@ public class TravellingActivity extends AppCompatActivity
     @Override
     public void onUserProfileClick(Request item) {
         //TODO enter profile activity
-        Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
         Intent i = UserProfileActivity.getIntent(this, mTraveler, item.getFromUser());
         startActivity(i);
     }
@@ -160,5 +162,10 @@ public class TravellingActivity extends AppCompatActivity
     @Override
     public void onListFragmentCreated() {
         loadRequest();
+    }
+
+    @Override
+    public void onRequestListLoaded(List<Request> list) {
+        //do nothing
     }
 }

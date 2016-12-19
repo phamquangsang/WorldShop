@@ -220,6 +220,7 @@ public class MakeOfferActivity extends AppCompatActivity {
         mOffer.setLastTimeEdited(System.currentTimeMillis());
         mOffer.setTime(System.currentTimeMillis());
         mOffer.setNote(mBinding.container.editTextNote.getText().toString());
+        mOffer.setRequestId(mRequest.getRequestId());
 
         DatabaseReference.CompletionListener completeListener = new DatabaseReference.CompletionListener() {
             @Override

@@ -46,6 +46,7 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
     private String TAG = OfferListFragment.class.getSimpleName();
     private Request mRequest;
     private ValueEventListener mRequestListener;
+    private RecyclerView mRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -56,12 +57,12 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static OfferListFragment newInstance(int columnCount, User loggedUser, Request request) {
+    public static OfferListFragment newInstance(int columnCount, User loggedUser, String requestId) {
         OfferListFragment fragment = new OfferListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         args.putParcelable(ARG_COLUMN_LOGGED_USER, loggedUser);
-        args.putParcelable(ARG_COLUMN_REQUEST, request);
+        args.putString(ARG_COLUMN_REQUEST, requestId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,7 +74,8 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mLoggedUser = getArguments().getParcelable(ARG_COLUMN_LOGGED_USER);
-            mRequest = getArguments().getParcelable(ARG_COLUMN_REQUEST);
+            String requestId = getArguments().getString(ARG_COLUMN_REQUEST);
+            setUpRequestListener(requestId);
         }
     }
 
@@ -85,25 +87,26 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new OfferAdapter(mLoggedUser, mRequest,mListener);
-            recyclerView.setAdapter(mAdapter);
         }
-        setUpRequestListener();
         return view;
     }
 
-    private void setUpRequestListener() {
+    private void setUpRequestListener(String requestId) {
         mRequestListener = new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Request request = dataSnapshot.getValue(Request.class);
+                mRequest = new Request();
                 mRequest.setRequest(request);
+                mAdapter = new OfferAdapter(mLoggedUser, mRequest, mListener);
+                mRecyclerView.setAdapter(mAdapter);
+                mListener.onFragmentCreated();
             }
 
             @Override
@@ -113,7 +116,7 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         };
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
                 .child(Contracts.REQUESTS_LOCATION)
-                .child(mRequest.getRequestId());
+                .child(requestId);
         ref.addValueEventListener(mRequestListener);
 
 
@@ -144,21 +147,31 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         void onUpdateClick(Offer item);
         void onDeleteClick(Offer item);
         void onCancelOffer(Offer item);
+        void onFragmentCreated();
         void onCompleteOffer(Offer item);
     }
 
     @Override
     public void onOfferAdded(Offer offer, String previousCityId) {
+        if(mAdapter==null){
+            throw new IllegalStateException("OfferListFragment is not ready, only call onOfferAdded() after onFragmentCreated() is called");
+        }
         mAdapter.addOffer(offer);
     }
 
     @Override
     public void onOfferChanged(Offer newOffer, String previousCityId) {
+        if(mAdapter==null){
+            throw new IllegalStateException("OfferListFragment is not ready, only call onOfferAdded() after onFragmentCreated() is called");
+        }
         mAdapter.updateOffer(newOffer);
     }
 
     @Override
     public void onOfferRemoved(Offer offer) {
+        if(mAdapter==null){
+            throw new IllegalStateException("OfferListFragment is not ready, only call onOfferAdded() after onFragmentCreated() is called");
+        }
         mAdapter.removeOffer(offer);
     }
 

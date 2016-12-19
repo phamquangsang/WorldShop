@@ -15,6 +15,8 @@ import android.view.View;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.adapters.RequestAdapter;
@@ -76,7 +78,7 @@ public class UserViewAllRequestActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Request item) {
-        Intent i = RequestDetailActivity.getIntent(this, item, mUser);
+        Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mUser);
         startActivity(i);
     }
 
@@ -95,8 +97,13 @@ public class UserViewAllRequestActivity extends AppCompatActivity
         loadAllUserRequest();
     }
 
+    @Override
+    public void onRequestListLoaded(List<Request> list) {
+
+    }
+
     private void loadAllUserRequest() {
-        mRequestListener = RequestApi.loadLatestUserRequest(mUser, 0, mFragment);
+        mRequestListener = RequestApi.loadLatestUserRequestChildEvent(mUser, 0, mFragment);
     }
 
     @Override

@@ -121,7 +121,45 @@ public class OfferApi {
         void onError(DatabaseError error);
     }
 
-    public static ChildEventListener loadOffers(String requestId, final OfferEventListener listener) {
+
+    public static ChildEventListener loadUserOffers(String userId, final OfferEventListener listener) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref = ref.child(Contracts.USER_OFFERS_LOCATION).child(userId);
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferAdded(offer, s);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferChanged(offer, s);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferRemoved(offer);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                Offer offer = dataSnapshot.getValue(Offer.class);
+                listener.onOfferMoved(offer, s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                listener.onError(databaseError);
+            }
+        };
+        ref.addChildEventListener(childEventListener);
+        return childEventListener;
+    }
+
+    public static ChildEventListener loadRequestOffers(String requestId, final OfferEventListener listener) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.REQUEST_OFFERS_LOCATION).child(requestId);
         ChildEventListener childEventListener = new ChildEventListener() {

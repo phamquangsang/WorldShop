@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
@@ -31,7 +32,8 @@ import thefour.com.worldshop.models.User;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RequestFragment extends Fragment implements RequestApi.RequestEventListener {
+public class RequestFragment extends Fragment
+        implements  RequestApi.RequestValueEventListener, RequestApi.RequestChildEventListener {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -39,7 +41,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-    private RequestAdapter mAdapter;
+    protected RequestAdapter mAdapter;
     private String TAG = RequestFragment.class.getSimpleName();
     private User mLoggedUser;
     private String mLoggedUserId;
@@ -110,36 +112,17 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
+    }
+
+    @Override
+    public void onDestroy() {
         if(mUserListener!=null){
             FirebaseDatabase.getInstance().getReference()
                     .child(Contracts.USERS_LOCATION).child(mLoggedUser.getUserId())
                     .removeEventListener(mUserListener);
         }
-    }
-
-    @Override
-    public void onRequestAdded(Request request, String previousCityId) {
-        mAdapter.addRequest(request);
-    }
-
-    @Override
-    public void onRequestChanged(Request newRequest, String previousCityId) {
-        mAdapter.updateRequest(newRequest);
-    }
-
-    @Override
-    public void onRequestRemoved(Request request) {
-        mAdapter.removeRequest(request);
-    }
-
-    @Override
-    public void onRequestMoved(Request request, String s) {
-
-    }
-
-    @Override
-    public void onError(DatabaseError error) {
-        Log.e(TAG, "onError: ", error.toException());
+        super.onDestroy();
     }
 
     /**
@@ -158,6 +141,7 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
         void onUserMakeOffer(Request item);
         void onUserProfileClick(Request item);
         void onListFragmentCreated();
+        void onRequestListLoaded(List<Request> list);
     }
 
     public void clearData(){
@@ -198,5 +182,44 @@ public class RequestFragment extends Fragment implements RequestApi.RequestEvent
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+
+    @Override
+    public void onDataChange(List<Request> requestList) {
+        mAdapter.getValues().clear();
+        mAdapter.getValues().addAll(requestList);
+        mAdapter.notifyDataSetChanged();
+        mListener.onRequestListLoaded(requestList);
+    }
+
+    @Override
+    public void onDatabaseError(DatabaseError error) {
+        Log.e(TAG, "onDatabaseError: ", error.toException());
+    }
+
+    @Override
+    public void onRequestAdded(Request request, String previousCityId) {
+        mAdapter.addRequest(request);
+    }
+
+    @Override
+    public void onRequestChanged(Request newRequest, String previousCityId) {
+        mAdapter.updateRequest(newRequest);
+    }
+
+    @Override
+    public void onRequestRemoved(Request request) {
+        mAdapter.removeRequest(request);
+    }
+
+    @Override
+    public void onRequestMoved(Request request, String s) {
+
+    }
+
+    @Override
+    public void onError(DatabaseError error) {
+        Log.e(TAG, "onError: ", error.toException());
     }
 }

@@ -61,6 +61,11 @@
         <activity
             android:name=".activities.UserViewAllRequestActivity"
             android:label="@string/title_activity_user_view_all_request"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:exported="true"
+            android:name=".activities.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -7,11 +7,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.bumptech.glide.Glide;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.Util;
 
 /**
  * Created by Quang Quang on 11/18/2016.
@@ -204,5 +206,11 @@ public class Offer extends BaseObservable implements Parcelable  {
             Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);
         }
 
+    }
+
+    @BindingAdapter(value = {"bind:offeredTime"})
+    public static void bindTimeOffered(TextView textView, long timeOffered){
+        String dateString = "offered "+ Util.relativeTimeFormat(timeOffered);
+        textView.setText(dateString);
     }
 }

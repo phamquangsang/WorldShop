@@ -1,6 +1,5 @@
 package thefour.com.worldshop.api;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -11,7 +10,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import thefour.com.worldshop.Contracts;
@@ -48,14 +49,20 @@ public class RequestApi {
         ref.updateChildren(childUpdates, completionListener);
     }
 
-    public interface RequestEventListener{
+    public interface RequestChildEventListener {
         abstract void onRequestAdded(Request request, String previousCityId);
         abstract void onRequestChanged(Request newRequest, String previousCityId);
         abstract void onRequestRemoved(Request request);
         abstract void onRequestMoved(Request request, String s);
         abstract void onError(DatabaseError error);
     }
-    public static ChildEventListener loadRequestInCity(City city, final RequestEventListener eventListener){
+
+    public interface RequestValueEventListener{
+        void onDataChange(List<Request> requestList);
+        void onDatabaseError(DatabaseError error);
+    }
+
+    public static ChildEventListener loadRequestInCity(City city, final RequestChildEventListener eventListener){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.CITY_REQUESTS_LOCATION).child(city.getCityId());
 //        Query pendingRequest = ref.orderByChild(Contracts.PRO_REQUEST_STATUS).equalTo(Request.STATUS_PENDING);
@@ -93,7 +100,7 @@ public class RequestApi {
         return listener;
     }
 
-    public static ChildEventListener loadLatestUserRequest(User user, int limitedSize, final RequestEventListener eventListener){
+    public static ChildEventListener loadLatestUserRequestChildEvent(User user, int limitedSize, final RequestChildEventListener eventListener){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.USER_REQUESTS_LOCATION).child(user.getUserId());
         Query query = ref.orderByChild(Contracts.PRO_REQUEST_ID);
@@ -133,7 +140,37 @@ public class RequestApi {
         return listener;
     }
 
-    public static ChildEventListener loadLatestRequestInCity(final RequestEventListener eventListener
+
+    ////using this method cause Memory leak.
+//    public static ValueEventListener loadLatestUserRequestValueEvent(User user, final int limitedSize, final RequestValueEventListener eventListener){
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+//        ref = ref.child(Contracts.USER_REQUESTS_LOCATION).child(user.getUserId());
+//        Query query = ref.orderByChild(Contracts.PRO_REQUEST_ID);
+//        if(limitedSize>0){
+//            query = query.limitToLast(limitedSize);
+//        }
+//
+//        ValueEventListener valueListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                List<Request> listRequest = new ArrayList<>();
+//                for (DataSnapshot requestNS :
+//                        dataSnapshot.getChildren()) {
+//                    listRequest.add(requestNS.getValue(Request.class));
+//                }
+//                eventListener.onDataChange(listRequest);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                eventListener.onDatabaseError(databaseError);
+//            }
+//        };
+//        query.addValueEventListener(valueListener);
+//        return valueListener;
+//    }
+
+    public static ChildEventListener loadLatestRequestInCity(final RequestChildEventListener eventListener
             , final DatabaseReference.CompletionListener completionListener){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.REQUESTS_LOCATION);

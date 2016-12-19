@@ -70,7 +70,7 @@
                     android:layout_toEndOf="@+id/tvUserName"
                     android:layout_toRightOf="@+id/tvUserName"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@{Util.relativeTimeFormat(offer.time)}"
+                    app:offeredTime="@{offer.time}"
                     tools:text="offered 4 days ago" />
 
                 <TextView

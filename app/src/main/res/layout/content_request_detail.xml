@@ -35,7 +35,7 @@
             android:id="@+id/btn_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_message_black_24dp"
+            app:srcCompat="@drawable/ic_message_white_24dp"
             android:contentDescription="@string/btn_message_me"/>
 
         <Button
@@ -44,7 +44,7 @@
             android:id="@+id/btn_make_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_message_black_24dp"
+            app:srcCompat="@drawable/ic_message_white_24dp"
             android:contentDescription="@string/btn_make_offer"/>
 
         <!--todo: list of offers for this request -->
