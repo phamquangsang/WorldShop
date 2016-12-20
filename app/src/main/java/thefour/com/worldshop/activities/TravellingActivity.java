@@ -58,7 +58,7 @@ public class TravellingActivity extends AppCompatActivity
         setSupportActionBar(mBinding.toolbar.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mBinding.toolbar.textViewTitle.setTypeface(TypefaceCache.get(this,TypefaceCache.TITLE_FONT));
-        mBinding.toolbar.textViewTitle.setText(R.string.title_activity_traveling);
+        mBinding.toolbar.textViewTitle.setText(mCity.getName());
 
         Toast.makeText(this, "city: " + mCity.getName(), Toast.LENGTH_SHORT).show();
 

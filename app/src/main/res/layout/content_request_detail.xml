@@ -21,11 +21,13 @@
         android:orientation="vertical">
 
         <include
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/itemInfo"
             layout="@layout/fragment_request_item"
             bind:request="@{request}"/>
 
         <TextView
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:text="Request is pending"
             android:id="@+id/tvRequestStatus"
             android:text="@{request.status}"

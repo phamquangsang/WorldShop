@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class RequestDetailActivity extends AppCompatActivity
         return i;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,7 @@ public class RequestDetailActivity extends AppCompatActivity
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setupView();
         loadRequest();
@@ -232,5 +236,15 @@ public class RequestDetailActivity extends AppCompatActivity
     @Override
     public void onFragmentCreated() {
         mEventOffersListener = OfferApi.loadRequestOffers(mRequestId, mFragment);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -151,3 +151,35 @@
     }
   }
 }
+
+"conversation":{
+  "user1Id":{
+    "user2Id":{
+      "messagePid":{
+        "fromUser":{},
+        "content":"this is message",
+        "time":13520666523,
+      },
+      "messagePid":{
+        "fromUser":{},
+        "content":"this is message",
+        "time":13520666523,
+      }
+      ...
+    },
+    "user3Id":{
+      "messagePid":{
+        "fromUser":{},
+        "content":"this is message",
+        "time":13520666523,
+      },
+      "messagePid":{
+        "fromUser":{},
+        "content":"this is message",
+        "time":13520666523,
+      }
+      ...
+    },
+    ...
+  }
+}

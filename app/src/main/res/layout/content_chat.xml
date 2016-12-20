@@ -13,4 +13,9 @@
     tools:context="thefour.com.worldshop.activities.ChatActivity"
     tools:showIn="@layout/activity_chat">
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"/>
+
 </RelativeLayout>

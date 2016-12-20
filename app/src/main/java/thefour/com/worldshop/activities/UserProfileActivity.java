@@ -17,9 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +35,7 @@ import java.util.List;
 
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.TypefaceCache;
 import thefour.com.worldshop.adapters.RequestAdapter;
 import thefour.com.worldshop.api.OfferApi;
 import thefour.com.worldshop.api.RequestApi;
@@ -78,6 +81,13 @@ public class UserProfileActivity extends AppCompatActivity
         setSupportActionBar(mBinding.toolbar);
 
         mBinding.toolbarLayout.setTitle(mUserProfile.getName());
+        mBinding.toolbarLayout.setCollapsedTitleTypeface(TypefaceCache.get(this, TypefaceCache.HARMONIA_BOLD));
+        mBinding.toolbarLayout.setExpandedTitleTypeface(TypefaceCache.get(this, TypefaceCache.HARMONIA_BOLD));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Glide.with(this).load(mUserProfile.getProfileImageUrl())
+                .placeholder(R.drawable.ic_person_black_48px)
+                .into(mBinding.userProfileImage);
 
         mRequestFragment = RequestFragment.newInstance(1, mLoggedUser.getUserId());
 
@@ -92,11 +102,17 @@ public class UserProfileActivity extends AppCompatActivity
 
 
         loadUserOffer();
+
+        if(mLoggedUser.getUserId().equals(mUserProfile.getUserId())){
+            mBinding.fab.setVisibility(View.GONE);
+        }
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent i = ChatActivity.getIntent(UserProfileActivity.this, mLoggedUser, mUserProfile);
+                startActivity(i);
             }
         });
 
@@ -199,5 +215,15 @@ public class UserProfileActivity extends AppCompatActivity
             return;
         }
         startActivity(RequestDetailActivity.getIntent(this, item.getRequestId(), mLoggedUser));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

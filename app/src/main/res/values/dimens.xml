@@ -20,4 +20,11 @@
     <dimen name="official_margin_top">8dp</dimen>
     <dimen name="double_spacing">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+
+    <dimen name="message_text_padding_buble">6dp</dimen>
+    <dimen name="message_item_padding">6dp</dimen>
+    <dimen name="message_item_profile_size">35dp</dimen>
+    <dimen name="message_text_size">16sp</dimen>
+    <dimen name="padding_message_text_profile">6dp</dimen>
+    <dimen name="margin_time_status">30dp</dimen>
 </resources>

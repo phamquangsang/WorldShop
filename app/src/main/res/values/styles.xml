@@ -50,4 +50,6 @@
         <!-- Used to color the overflow menu icon -->
         <item name="actionMenuTextColor">#000</item>
     </style>
+
+    <style name="AppTheme.MessageBar" parent="AppTheme"/>
 </resources>

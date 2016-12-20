@@ -6,45 +6,48 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DatabaseError;
-
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
-import thefour.com.worldshop.adapters.UserOfferAdapter;
-import thefour.com.worldshop.api.OfferApi;
-import thefour.com.worldshop.models.Offer;
+import thefour.com.worldshop.models.Message;
+import thefour.com.worldshop.models.User;
 
-
-public class UserProfileOfferListFragment extends Fragment implements OfferApi.OfferEventListener {
+/**
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnListMessageFragmentInteractionListener}
+ * interface.
+ */
+public class MessageFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String TAG = UserProfileOfferListFragment.class.getSimpleName();
+    private static final String ARG_LOGGED_USER = "logged-user";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
-    private OnListFragmentInteractionListener mListener;
-    private UserOfferAdapter mAdapter;
+    private OnListMessageFragmentInteractionListener mListener;
+    private User mLoggedUser;
+    private MessageAdapter mAdapter;
     private RecyclerView mRecyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public UserProfileOfferListFragment() {
+    public MessageFragment() {
     }
 
     // TODO: Customize parameter initialization
-    public static UserProfileOfferListFragment newInstance(int columnCount) {
-        UserProfileOfferListFragment fragment = new UserProfileOfferListFragment();
+    @SuppressWarnings("unused")
+    public static MessageFragment newInstance(int columnCount, User loggedUser) {
+        MessageFragment fragment = new MessageFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putParcelable(ARG_LOGGED_USER, loggedUser);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,13 +58,14 @@ public class UserProfileOfferListFragment extends Fragment implements OfferApi.O
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mLoggedUser = getArguments().getParcelable(ARG_LOGGED_USER);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_offer_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_message_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -72,9 +76,8 @@ public class UserProfileOfferListFragment extends Fragment implements OfferApi.O
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            mAdapter = new UserOfferAdapter(new ArrayList<Offer>(), mListener);
+            mAdapter = new MessageAdapter(new ArrayList<Message>(),mLoggedUser, mListener);
             mRecyclerView.setAdapter(mAdapter);
-            mRecyclerView.setNestedScrollingEnabled(false);
         }
         return view;
     }
@@ -83,8 +86,8 @@ public class UserProfileOfferListFragment extends Fragment implements OfferApi.O
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnListMessageFragmentInteractionListener) {
+            mListener = (OnListMessageFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListMessageFragmentInteractionListener");
@@ -97,39 +100,6 @@ public class UserProfileOfferListFragment extends Fragment implements OfferApi.O
         mListener = null;
     }
 
-    @Override
-    public void onOfferAdded(Offer offer, String previousCityId) {
-        mAdapter.addOffer(offer);
-    }
-
-    @Override
-    public void onOfferChanged(Offer newOffer, String previousCityId) {
-        mAdapter.updateOffer(newOffer);
-    }
-
-    @Override
-    public void onOfferRemoved(Offer offer) {
-        mAdapter.removeOffer(offer);
-    }
-
-    @Override
-    public void onOfferMoved(Offer offer, String s) {
-        Log.i(TAG, "onOfferMoved: onOffer moved " + offer.getOfferId());
-    }
-
-    @Override
-    public void onError(DatabaseError error) {
-        Log.e(TAG, "onError: ", error.toException());
-    }
-
-    public UserOfferAdapter getAdapter() {
-        return mAdapter;
-    }
-
-    public RecyclerView getRecyclerView() {
-        return mRecyclerView;
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -140,13 +110,24 @@ public class UserProfileOfferListFragment extends Fragment implements OfferApi.O
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
+    public interface OnListMessageFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Offer item);
+        void onListFragmentInteraction(Message item);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public MessageAdapter getAdapter(){
+
+        return mAdapter;
+    }
+    public void addMessage(Message message){
+        mAdapter.addMessage(message);
+        mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount()-1);
+    }
+    public void updateMessage(Message message){
+        mAdapter.updateMessage(message);
+    }
+
+    public void removeMessage(Message message){
+        mAdapter.removeMessage(message);
     }
 }

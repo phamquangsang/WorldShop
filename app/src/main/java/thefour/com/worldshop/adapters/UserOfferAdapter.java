@@ -1,4 +1,4 @@
-package thefour.com.worldshop.fragments;
+package thefour.com.worldshop.adapters;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;

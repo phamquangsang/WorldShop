@@ -19,6 +19,7 @@ public class Contracts {
     public static final String ITEMS_LOCATION = "items";
     public static final String CITIES_LOCATION = "cities";
     public static final String REQUEST_OFFERS_LOCATION = "requestOffers";
+    public static final String REQUEST_CONVERSATION_LOCATION = "conversation";
 
 
     public static final String PRO_CITY_ID = "cityId";
