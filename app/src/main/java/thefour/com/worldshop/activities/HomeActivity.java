@@ -134,17 +134,20 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Request item) {
-
+        Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mLoggedUser);
+        startActivity(i);
     }
 
     @Override
     public void onUserMakeOffer(Request item) {
-
+        Intent i = MakeOfferActivity.getIntent(this, mLoggedUser, item, null);
+        startActivity(i);
     }
 
     @Override
     public void onUserProfileClick(Request item) {
-
+        Intent i = UserProfileActivity.getIntent(this, mLoggedUser, item.getFromUser());
+        startActivity(i);
     }
 
     @Override
