@@ -3,84 +3,68 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:context="thefour.com.worldshop.activities.ChatActivity">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            android:fitsSystemWindows="true"
-            android:theme="@style/MyAppbarStyle">
-
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/userProfileImage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:padding="5dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:src="@drawable/user_profile_sample" />
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"/>
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-
-        </android.support.design.widget.AppBarLayout>
-
-        <FrameLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="40dp"
-            android:id="@+id/listMessageContainer"
-            tools:layout="@layout/fragment_message_list" />
+            android:fitsSystemWindows="true"
+            android:layout_above="@+id/messageComposer"
+            tools:context="thefour.com.worldshop.activities.ChatActivity">
 
-        <include layout="@layout/message_composer"
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/app_bar_height"
+                android:fitsSystemWindows="true"
+                android:theme="@style/MyAppbarStyle">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/userProfileImage"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:src="@drawable/user_profile_sample" />
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"/>
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listMessageContainer"
+                tools:layout="@layout/fragment_message_list" />
+        </android.support.design.widget.CoordinatorLayout>
+
+        <include
+            layout="@layout/message_composer"
             android:id="@+id/messageComposer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"/>
-        <!--<LinearLayout-->
-            <!--android:layout_gravity="bottom"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/colorAccent"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp">-->
-            <!--<EditText-->
-                <!--android:textColor="@android:color/white"-->
-                <!--android:id="@+id/etChat"-->
-                <!--android:maxLines="1"-->
-                <!--tools:text="@string/sample_lorem"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="wrap_content" />-->
-            <!--<ImageButton-->
-                <!--android:id="@+id/btnSend"-->
-                <!--android:background="@color/colorAccent"-->
-                <!--app:srcCompat="@drawable/ic_send_white_36px"-->
-                <!--android:layout_width="40dp"-->
-                <!--android:layout_height="40dp" />-->
-        <!--</LinearLayout>-->
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

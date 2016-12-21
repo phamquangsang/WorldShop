@@ -1,6 +1,7 @@
 package thefour.com.worldshop.fragments;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.databinding.FragmentMessageLeftBinding;
+import thefour.com.worldshop.databinding.FragmentMessageListBinding;
 import thefour.com.worldshop.models.Message;
 import thefour.com.worldshop.models.User;
 
@@ -55,7 +59,8 @@ public class MessageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getActivity().getWindow().setSoftInputMode
+                (WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             mLoggedUser = getArguments().getParcelable(ARG_LOGGED_USER);
@@ -66,19 +71,18 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message_list, container, false);
-
+        FragmentMessageListBinding binding = DataBindingUtil.bind(view);
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            mRecyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            mAdapter = new MessageAdapter(new ArrayList<Message>(),mLoggedUser, mListener);
-            mRecyclerView.setAdapter(mAdapter);
+        Context context = view.getContext();
+        mRecyclerView = binding.list;
+        if (mColumnCount <= 1) {
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        mAdapter = new MessageAdapter(new ArrayList<Message>(),mLoggedUser, mListener);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(false);
         return view;
     }
 
