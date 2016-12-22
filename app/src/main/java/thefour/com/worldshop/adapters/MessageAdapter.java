@@ -1,4 +1,4 @@
-package thefour.com.worldshop.fragments;
+package thefour.com.worldshop.adapters;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link MessageFragment.OnListMessageFragmentInteractionListener}.
+ * specified {@link OnListMessageFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -27,7 +27,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static int TYPE_RIGHT = 2;
     private User mLoggedUser;
     private final List<Message> mValues;
-    private final MessageFragment.OnListMessageFragmentInteractionListener mListener;
+    private final OnListMessageFragmentInteractionListener mListener;
 
     public MessageAdapter(List<Message> items, User loggedUser, OnListMessageFragmentInteractionListener listener) {
         mValues = items;

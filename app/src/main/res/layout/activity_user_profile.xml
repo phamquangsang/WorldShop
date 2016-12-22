@@ -31,7 +31,7 @@
                     android:padding="5dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/user_profile_sample" />
+                    tools:src="@drawable/user_profile_sample" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

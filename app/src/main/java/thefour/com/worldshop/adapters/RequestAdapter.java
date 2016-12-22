@@ -119,8 +119,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     }
 
     public void addRequest(Request request){
-        mValues.add(request);
-        notifyDataSetChanged();
+        mValues.add(0, request);
+        notifyItemInserted(0);
     }
 
     public void removeRequest(Request request){

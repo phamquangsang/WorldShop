@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity
     private ActivityHomeBinding mBinding;
     private String mUserId;
     private User mLoggedUser;
+    private Query mRequestQuery;
 
     public static Intent getIntent(Context c, String userId) {
         Intent i = new Intent(c, HomeActivity.class);
@@ -80,7 +82,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void loadRequest() {
-        mChildEventListener = RequestApi.loadLatestRequestInCity(mRequestFragment, new DatabaseReference.CompletionListener() {
+        mChildEventListener = loadLatestRequest(mRequestFragment, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 mBinding.progressBar.setVisibility(View.GONE);
@@ -88,6 +90,44 @@ public class HomeActivity extends AppCompatActivity
         });
     }
 
+    public ChildEventListener loadLatestRequest(final RequestApi.RequestChildEventListener eventListener
+            , final DatabaseReference.CompletionListener completionListener){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref = ref.child(Contracts.REQUESTS_LOCATION);
+        mRequestQuery = ref.orderByChild(Contracts.PRO_REQUEST_STATUS).equalTo(Request.STATUS_PENDING);
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.i(TAG, "onChildAdded: "+dataSnapshot.toString());
+                eventListener.onRequestAdded(dataSnapshot.getValue(Request.class),s);
+                completionListener.onComplete(null, null);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestChanged(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                eventListener.onRequestRemoved(dataSnapshot.getValue(Request.class));
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                eventListener.onRequestMoved(dataSnapshot.getValue(Request.class),s);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                eventListener.onError(databaseError);
+            }
+
+        };
+
+        mRequestQuery.addChildEventListener(childEventListener);
+        return childEventListener;
+    }
     private void loadLoggedUser(){
         UserApi.retrieveUserById(mUserId, new UserApi.IsUserExistCallback() {
             @Override
@@ -128,6 +168,10 @@ public class HomeActivity extends AppCompatActivity
                 }
                 break;
             }
+            case R.id.action_conversation:{
+                Intent i = ConversationActivity.getIntent(this, mLoggedUser);
+                startActivity(i);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -163,8 +207,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         if(mChildEventListener!=null){
-            FirebaseDatabase.getInstance().getReference().child(Contracts.REQUESTS_LOCATION)
-                    .removeEventListener(mChildEventListener);
+            mRequestQuery.removeEventListener(mChildEventListener);
         }
         super.onDestroy();
     }

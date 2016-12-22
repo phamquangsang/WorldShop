@@ -13,5 +13,11 @@
         android:title="@string/travel_menu_item"
         android:icon="@drawable/ic_flight_black_24px"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_conversation"
+        android:orderInCategory="100"
+        android:title="@string/friends"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_person_black_48px"/>
 
 </menu>

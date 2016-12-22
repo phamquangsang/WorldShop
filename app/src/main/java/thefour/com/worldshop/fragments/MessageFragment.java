@@ -15,7 +15,7 @@ import android.view.WindowManager;
 import java.util.ArrayList;
 
 import thefour.com.worldshop.R;
-import thefour.com.worldshop.databinding.FragmentMessageLeftBinding;
+import thefour.com.worldshop.adapters.MessageAdapter;
 import thefour.com.worldshop.databinding.FragmentMessageListBinding;
 import thefour.com.worldshop.models.Message;
 import thefour.com.worldshop.models.User;

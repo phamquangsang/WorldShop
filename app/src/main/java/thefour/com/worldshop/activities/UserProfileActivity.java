@@ -86,7 +86,6 @@ public class UserProfileActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Glide.with(this).load(mUserProfile.getProfileImageUrl())
-                .placeholder(R.drawable.ic_person_black_48px)
                 .into(mBinding.userProfileImage);
 
         mRequestFragment = RequestFragment.newInstance(1, mLoggedUser.getUserId());
@@ -109,8 +108,6 @@ public class UserProfileActivity extends AppCompatActivity
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 Intent i = ChatActivity.getIntent(UserProfileActivity.this, mLoggedUser, mUserProfile);
                 startActivity(i);
             }

@@ -183,3 +183,19 @@
     ...
   }
 }
+
+"friendsList":{
+  "userId":{
+    "friendId":{
+      "user":{
+        ...
+      },
+      "latestMessage":{
+        ...
+      }
+    },
+    "friendId":{
+
+    }
+  }
+}

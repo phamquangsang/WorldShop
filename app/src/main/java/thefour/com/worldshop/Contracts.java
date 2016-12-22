@@ -19,7 +19,8 @@ public class Contracts {
     public static final String ITEMS_LOCATION = "items";
     public static final String CITIES_LOCATION = "cities";
     public static final String REQUEST_OFFERS_LOCATION = "requestOffers";
-    public static final String REQUEST_CONVERSATION_LOCATION = "conversation";
+    public static final String CONVERSATION_LOCATION = "conversation";
+    public static final String FRIENDS_LIST_LOCATION = "friendsList";
 
 
     public static final String PRO_CITY_ID = "cityId";
@@ -57,4 +58,7 @@ public class Contracts {
 
 
     public static final String SETTING_TRAVEL_CITY = "setting_travel_city";
+
+    public static final String PRO_FRIEND_LIST_USER = "user";
+    public static final String PRO_FRIEND_LIST_LATEST_MESSAGE = "latestMessage";
 }

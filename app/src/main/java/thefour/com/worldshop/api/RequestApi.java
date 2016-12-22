@@ -170,7 +170,7 @@ public class RequestApi {
 //        return valueListener;
 //    }
 
-    public static ChildEventListener loadLatestRequestInCity(final RequestChildEventListener eventListener
+    public static ChildEventListener loadLatestRequest(final RequestChildEventListener eventListener
             , final DatabaseReference.CompletionListener completionListener){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.REQUESTS_LOCATION);
