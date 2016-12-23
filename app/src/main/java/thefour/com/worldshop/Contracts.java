@@ -6,6 +6,7 @@ package thefour.com.worldshop;
 
 public class Contracts {
 
+
     private Contracts(){}
 
     public static final double SERVICE_FEE = 0.1d;
@@ -21,7 +22,12 @@ public class Contracts {
     public static final String REQUEST_OFFERS_LOCATION = "requestOffers";
     public static final String CONVERSATION_LOCATION = "conversation";
     public static final String FRIENDS_LIST_LOCATION = "friendsList";
+    public static final String NOTIFICATION_LOCATION = "notifications";
 
+    public static final String PRO_NOTIFICATION_FROM_USER = "fromUser";
+    public static final String PRO_NOTIFICATION_TIME = "time";
+    public static final String PRO_NOTIFICATION_ACTION = "action";
+    public static final String PRO_NOTIFICATION_REQUEST = "request";
 
     public static final String PRO_CITY_ID = "cityId";
     public static final String PRO_CITY_NAME = "name";

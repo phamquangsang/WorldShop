@@ -139,7 +139,7 @@ public class RequestDetailActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(mRequest!=null){
+        if(mRequest==null){
             Toast.makeText(this, R.string.no_internet_warning, Toast.LENGTH_SHORT).show();
             return;
         }

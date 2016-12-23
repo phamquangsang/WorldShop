@@ -171,6 +171,12 @@ public class HomeActivity extends AppCompatActivity
             case R.id.action_conversation:{
                 Intent i = ConversationActivity.getIntent(this, mLoggedUser);
                 startActivity(i);
+                break;
+            }
+            case R.id.action_notification:{
+                Intent i = NotificationActivity.getIntent(this, mLoggedUser);
+                startActivity(i);
+                break;
             }
         }
         return super.onOptionsItemSelected(item);

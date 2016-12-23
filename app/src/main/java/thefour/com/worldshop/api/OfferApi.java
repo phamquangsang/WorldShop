@@ -1,6 +1,7 @@
 package thefour.com.worldshop.api;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import thefour.com.worldshop.Contracts;
+import thefour.com.worldshop.activities.LoginActivity;
+import thefour.com.worldshop.models.Notification;
 import thefour.com.worldshop.models.Offer;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
@@ -22,6 +25,8 @@ import thefour.com.worldshop.models.User;
  */
 
 public class OfferApi {
+    private static final String TAG = OfferApi.class.getSimpleName();
+
     public static void makeOffer(Request request, Offer offer, @Nullable final DatabaseReference.CompletionListener listener) {
         if(request.getFromUser().getUserId().equals(offer.getFromUser().getUserId())){
             throw new IllegalStateException("user can not make offer for their own request");
@@ -34,7 +39,15 @@ public class OfferApi {
         childUpdate.put("/" + Contracts.OFFERS_LOCATION + "/" + key, offer);
         childUpdate.put("/" + Contracts.REQUEST_OFFERS_LOCATION + "/" + request.getRequestId() + "/" + key, offer);
         childUpdate.put("/" + Contracts.USER_OFFERS_LOCATION + "/" + offer.getFromUser().getUserId() + "/" + key, offer);
+
         ref.updateChildren(childUpdate, listener);
+
+        NotificationApi.makeOfferNotify(request, offer, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: make offer notification created");
+            }
+        });
     }
 
     public static void acceptOffer(final Request request, final Offer offer, User loggedUser, @Nullable final DatabaseReference.CompletionListener listener) {
@@ -71,6 +84,13 @@ public class OfferApi {
                 UserApi.withdrawal(money + money * Contracts.SERVICE_FEE, request.getFromUser(), listener);
             }
         });
+
+        NotificationApi.acceptOfferNotify(request, offer, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: accept offer notification created");
+            }
+        });
     }
 
     public static void deleteOffer(Request request,
@@ -89,6 +109,13 @@ public class OfferApi {
         childUpdate.put("/" + Contracts.REQUEST_OFFERS_LOCATION + "/" + request.getRequestId() + "/" + key, null);
         childUpdate.put("/" + Contracts.USER_OFFERS_LOCATION + "/" + offer.getFromUser().getUserId() + "/" + key, null);
         ref.updateChildren(childUpdate, listener);
+
+        NotificationApi.deleteOfferNotify(request, offer, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: user delete offer notification created");
+            }
+        });
     }
 
     public static void updateOffer(Request request,
@@ -111,6 +138,13 @@ public class OfferApi {
         childUpdate.put("/" + Contracts.REQUEST_OFFERS_LOCATION + "/" + request.getRequestId() + "/" + key, offer);
         childUpdate.put("/" + Contracts.USER_OFFERS_LOCATION + "/" + offer.getFromUser().getUserId() + "/" + key, offer);
         ref.updateChildren(childUpdate, listener);
+
+        NotificationApi.updateOfferNotify(request, offer, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: update offer notification created");
+            }
+        });
     }
 
     public interface OfferEventListener{
@@ -228,6 +262,13 @@ public class OfferApi {
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 double money = request.getQuantity() * request.getItem().getPrice() + offer.getFee();
                 UserApi.recharge(money + money * Contracts.SERVICE_FEE, request.getFromUser(), listener);
+            }
+        });
+
+        NotificationApi.cancelOfferNotify(request, offer, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                Log.i(TAG, "onComplete: User cancel offer notification created");
             }
         });
     }

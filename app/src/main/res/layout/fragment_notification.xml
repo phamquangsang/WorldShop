@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_color"
+        android:orientation="vertical"
+        tools:context="thefour.com.worldshop.fragments.NotificationFragment">
+
+
+        <TextView
+            android:id="@+id/notification_emptyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/quote_margin"
+            android:layout_marginBottom="5dp"
+            android:autoLink="all"
+            android:fontFamily="sans-serif-light"
+            android:orientation="vertical"
+            android:text="Tất cả những thông báo của bạn sẻ được hiện ở đây"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/quote_size"
+            android:typeface="monospace" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_notification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            tools:listitem="@layout/notification_item" />
+
+    </LinearLayout>
+
+</layout>

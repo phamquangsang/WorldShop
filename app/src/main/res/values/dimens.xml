@@ -27,4 +27,7 @@
     <dimen name="message_text_size">16sp</dimen>
     <dimen name="padding_message_text_profile">6dp</dimen>
     <dimen name="margin_time_status">30dp</dimen>
+
+    <dimen name="quote_size">24sp</dimen>
+    <dimen name="quote_margin">20dp</dimen>
 </resources>

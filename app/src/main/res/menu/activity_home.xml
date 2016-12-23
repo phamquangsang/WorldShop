@@ -19,5 +19,11 @@
         android:title="@string/friends"
         app:showAsAction="always"
         android:icon="@drawable/ic_person_black_48px"/>
+    <item
+        android:id="@+id/action_notification"
+        android:orderInCategory="100"
+        android:title="@string/notification"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_notifications_black_48px"/>
 
 </menu>

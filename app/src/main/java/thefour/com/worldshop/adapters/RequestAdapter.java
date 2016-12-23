@@ -124,11 +124,12 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     }
 
     public void removeRequest(Request request){
-        for (Request item :
-                mValues) {
+        for(int i=0 ; i<mValues.size(); ++i){
+            Request item = mValues.get(i);
             if(request.getRequestId().equals(item.getRequestId())){
-                mValues.remove(item);
-                notifyDataSetChanged();
+                mValues.remove(i);
+                notifyItemRemoved(i);
+                break;
             }
         }
     }

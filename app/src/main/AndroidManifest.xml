@@ -55,18 +55,17 @@
             android:label="@string/title_activity_conversation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:name=".activities.ChatActivity"
             android:label="@string/title_activity_chat"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.UserViewAllRequestActivity"
             android:label="@string/title_activity_user_view_all_request"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:exported="true"
-            android:name=".activities.ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
+            android:name=".activities.NotificationActivity"
+            android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

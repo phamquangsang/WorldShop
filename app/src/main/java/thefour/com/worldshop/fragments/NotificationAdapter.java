@@ -5,21 +5,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
+import android.widget.TextView;
 
 import thefour.com.worldshop.R;
-import thefour.com.worldshop.databinding.FragmentFriendItemBinding;
-import thefour.com.worldshop.fragments.FriendsListFragment.OnListFragmentInteractionListener;
-import thefour.com.worldshop.models.Friend;
+import thefour.com.worldshop.databinding.NotificationItemBinding;
+import thefour.com.worldshop.fragments.NotificationFragment.OnListFragmentInteractionListener;
+import thefour.com.worldshop.models.Notification;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
-public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
 
-    private final List<Friend> mValues;
+    private final List<Notification> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public FriendAdapter(List<Friend> items, OnListFragmentInteractionListener listener) {
+    public NotificationAdapter(List<Notification> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -27,15 +31,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_friend_item, parent, false);
+                .inflate(R.layout.notification_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
-        holder.mBinding.setFriend(holder.mItem);
+        holder.mBinding.setNotification(holder.mItem);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,25 +56,23 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         return mValues.size();
     }
 
-    public void addValues(List<Friend> list) {
-        mValues.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void removeValues() {
-        mValues.clear();
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public FragmentFriendItemBinding mBinding;
-        public Friend mItem;
+        public Notification mItem;
+        public NotificationItemBinding mBinding;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mBinding = DataBindingUtil.bind(view);
         }
+
+    }
+
+    public void updateItems(List<Notification> list){
+        mValues.clear();
+        mValues.addAll(list);
+        Collections.reverse(mValues);
+        notifyDataSetChanged();
     }
 }
