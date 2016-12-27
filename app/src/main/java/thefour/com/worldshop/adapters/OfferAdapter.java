@@ -100,6 +100,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
     public void addOffer(Offer offer){
         mOffers.add(offer);
         notifyDataSetChanged();
+        mListener.onDatasetChange(mOffers);
     }
 
     public void removeOffer(Offer offer){
@@ -108,6 +109,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             if(offer.getOfferId().equals(item.getOfferId())){
                 mOffers.remove(item);
                 notifyDataSetChanged();
+                mListener.onDatasetChange(mOffers);
                 return;
             }
         }
@@ -119,6 +121,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             if(offer.getOfferId().equals(item.getOfferId())){
                 mOffers.set(mOffers.indexOf(item),offer);
                 notifyDataSetChanged();
+                mListener.onDatasetChange(mOffers);
             }
         }
     }

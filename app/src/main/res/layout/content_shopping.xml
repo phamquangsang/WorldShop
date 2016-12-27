@@ -128,7 +128,6 @@
                     android:hint="@string/quantity"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:text="@string/default_quantity_number"
                     android:textColorHint="@color/colorGray" />
             </android.support.design.widget.TextInputLayout>
 

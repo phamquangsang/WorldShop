@@ -20,34 +20,212 @@
         tools:showIn="@layout/activity_request_detail"
         android:orientation="vertical">
 
-        <include
+        <android.support.v7.widget.RecyclerView
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:id="@+id/itemInfo"
-            layout="@layout/fragment_request_item"
-            bind:request="@{request}"/>
+            android:id="@+id/listDetailImage"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="thefour.com.worldshop.activities.RequestDetailActivity"
+            tools:listitem="@layout/detail_item_image"/>
 
-        <TextView
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:text="Request is pending"
-            android:id="@+id/tvRequestStatus"
-            android:text="@{request.status}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <ImageButton
-            android:id="@+id/btn_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_message_white_24dp"
-            android:contentDescription="@string/btn_message_me"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:paddingBottom="@dimen/line_spacing"
+                android:background="@drawable/item_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    tools:text="Deliver to Ho Chi Minh City"
+                    android:id="@+id/requestItem_deliverTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:lineSpacingExtra="@dimen/line_spacing"
+                    android:textColor="@color/colorContent"
+                    android:textSize="14sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/official_margin_top"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top">
+
+                    <TextView
+                        android:textColor="@color/colorContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/status"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:textColor="@color/colorContent"
+                        android:id="@+id/tvStatus"
+                        android:text="@{request.status}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        app:requestStatus="@{request}"
+                        tools:text="Completed" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:background="#66ffffff" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <TextView
+                        tools:text="Zenbook Pro"
+                        android:id="@+id/requestItem_itemName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:text="@{request.item.name}"
+                        android:textAllCaps="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        tools:text="$1000"
+                        android:text="@{request.item.priceString}"
+                        android:id="@+id/itemRequest_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:gravity="center_vertical|end"
+                        android:maxLines="1"
+                        android:textColor="@color/colorTitle"
+                        android:textSize="24sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/official_margin_top"
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:orientation="vertical"
+                    android:weightSum="10">
+
+
+
+                    <TextView
+                        tools:text="Reward: $25"
+                        android:id="@+id/reward"
+                        android:text="@{request.rewardString}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:textColor="@color/colorContent"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginLeft="@dimen/official_margin_left"
+                    android:layout_marginRight="@dimen/official_margin_left"
+                    android:layout_marginTop="@dimen/official_margin_top"
+                    android:lineSpacingExtra="@dimen/line_spacing"
+                    tools:text="@string/sample_lorem"
+                    android:id="@+id/requestItem_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="15"
+                    android:gravity="center_vertical|start"
+                    android:text="@{request.item.description}"
+                    android:textColor="@color/colorContent"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <!--<TextView-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+            <!--tools:text="Request is pending"-->
+            <!--android:id="@+id/tvRequestStatus"-->
+            <!--android:text="@{request.status}"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:padding="8dp"
+            tools:src="@drawable/user_profile_sample"
+            android:layout_gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:imageUrl="@{request.fromUser.profileImageUrl}"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                tools:text="Quang Quang"
+                android:text="@{request.fromUser.name}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="@{request.requestTimeString}"
+                tools:text="requested 5 days ago"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <Button
-            android:visibility="@{request.status.equals(request.STATUS_PENDING)?View.VISIBLE:View.GONE}"
             android:text="@string/btn_make_offer"
             android:id="@+id/btn_make_offer"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_message_white_24dp"
             android:contentDescription="@string/btn_make_offer"/>
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/btn_message"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:srcCompat="@drawable/ic_message_white_24dp"-->
+            <!--android:contentDescription="@string/btn_message_me"/>-->
+
+
 
         <!--todo: list of offers for this request -->
 

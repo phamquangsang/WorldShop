@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.adapters.OfferAdapter;
@@ -142,6 +144,7 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
 
     public interface OnListOfferInteractListener {
         // TODO: Update argument type and name
+        void onDatasetChange(List<Offer> list);
         void onItemClick(Offer item);
         void onAcceptClick(Offer item);
         void onUpdateClick(Offer item);

@@ -145,4 +145,5 @@
     <string name="friends">Friends</string>
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="notification">Notification</string>
+    <string name="pending_delivery_offers">Pending delivery offers</string>
 </resources>

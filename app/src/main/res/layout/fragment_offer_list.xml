@@ -7,11 +7,9 @@
         android:name="thefour.com.worldshop.fragments.OfferListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:background="@color/white_page"
         app:layoutManager="LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="thefour.com.worldshop.fragments.OfferListFragment"
         tools:listitem="@layout/fragment_offer_item" />
-
 </layout>

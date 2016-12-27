@@ -5,17 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.Collections;
+import java.util.List;
 
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.databinding.NotificationItemBinding;
 import thefour.com.worldshop.fragments.NotificationFragment.OnListFragmentInteractionListener;
 import thefour.com.worldshop.models.Notification;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
@@ -56,6 +53,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return mValues.size();
     }
 
+    public void updateItems(List<Notification> list) {
+        mValues.clear();
+        mValues.addAll(list);
+        Collections.reverse(mValues);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public Notification mItem;
@@ -67,12 +71,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             mBinding = DataBindingUtil.bind(view);
         }
 
-    }
-
-    public void updateItems(List<Notification> list){
-        mValues.clear();
-        mValues.addAll(list);
-        Collections.reverse(mValues);
-        notifyDataSetChanged();
     }
 }

@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,9 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.List;
+
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.NetworkUtil;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.adapters.ItemDetailImageAdapter;
 import thefour.com.worldshop.api.OfferApi;
 import thefour.com.worldshop.databinding.ActivityRequestDetailBinding;
 import thefour.com.worldshop.fragments.OfferListFragment;
@@ -56,12 +60,6 @@ public class RequestDetailActivity extends AppCompatActivity
     //TODO|| UI-UX example https://grabr.io/en/grabs/52007
 
 
-//    public static Intent getIntent(Context c, Request request, User loggedUser){
-//        Intent i = new Intent(c, RequestDetailActivity.class);
-//        i.putExtra(ARG_REQUEST, request);
-//        i.putExtra(ARG_LOGGED_USER, loggedUser);
-//        return i;
-//    }
 
     public static Intent getIntent(Context c, String requestId, User loggedUser){
         Intent i = new Intent(c, RequestDetailActivity.class);
@@ -85,17 +83,13 @@ public class RequestDetailActivity extends AppCompatActivity
 
         setupView();
         loadRequest();
-//        Toast.makeText(this, "request:status = "+mRequestId.getStatus(), Toast.LENGTH_SHORT).show();
     }
 
     private void setupView() {
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mBinding.content.listDetailImage.setHasFixedSize(true);
+        mBinding.content.listDetailImage
+                .setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
 
         mFragment = OfferListFragment.newInstance(1, mLoggedUser, mRequestId);
         getSupportFragmentManager().beginTransaction()
@@ -113,11 +107,17 @@ public class RequestDetailActivity extends AppCompatActivity
                 mBinding.content.setRequest(mRequest);
                 if(isLoggedUser(mRequest.getFromUser())){
                     mBinding.content.btnMakeOffer.setVisibility(View.GONE);
-                    mBinding.content.btnMessage.setVisibility(View.GONE);
+                    mBinding.fabMessage.setVisibility(View.GONE);
                 }else{
-                    mBinding.content.btnMessage.setOnClickListener(RequestDetailActivity.this);
+                    if(!mRequest.getStatus().equals(Request.STATUS_PENDING)){
+                        mBinding.content.btnMakeOffer.setVisibility(View.GONE);
+                    }
+                    mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
                     mBinding.content.btnMakeOffer.setOnClickListener(RequestDetailActivity.this);
                 }
+                mBinding.content.listDetailImage.setAdapter(new ItemDetailImageAdapter(mRequest.getItem()));
+
+                mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
             }
 
             @Override
@@ -125,7 +125,6 @@ public class RequestDetailActivity extends AppCompatActivity
 
             }
         };
-        Toast.makeText(this, ""+mRequestId, Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance().getReference()
                 .child(Contracts.REQUESTS_LOCATION).child(mRequestId)
                 .addValueEventListener(mRequestListener);
@@ -145,8 +144,9 @@ public class RequestDetailActivity extends AppCompatActivity
         }
         if(id == mBinding.content.btnMakeOffer.getId()){
             startActivity(MakeOfferActivity.getIntent(this, mLoggedUser, mRequest, null));
-        }else if(id == mBinding.content.btnMessage.getId()){
-            ChatActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
+        }else if(id == mBinding.fabMessage.getId()){
+            Intent i = ChatActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
+            startActivity(i);
         }
     }
 
@@ -246,5 +246,14 @@ public class RequestDetailActivity extends AppCompatActivity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDatasetChange(List<Offer> list) {
+        if(list.size()==0){
+            mBinding.pendingOffersLabel.setVisibility(View.GONE);
+        }else{
+            mBinding.pendingOffersLabel.setVisibility(View.VISIBLE);
+        }
     }
 }

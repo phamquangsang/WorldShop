@@ -65,10 +65,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginStart="4dp"
                     android:layout_toEndOf="@+id/tvUserName"
                     android:layout_toRightOf="@+id/tvUserName"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
                     android:fontFamily="sans-serif-condensed"
                     app:offeredTime="@{offer.time}"
                     tools:text="offered 4 days ago" />

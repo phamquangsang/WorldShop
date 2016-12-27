@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import thefour.com.worldshop.BR;
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.Util;
 
 /**
  * Created by Quang Quang on 11/17/2016.
@@ -205,4 +207,14 @@ public class Request extends BaseObservable implements Parcelable{
             tv.setText(R.string.request_status_unknown);
         }
     }
+
+    public String getRequestTimeString(){
+        return "requested "+ Util.relativeTimeFormat(getTime());
+    }
+
+    public String getRewardString(){
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        return "Reward: $" + decimalFormat.format(getReward());
+    }
+
 }

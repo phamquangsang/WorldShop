@@ -5,6 +5,7 @@ import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -91,6 +92,11 @@ public class Item extends BaseObservable implements Parcelable{
     public void setPrice(double price) {
         this.price = price;
         notifyChange();
+    }
+
+    public String getPriceString(){
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        return "$" + decimalFormat.format(getPrice());
     }
 
     @Override
