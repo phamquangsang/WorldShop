@@ -152,6 +152,7 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         void onCancelOffer(Offer item);
         void onFragmentCreated();
         void onCompleteOffer(Offer item);
+        void onUserProfileClick(Offer item);
     }
 
     @Override

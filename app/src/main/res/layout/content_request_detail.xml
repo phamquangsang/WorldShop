@@ -177,6 +177,7 @@
             <!--android:layout_height="wrap_content" />-->
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView_profile"
             android:padding="8dp"
             tools:src="@drawable/user_profile_sample"
             android:layout_gravity="center"

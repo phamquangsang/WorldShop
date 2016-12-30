@@ -41,10 +41,10 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     app:imageUrl="@{offer.fromUser.profileImageUrl}"
                     app:placeholder="@{@drawable/ic_person_black_48px}"
-                    tools:src="@drawable/example_image_item"
+                    tools:src="@drawable/user_profile_sample"
                     android:id="@+id/imageView_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="@dimen/line_spacing"/>
 
                 <TextView

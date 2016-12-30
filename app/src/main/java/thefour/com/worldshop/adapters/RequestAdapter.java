@@ -120,7 +120,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     public void addRequest(Request request){
         mValues.add(0, request);
-        notifyItemInserted(0);
+//        notifyItemInserted(0);
+        notifyDataSetChanged();
     }
 
     public void removeRequest(Request request){
@@ -128,15 +129,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             Request item = mValues.get(i);
             if(request.getRequestId().equals(item.getRequestId())){
                 mValues.remove(i);
-                notifyItemRemoved(i);
+                notifyDataSetChanged();
                 break;
             }
         }
     }
 
     public void updateRequest(Request request){
-        for (Request item :
-                mValues) {
+        for(int i=0 ; i<mValues.size(); ++i){
+            Request item = mValues.get(i);
             if(request.getRequestId().equals(item.getRequestId())){
                 mValues.set(mValues.indexOf(item),request);
                 notifyDataSetChanged();

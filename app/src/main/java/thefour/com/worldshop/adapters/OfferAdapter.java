@@ -72,6 +72,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
             mBinding.btnUpdateOffer.setOnClickListener(this);
             mBinding.btnDeleteOffer.setOnClickListener(this);
             mBinding.btnCompleteOffer.setOnClickListener(this);
+            mBinding.imageViewProfile.setOnClickListener(this);
         }
 
         @Override
@@ -92,6 +93,9 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
                     break;
                 case R.id.btnCompleteOffer:
                     mListener.onCompleteOffer(offer);
+                    break;
+                case R.id.imageView_profile:
+                    mListener.onUserProfileClick(offer);
                     break;
             }
         }

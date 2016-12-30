@@ -50,6 +50,7 @@ public class ShoppingActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PICK_PHOTO = 10;
     private static final String ARG_LOGGED_USER = "arg_logged_user";
     private static final String TAG = ShoppingActivity.class.getSimpleName();
+    private static final String SAVED_IMAGE_LIST = "saved-image-list";
 
     private ContentShoppingBinding mContentBinding;
     private ActivityShoppingBinding mBinding;
@@ -79,14 +80,26 @@ public class ShoppingActivity extends AppCompatActivity {
         setSupportActionBar(mBinding.layoutToolbar.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        setUpLayout();
+        setUpLayout(savedInstanceState);
     }
 
-    public void setUpLayout() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putStringArrayList(SAVED_IMAGE_LIST, mAdapter.getData());
+        super.onSaveInstanceState(outState);
+    }
+
+    public void setUpLayout(Bundle savedState) {
         mContentBinding.recyclerViewItemImages.setHasFixedSize(true);
         mContentBinding.recyclerViewItemImages.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new ItemImageAdapter();
+        if(savedState!=null){
+            List<String> images = savedState.getStringArrayList(SAVED_IMAGE_LIST);
+            if(images!=null){
+                mAdapter.addImage(images);
+            }
+        }
         mContentBinding.recyclerViewItemImages.setAdapter(mAdapter);
 
         mBinding.fab.setOnClickListener(new View.OnClickListener() {

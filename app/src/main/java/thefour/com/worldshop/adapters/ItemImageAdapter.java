@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.databinding.ItemImageBinding;
@@ -67,6 +68,11 @@ public class ItemImageAdapter extends
     public void addImage(String fileUrl) {
         mDataset.add(fileUrl);
         notifyItemInserted(mDataset.size() - 1);
+    }
+
+    public void addImage(List<String> list){
+        mDataset.addAll(list);
+        notifyDataSetChanged();
     }
 
     public ArrayList<String> getData() {

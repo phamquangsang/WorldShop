@@ -119,7 +119,7 @@ public class RequestFragment extends Fragment
     public void onDestroy() {
         if(mUserListener!=null){
             FirebaseDatabase.getInstance().getReference()
-                    .child(Contracts.USERS_LOCATION).child(mLoggedUser.getUserId())
+                    .child(Contracts.USERS_LOCATION).child(mLoggedUserId)
                     .removeEventListener(mUserListener);
         }
         super.onDestroy();

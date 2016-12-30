@@ -147,7 +147,6 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public void onRequestListLoaded(List<Request> list) {
-        Toast.makeText(this, "onRequestLoaded: "+list.size(), Toast.LENGTH_LONG).show();
         if(list.size()<=NUMBER_OF_REQUEST){
             mBinding.content.tvViewAllRequest.setVisibility(View.GONE);
         }else{
@@ -187,7 +186,6 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     protected void onDestroy() {
-        Toast.makeText(this, "User Profile Fragment Destroy", Toast.LENGTH_SHORT).show();
         if(mRequestListener!=null){
             mLatestUserRequestQuery
                     .removeEventListener(mRequestListener);

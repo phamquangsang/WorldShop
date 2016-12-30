@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,6 +31,7 @@ import thefour.com.worldshop.adapters.ItemDetailImageAdapter;
 import thefour.com.worldshop.api.OfferApi;
 import thefour.com.worldshop.databinding.ActivityRequestDetailBinding;
 import thefour.com.worldshop.fragments.OfferListFragment;
+import thefour.com.worldshop.fragments.UserProfileOfferListFragment;
 import thefour.com.worldshop.models.Offer;
 import thefour.com.worldshop.models.Request;
 import thefour.com.worldshop.models.User;
@@ -96,6 +99,42 @@ public class RequestDetailActivity extends AppCompatActivity
                 .replace(R.id.container, mFragment)
                 .commit();
 
+        setUpRecyclerViewToScrollOneByOne();
+    }
+
+    private void setUpRecyclerViewToScrollOneByOne() {
+        LinearSnapHelper snapHelper = new LinearSnapHelper() {
+            @Override
+            public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
+                View centerView = findSnapView(layoutManager);
+                if (centerView == null)
+                    return RecyclerView.NO_POSITION;
+
+                int position = layoutManager.getPosition(centerView);
+                int targetPosition = -1;
+                if (layoutManager.canScrollHorizontally()) {
+                    if (velocityX < 0) {
+                        targetPosition = position - 1;
+                    } else {
+                        targetPosition = position + 1;
+                    }
+                }
+
+                if (layoutManager.canScrollVertically()) {
+                    if (velocityY < 0) {
+                        targetPosition = position - 1;
+                    } else {
+                        targetPosition = position + 1;
+                    }
+                }
+
+                final int firstItem = 0;
+                final int lastItem = layoutManager.getItemCount() - 1;
+                targetPosition = Math.min(lastItem, Math.max(targetPosition, firstItem));
+                return targetPosition;
+            }
+        };
+        snapHelper.attachToRecyclerView(mBinding.content.listDetailImage);
     }
 
     private void loadRequest(){
@@ -112,12 +151,9 @@ public class RequestDetailActivity extends AppCompatActivity
                     if(!mRequest.getStatus().equals(Request.STATUS_PENDING)){
                         mBinding.content.btnMakeOffer.setVisibility(View.GONE);
                     }
-                    mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
-                    mBinding.content.btnMakeOffer.setOnClickListener(RequestDetailActivity.this);
-                }
-                mBinding.content.listDetailImage.setAdapter(new ItemDetailImageAdapter(mRequest.getItem()));
 
-                mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
+                }
+                setListenerEvent();
             }
 
             @Override
@@ -128,6 +164,13 @@ public class RequestDetailActivity extends AppCompatActivity
         FirebaseDatabase.getInstance().getReference()
                 .child(Contracts.REQUESTS_LOCATION).child(mRequestId)
                 .addValueEventListener(mRequestListener);
+    }
+
+    private void setListenerEvent() {
+        mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
+        mBinding.content.btnMakeOffer.setOnClickListener(RequestDetailActivity.this);
+        mBinding.content.imageViewProfile.setOnClickListener(RequestDetailActivity.this);
+        mBinding.content.listDetailImage.setAdapter(new ItemDetailImageAdapter(mRequest.getItem()));
     }
 
     private boolean isLoggedUser(User user){
@@ -146,6 +189,10 @@ public class RequestDetailActivity extends AppCompatActivity
             startActivity(MakeOfferActivity.getIntent(this, mLoggedUser, mRequest, null));
         }else if(id == mBinding.fabMessage.getId()){
             Intent i = ChatActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
+            startActivity(i);
+        }
+        if(id == mBinding.content.imageViewProfile.getId()){
+            Intent i = UserProfileActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
             startActivity(i);
         }
     }
@@ -236,6 +283,12 @@ public class RequestDetailActivity extends AppCompatActivity
     @Override
     public void onFragmentCreated() {
         mEventOffersListener = OfferApi.loadRequestOffers(mRequestId, mFragment);
+    }
+
+    @Override
+    public void onUserProfileClick(Offer item) {
+        Intent i = UserProfileActivity.getIntent(this, mLoggedUser, item.getFromUser());
+        startActivity(i);
     }
 
     @Override
