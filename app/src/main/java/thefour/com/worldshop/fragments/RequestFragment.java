@@ -137,9 +137,9 @@ public class RequestFragment extends Fragment
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Request item);
+        void onListFragmentInteraction(Request item, View selectedView);
         void onUserMakeOffer(Request item);
-        void onUserProfileClick(Request item);
+        void onUserProfileClick(Request item, View profileImageView, View profileNameTv);
         void onListFragmentCreated();
         void onRequestListLoaded(List<Request> list);
     }
@@ -222,4 +222,5 @@ public class RequestFragment extends Fragment
     public void onError(DatabaseError error) {
         Log.e(TAG, "onError: ", error.toException());
     }
+
 }

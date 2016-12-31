@@ -5,23 +5,24 @@ package thefour.com.worldshop.activities;
 //TODO||All offers made by that user
 //TODO||
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.tool.DataBindingBuilder;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.ViewPropertyAnimation;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,9 +37,7 @@ import java.util.List;
 import thefour.com.worldshop.Contracts;
 import thefour.com.worldshop.R;
 import thefour.com.worldshop.TypefaceCache;
-import thefour.com.worldshop.adapters.RequestAdapter;
 import thefour.com.worldshop.api.OfferApi;
-import thefour.com.worldshop.api.RequestApi;
 import thefour.com.worldshop.databinding.ActivityUserProfileBinding;
 import thefour.com.worldshop.fragments.RequestFragment;
 import thefour.com.worldshop.fragments.UserProfileOfferListFragment;
@@ -62,7 +61,7 @@ public class UserProfileActivity extends AppCompatActivity
     private Query mLatestUserRequestQuery;
 
 
-    public static Intent getIntent(Context c, User loggedUser, User profileUser){
+    public static Intent getIntent(Context c, User loggedUser, User profileUser) {
         Intent i = new Intent(c, UserProfileActivity.class);
         i.putExtra(ARG_LOGGED_USER, loggedUser);
         i.putExtra(ARG_PROFILE_USER, profileUser);
@@ -72,11 +71,51 @@ public class UserProfileActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         mLoggedUser = getIntent().getParcelableExtra(ARG_LOGGED_USER);
         mUserProfile = getIntent().getParcelableExtra(ARG_PROFILE_USER);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_user_profile);
 
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition a = null;
+            a = TransitionInflater.from(this).inflateTransition(R.transition.app_bar_transition);
+            getWindow().setEnterTransition(a);
 
+            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+//                    Animator anim = ObjectAnimator.ofFloat(mBinding.content.scrollView, "alpha", 0f, 1f);
+                    Animator anim = ObjectAnimator.ofFloat(mBinding.content.scrollView, "translationY", 500, 0);
+                    anim.setInterpolator(new DecelerateInterpolator());
+                    anim.setDuration(300);
+                    mBinding.content.scrollView.setVisibility(View.VISIBLE);
+                    anim.start();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        }else{
+            mBinding.content.scrollView.setVisibility(View.VISIBLE);
+        }
 
         setSupportActionBar(mBinding.toolbar);
 
@@ -102,7 +141,7 @@ public class UserProfileActivity extends AppCompatActivity
 
         loadUserOffer();
 
-        if(mLoggedUser.getUserId().equals(mUserProfile.getUserId())){
+        if (mLoggedUser.getUserId().equals(mUserProfile.getUserId())) {
             mBinding.fab.setVisibility(View.GONE);
         }
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
@@ -124,9 +163,12 @@ public class UserProfileActivity extends AppCompatActivity
 
 
     @Override
-    public void onListFragmentInteraction(Request item) {
+    public void onListFragmentInteraction(Request item, View selectedView) {
         Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mLoggedUser);
-        startActivity(i);
+        Bundle options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, selectedView, getString(R.string.item_image_transition_name))
+                .toBundle();
+        startActivity(i, options);
     }
 
     @Override
@@ -135,7 +177,7 @@ public class UserProfileActivity extends AppCompatActivity
     }
 
     @Override
-    public void onUserProfileClick(Request item) {
+    public void onUserProfileClick(Request item, View view, View view2) {
 
     }
 
@@ -147,9 +189,9 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public void onRequestListLoaded(List<Request> list) {
-        if(list.size()<=NUMBER_OF_REQUEST){
+        if (list.size() <= NUMBER_OF_REQUEST) {
             mBinding.content.tvViewAllRequest.setVisibility(View.GONE);
-        }else{
+        } else {
             mBinding.content.tvViewAllRequest.setVisibility(View.VISIBLE);
         }
     }
@@ -158,7 +200,7 @@ public class UserProfileActivity extends AppCompatActivity
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref = ref.child(Contracts.USER_REQUESTS_LOCATION).child(mUserProfile.getUserId());
         mLatestUserRequestQuery = ref.orderByChild(Contracts.PRO_REQUEST_ID);
-        mLatestUserRequestQuery = mLatestUserRequestQuery.limitToLast(NUMBER_OF_REQUEST+1);
+        mLatestUserRequestQuery = mLatestUserRequestQuery.limitToLast(NUMBER_OF_REQUEST + 1);
 
 
         mRequestListener = new ValueEventListener() {
@@ -180,18 +222,18 @@ public class UserProfileActivity extends AppCompatActivity
         mLatestUserRequestQuery.addValueEventListener(mRequestListener);
     }
 
-    private void loadUserOffer(){
+    private void loadUserOffer() {
         mUserOfferListener = OfferApi.loadUserOffers(mUserProfile.getUserId(), mUserOfferFragment);
     }
 
     @Override
     protected void onDestroy() {
-        if(mRequestListener!=null){
+        if (mRequestListener != null) {
             mLatestUserRequestQuery
                     .removeEventListener(mRequestListener);
         }
         mRequestListener = null;
-        if(mUserOfferListener!=null){
+        if (mUserOfferListener != null) {
             FirebaseDatabase.getInstance().getReference()
                     .child(Contracts.USER_OFFERS_LOCATION)
                     .child(mLoggedUser.getUserId())
@@ -205,7 +247,7 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Offer item) {
-        if(item.getRequestId()==null){
+        if (item.getRequestId() == null) {
             Toast.makeText(this, "requestId is null", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -214,11 +256,21 @@ public class UserProfileActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        Animator anim = ObjectAnimator.ofFloat(mBinding.content.scrollView, "alpha", 1f, 0f);
+//        anim.setInterpolator(new DecelerateInterpolator());
+//        anim.setDuration(500);
+//        mBinding.content.scrollView.setVisibility(View.INVISIBLE);
+//        anim.start();
+//        super.onBackPressed();
+//    }
 }

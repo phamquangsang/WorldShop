@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.adapters.FriendAdapter;
 import thefour.com.worldshop.models.Friend;
 
 

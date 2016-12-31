@@ -21,6 +21,7 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
+            android:transitionName="@string/item_image_transition_name"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/listDetailImage"
             android:layout_width="match_parent"
@@ -35,8 +36,9 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/item_information"
                 android:paddingBottom="@dimen/line_spacing"
-                android:background="@drawable/item_gradient"
+                android:background="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -186,6 +188,7 @@
             app:imageUrl="@{request.fromUser.profileImageUrl}"/>
 
         <LinearLayout
+            android:id="@+id/footer"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -211,20 +214,29 @@
 
         </LinearLayout>
 
-        <Button
-            android:text="@string/btn_make_offer"
-            android:id="@+id/btn_make_offer"
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_message_white_24dp"
-            android:contentDescription="@string/btn_make_offer"/>
+            android:layout_height="match_parent">
 
-        <!--<ImageButton-->
-            <!--android:id="@+id/btn_message"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srcCompat="@drawable/ic_message_white_24dp"-->
-            <!--android:contentDescription="@string/btn_message_me"/>-->
+            <Button
+                android:text="@string/btn_make_offer"
+                android:id="@+id/btn_make_offer"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/btn_make_offer"/>
+
+            <Button
+                android:text="@string/btn_message_me"
+                android:id="@+id/btn_message"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/btn_message_me"/>
+        </LinearLayout>
+
 
 
 

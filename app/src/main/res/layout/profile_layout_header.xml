@@ -30,12 +30,14 @@
             android:gravity="center_vertical">
 
             <ImageView
+                android:transitionName="@string/profile_image"
                 android:id="@+id/imageView_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 app:imageUrl="@{request.fromUser.profileImageUrl}"
                 app:placeholder="@{@drawable/ic_person_black_48px}"
-                tools:srcCompat="@drawable/ic_person_black_48px" />
+                tools:srcCompat="@drawable/ic_person_black_48px"
+                tools:targetApi="lollipop" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -51,7 +53,8 @@
                     android:text="@{request.fromUser.name}"
                     android:textColor="@color/colorAccent"
                     android:textSize="14sp"
-                    tools:text="Quang Sang" />
+                    tools:text="Quang Sang"
+                    tools:targetApi="lollipop" />
 
                 <TextView
                     android:id="@+id/textView_time"

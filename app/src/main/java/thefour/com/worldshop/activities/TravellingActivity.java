@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -136,10 +138,13 @@ public class TravellingActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Request item) {
+    public void onListFragmentInteraction(Request item, View selectedView) {
         //TODO enter Request detail activity
         Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mTraveler);
-        startActivity(i);
+        Bundle options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, selectedView, getString(R.string.item_image_transition_name))
+                .toBundle();
+        startActivity(i, options);
 //        Toast.makeText(this, "onListInteraction: "+item.getItem().getName(), Toast.LENGTH_SHORT).show();
     }
 
@@ -152,11 +157,15 @@ public class TravellingActivity extends AppCompatActivity
     }
 
     @Override
-    public void onUserProfileClick(Request item) {
+    public void onUserProfileClick(Request item, View userProfileImageView, View userNameTv) {
         //TODO enter profile activity
 //        Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
+        Pair<View, String> p1 = Pair.create(userProfileImageView, getString(R.string.profile_image));
+        Pair<View, String> p2 = Pair.create(userNameTv, getString(R.string.profile_name));
+        ActivityOptionsCompat options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, p1, p2);
         Intent i = UserProfileActivity.getIntent(this, mTraveler, item.getFromUser());
-        startActivity(i);
+        startActivity(i, options.toBundle());
     }
 
     @Override

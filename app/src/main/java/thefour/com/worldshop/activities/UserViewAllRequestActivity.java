@@ -7,6 +7,8 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -77,18 +79,22 @@ public class UserViewAllRequestActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Request item) {
+    public void onListFragmentInteraction(Request item, View selectedView) {
         Intent i = RequestDetailActivity.getIntent(this, item.getRequestId(), mUser);
-        startActivity(i);
+        Bundle options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this, selectedView, getString(R.string.item_image_transition_name))
+                .toBundle();
+        startActivity(i, options);
     }
 
     @Override
     public void onUserMakeOffer(Request item) {
-
+        Intent intent = MakeOfferActivity.getIntent(this, mUser, item, null);
+        startActivity(intent);
     }
 
     @Override
-    public void onUserProfileClick(Request item) {
+    public void onUserProfileClick(Request item, View profileImage, View profileName) {
 
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<slide-->
+        <!--android:duration="300"-->
+        <!--android:slideEdge="bottom">-->
+        <!--<target android:targetId="@id/content_request_detail"/>-->
+    <!--</slide>-->
+    <!--<fade android:duration="200"-->
+        <!--android:startDelay="300">-->
+        <!--<target android:targetId="@id/listDetailImage"/>-->
+    <!--</fade>-->
+</transitionSet>

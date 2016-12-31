@@ -99,6 +99,11 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     private void setUpRequestListener(String requestId) {
         mRequestListener = new ValueEventListener(){
             @Override
@@ -195,11 +200,12 @@ public class OfferListFragment extends Fragment implements OfferApi.OfferEventLi
 
     @Override
     public void onDestroy() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
-                .child(Contracts.REQUESTS_LOCATION)
-                .child(mRequest.getRequestId());
-        if(mRequestListener!=null)
+        if(mRequestListener!=null && mRequest != null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference()
+                    .child(Contracts.REQUESTS_LOCATION)
+                    .child(mRequest.getRequestId());
             ref.removeEventListener(mRequestListener);
+        }
         super.onDestroy();
     }
 }

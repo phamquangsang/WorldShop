@@ -18,6 +18,7 @@
             android:layout_height="@dimen/image_size">
 
             <ImageView
+                android:transitionName="@string/item_image_transition_name"
                 app:imageUrl="@{request.item.firstImage}"
                 app:placeholder="@{@drawable/placeholder}"
                 android:id="@+id/requestItem_ImageView"

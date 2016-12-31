@@ -27,7 +27,8 @@
         <activity
             android:name=".activities.HomeActivity"
             android:clearTaskOnLaunch="true"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.ShoppingActivity"
             android:label="@string/title_activity_shopping" />
@@ -45,7 +46,7 @@
         <activity
             android:name=".activities.RequestDetailActivity"
             android:label="@string/title_activity_request_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.RequestDetail" />
         <activity
             android:name=".activities.UserProfileActivity"
             android:label="@string/title_activity_user_profile"
@@ -66,7 +67,17 @@
         <activity
             android:name=".activities.NotificationActivity"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.ScrollingActivity"
+            android:exported="true"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:exported="true"
+            android:name=".activities.BasicActivity"
+            android:label="@string/title_activity_basic"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -7,12 +7,17 @@ import android.databinding.Observable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -183,13 +188,12 @@ public class Request extends BaseObservable implements Parcelable{
     }
 
     @BindingAdapter(value = {"bind:imageUrl", "bind:placeholder"}, requireAll = false)
-    public static void loadImage(ImageView imageView, String url, Drawable placeHolder) {
+    public static void loadImage(final ImageView imageView, String url, Drawable placeHolder) {
         if (url == null) {
             imageView.setImageDrawable(placeHolder);
         } else {
             Glide.with(imageView.getContext()).load(url).placeholder(placeHolder).into(imageView);
         }
-
     }
 
     @BindingAdapter("bind:requestStatus")

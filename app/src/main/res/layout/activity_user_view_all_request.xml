@@ -24,10 +24,10 @@
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/actionBar_size"/>
+            android:layout_height="match_parent"/>
 
 
     </android.support.design.widget.CoordinatorLayout>

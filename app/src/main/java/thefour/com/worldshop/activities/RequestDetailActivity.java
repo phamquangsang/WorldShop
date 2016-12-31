@@ -3,6 +3,7 @@ package thefour.com.worldshop.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -71,13 +76,29 @@ public class RequestDetailActivity extends AppCompatActivity
         return i;
     }
 
+    public static Intent getIntent(Context c, Request request, User loggedUser){
+        Intent i = new Intent(c, RequestDetailActivity.class);
+        i.putExtra(ARG_REQUEST, request);
+        i.putExtra(ARG_LOGGED_USER, loggedUser);
+        return i;
+    }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition a = null;
+            a = TransitionInflater.from(this).inflateTransition(R.transition.request_detail_enter);
+            getWindow().setEnterTransition(a);
+        }
+
+
         mLoggedUser = getIntent().getParcelableExtra(ARG_LOGGED_USER);
+        mRequest = getIntent().getParcelableExtra(ARG_REQUEST);
         mRequestId = getIntent().getStringExtra(ARG_REQUEST_ID);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_request_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -141,12 +162,14 @@ public class RequestDetailActivity extends AppCompatActivity
         mRequestListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mRequest = new Request();
+                if(mRequest==null){
+                    mRequest = new Request();
+                }
                 mRequest.setRequest(dataSnapshot.getValue(Request.class));
                 mBinding.content.setRequest(mRequest);
                 if(isLoggedUser(mRequest.getFromUser())){
                     mBinding.content.btnMakeOffer.setVisibility(View.GONE);
-                    mBinding.fabMessage.setVisibility(View.GONE);
+                    mBinding.content.btnMessage.setVisibility(View.GONE);
                 }else{
                     if(!mRequest.getStatus().equals(Request.STATUS_PENDING)){
                         mBinding.content.btnMakeOffer.setVisibility(View.GONE);
@@ -167,7 +190,7 @@ public class RequestDetailActivity extends AppCompatActivity
     }
 
     private void setListenerEvent() {
-        mBinding.fabMessage.setOnClickListener(RequestDetailActivity.this);
+        mBinding.content.btnMessage.setOnClickListener(RequestDetailActivity.this);
         mBinding.content.btnMakeOffer.setOnClickListener(RequestDetailActivity.this);
         mBinding.content.imageViewProfile.setOnClickListener(RequestDetailActivity.this);
         mBinding.content.listDetailImage.setAdapter(new ItemDetailImageAdapter(mRequest.getItem()));
@@ -187,7 +210,8 @@ public class RequestDetailActivity extends AppCompatActivity
         }
         if(id == mBinding.content.btnMakeOffer.getId()){
             startActivity(MakeOfferActivity.getIntent(this, mLoggedUser, mRequest, null));
-        }else if(id == mBinding.fabMessage.getId()){
+        }else
+        if(id == mBinding.content.btnMessage.getId()){
             Intent i = ChatActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
             startActivity(i);
         }
@@ -309,4 +333,5 @@ public class RequestDetailActivity extends AppCompatActivity
             mBinding.pendingOffersLabel.setVisibility(View.VISIBLE);
         }
     }
+
 }

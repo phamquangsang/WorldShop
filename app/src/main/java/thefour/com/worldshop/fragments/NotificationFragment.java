@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import thefour.com.worldshop.R;
+import thefour.com.worldshop.adapters.NotificationAdapter;
 import thefour.com.worldshop.models.Notification;
 
 import java.util.ArrayList;

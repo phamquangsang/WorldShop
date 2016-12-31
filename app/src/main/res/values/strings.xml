@@ -146,4 +146,8 @@
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="notification">Notification</string>
     <string name="pending_delivery_offers">Pending delivery offers</string>
+    <string name="title_activity_basic">BasicActivity</string>
+    <string name="item_image_transition_name">itemImageDetail</string>
+    <string name="profile_image">profileImage</string>
+    <string name="profile_name">profileName</string>
 </resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <slide
+        android:duration="300"
+        android:startDelay="200"
+        android:slideEdge="bottom">
+        <targets>
+            <target android:targetId="@id/item_information"/>
+            <target android:targetId="@+id/imageView_profile"/>
+            <target android:targetId="@+id/footer"/>
+        </targets>
+
+    </slide>
+
+    <slide
+        android:duration="300"
+        android:slideEdge="top">
+        <targets>
+            <target android:targetId="@id/app_bar"/>
+        </targets>
+
+    </slide>
+
+    <!--<fade android:duration="2000"-->
+        <!--android:startDelay="300">-->
+        <!--<targets>-->
+            <!--<target android:targetId="@id/listDetailImage"/>-->
+        <!--</targets>-->
+    <!--</fade>-->
+</transitionSet>

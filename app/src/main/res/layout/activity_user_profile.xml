@@ -26,6 +26,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:transitionName="@string/profile_name"
                     android:id="@+id/userProfileImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
