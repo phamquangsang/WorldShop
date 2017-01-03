@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -156,6 +157,7 @@ public class RequestDetailActivity extends AppCompatActivity
             }
         };
         snapHelper.attachToRecyclerView(mBinding.content.listDetailImage);
+//        mBinding.content.listDetailImage.setScrollIndicators(View.SCROLL_INDICATOR_BOTTOM);
     }
 
     private void loadRequest(){
@@ -216,8 +218,12 @@ public class RequestDetailActivity extends AppCompatActivity
             startActivity(i);
         }
         if(id == mBinding.content.imageViewProfile.getId()){
+//            ActivityOptionsCompat options = ActivityOptionsCompat
+//                    .makeSceneTransitionAnimation(this, mBinding.content.imageViewProfile, getString(R.string.profile_image));
+            ActivityOptionsCompat options = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(this);
             Intent i = UserProfileActivity.getIntent(this, mLoggedUser, mRequest.getFromUser());
-            startActivity(i);
+            startActivity(i, options.toBundle());
         }
     }
 
@@ -312,7 +318,9 @@ public class RequestDetailActivity extends AppCompatActivity
     @Override
     public void onUserProfileClick(Offer item) {
         Intent i = UserProfileActivity.getIntent(this, mLoggedUser, item.getFromUser());
-        startActivity(i);
+        ActivityOptionsCompat options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(this);
+        startActivity(i, options.toBundle());
     }
 
     @Override

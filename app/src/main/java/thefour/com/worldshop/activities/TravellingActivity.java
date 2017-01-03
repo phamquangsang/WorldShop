@@ -74,13 +74,6 @@ public class TravellingActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, mFragmentList).commit();
 
-        mBinding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void loadRequest() {
@@ -160,10 +153,10 @@ public class TravellingActivity extends AppCompatActivity
     public void onUserProfileClick(Request item, View userProfileImageView, View userNameTv) {
         //TODO enter profile activity
 //        Toast.makeText(this, "onuserProfileClick: "+item.getFromUser().getName(), Toast.LENGTH_SHORT).show();
-        Pair<View, String> p1 = Pair.create(userProfileImageView, getString(R.string.profile_image));
-        Pair<View, String> p2 = Pair.create(userNameTv, getString(R.string.profile_name));
+//        Pair<View, String> p1 = Pair.create(userProfileImageView, getString(R.string.profile_image));
+//        Pair<View, String> p2 = Pair.create(userNameTv, getString(R.string.profile_name));
         ActivityOptionsCompat options = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(this, p1, p2);
+                .makeSceneTransitionAnimation(this);
         Intent i = UserProfileActivity.getIntent(this, mTraveler, item.getFromUser());
         startActivity(i, options.toBundle());
     }

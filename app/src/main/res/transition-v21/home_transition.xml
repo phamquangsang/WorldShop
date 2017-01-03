@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <fade
+        android:duration="300">
+        <targets>
+            <target android:excludeId="@id/container"/>
+            <target android:excludeId="@id/main_action_container"/>
+        </targets>
+    </fade>
+
+
+    <slide
+        android:duration="250"
+        android:slideEdge="top">
+        <targets>
+            <target android:targetId="@id/app_bar"/>
+        </targets>
+    </slide>
+
+    <!--<slide-->
+        <!--android:startDelay="250"-->
+        <!--android:duration="300"-->
+        <!--android:slideEdge="bottom">-->
+        <!--<targets>-->
+            <!--<target android:targetId="@id/main_action_container"/>-->
+        <!--</targets>-->
+    <!--</slide>-->
+
+    <!--<fade android:duration="2000"-->
+    <!--android:startDelay="300">-->
+    <!--<targets>-->
+    <!--<target android:targetId="@id/listDetailImage"/>-->
+    <!--</targets>-->
+    <!--</fade>-->
+</transitionSet>

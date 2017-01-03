@@ -18,6 +18,7 @@ import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
@@ -82,7 +83,7 @@ public class UserProfileActivity extends AppCompatActivity
             a = TransitionInflater.from(this).inflateTransition(R.transition.app_bar_transition);
             getWindow().setEnterTransition(a);
 
-            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+            getWindow().getEnterTransition().addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {
 
@@ -114,8 +115,23 @@ public class UserProfileActivity extends AppCompatActivity
                 }
             });
         }else{
+            Animator anim = ObjectAnimator.ofFloat(mBinding.content.scrollView, "translationY", 500, 0);
+            anim.setInterpolator(new AccelerateInterpolator());
+            anim.setStartDelay(300);
+            anim.setDuration(300);
             mBinding.content.scrollView.setVisibility(View.VISIBLE);
+            anim.start();
         }
+//        if(mBinding.content.scrollView.getVisibility()!=View.VISIBLE){
+//            Animator anim = ObjectAnimator.ofFloat(mBinding.content.scrollView, "translationY", 500, 0);
+//            anim.setInterpolator(new DecelerateInterpolator());
+//            anim.setStartDelay(300);
+//            anim.setDuration(300);
+//            mBinding.content.scrollView.setVisibility(View.VISIBLE);
+//            anim.start();
+//        }
+
+
 
         setSupportActionBar(mBinding.toolbar);
 

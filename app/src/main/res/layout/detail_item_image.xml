@@ -11,7 +11,7 @@
         <ImageView
             tools:src="@drawable/example_image_item"
             android:id="@+id/image"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:layout_width="match_parent"
             android:layout_height="320dp"
             tools:targetApi="lollipop" />

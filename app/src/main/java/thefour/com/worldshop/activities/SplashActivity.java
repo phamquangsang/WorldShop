@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,7 +79,11 @@ public class SplashActivity extends AppCompatActivity {
                             .child(Contracts.USERS_LOCATION).
                             child(mFirebaseUser.getUid())
                             .keepSynced(true);
-
+//                    todo animation not work yet
+//                    ActivityOptionsCompat optionsCompat =
+//                            ActivityOptionsCompat.makeSceneTransitionAnimation(SplashActivity.this);
+//                    startActivity(HomeActivity.getIntent(SplashActivity.this, mFirebaseUser.getUid())
+//                                                            , optionsCompat.toBundle());
                     startActivity(HomeActivity.getIntent(SplashActivity.this, mFirebaseUser.getUid()));
                 } else {
                     // User is signed out

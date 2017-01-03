@@ -22,6 +22,7 @@ public class Notification extends BaseObservable{
     public static final String ACTION_UPDATE_OFFER = "action_update_offer";
     public static final String ACTION_CANCEL_OFFER = "action_cancel_offer";
 
+    private String notificationId;
     private User fromUser;
     private Request request;
     private Offer offer;
@@ -29,6 +30,14 @@ public class Notification extends BaseObservable{
     private long time;
 
     public Notification() {
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
     }
 
     @Bindable

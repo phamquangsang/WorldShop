@@ -19,7 +19,7 @@
             android:layout_height="@dimen/item_city_height"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            tools:src="@drawable/logo" />
+            tools:src="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"

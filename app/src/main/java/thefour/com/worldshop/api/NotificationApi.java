@@ -29,6 +29,7 @@ public class NotificationApi {
         Map<String, Object> updates = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.NOTIFICATION_LOCATION);
         String key = ref.child(request.getFromUser().getUserId()).push().getKey();
+        noti.setNotificationId(key);
         updates.put("/"+request.getFromUser().getUserId()+"/"+key, noti);
 
         ref.updateChildren(updates, listener);
@@ -47,6 +48,7 @@ public class NotificationApi {
         Map<String, Object> updates = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.NOTIFICATION_LOCATION);
         String key = ref.child(request.getFromUser().getUserId()).push().getKey();
+        noti.setNotificationId(key);
         updates.put("/"+request.getFromUser().getUserId()+"/"+key, noti);
 
         ref.updateChildren(updates, listener);
@@ -64,6 +66,7 @@ public class NotificationApi {
         Map<String, Object> updates = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.NOTIFICATION_LOCATION);
         String key = ref.child(request.getFromUser().getUserId()).push().getKey();
+        noti.setNotificationId(key);
         updates.put("/"+request.getFromUser().getUserId()+"/"+key, noti);
 
         ref.updateChildren(updates, listener);
@@ -81,6 +84,7 @@ public class NotificationApi {
         Map<String, Object> updates = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.NOTIFICATION_LOCATION);
         String key = ref.child(request.getFromUser().getUserId()).push().getKey();
+        noti.setNotificationId(key);
         updates.put("/"+request.getFromUser().getUserId()+"/"+key, noti);
 
         ref.updateChildren(updates, listener);
@@ -99,6 +103,7 @@ public class NotificationApi {
         Map<String, Object> updates = new HashMap<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(Contracts.NOTIFICATION_LOCATION);
         String key = ref.child(offer.getFromUser().getUserId()).push().getKey();
+        noti.setNotificationId(key);
         updates.put("/"+offer.getFromUser().getUserId()+"/"+key, noti);
 
         ref.updateChildren(updates, listener);

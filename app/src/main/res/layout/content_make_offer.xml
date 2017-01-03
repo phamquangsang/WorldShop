@@ -10,6 +10,7 @@
     </data>
 
     <ScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -29,14 +30,21 @@
                 tools:src="@drawable/example_image_item" />
 
             <LinearLayout
+                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Price: $"/>
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -46,10 +54,16 @@
                     android:text="@{String.valueOf(request.item.price * request.quantity)}"
                     tools:text="1000" />
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quantity: "/>
                 <TextView
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
+                    android:fontFamily="sans-serif-condensed"
                     tools:text="1"
                     android:text="@{String.valueOf(request.quantity)}"
                     android:layout_width="wrap_content"
