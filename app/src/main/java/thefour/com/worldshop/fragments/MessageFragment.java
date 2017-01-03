@@ -82,7 +82,6 @@ public class MessageFragment extends Fragment {
         }
         mAdapter = new MessageAdapter(new ArrayList<Message>(),mLoggedUser, mListener);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setHasFixedSize(false);
         return view;
     }
 
